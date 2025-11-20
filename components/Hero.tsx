@@ -197,7 +197,7 @@ const Hero: React.FC = () => {
             {/* Subheading */}
             <Reveal delay={1500} width="100%">
               <p className="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto lg:mx-0 mb-10 leading-relaxed">
-                Firefly Marketing Agency is a dynamic and innovative marketing firm dedicated to illuminating brands and businesses through strategic and creative solutions. With a passion for igniting growth and visibility, we specialize in crafting tailored marketing strategies that resonate with target audiences and drive tangible results.
+                وكالة فايرفلاي للتسويق: حلول إبداعية واستراتيجية لإضاءة علامتك التجارية، تحقيق النمو، وزيادة الظهور بنتائج ملموسة.
               </p>
             </Reveal>
 
