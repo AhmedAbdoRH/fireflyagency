@@ -13,19 +13,12 @@ const Footer: React.FC = () => {
           <div>
             <div className="flex items-center gap-3 mb-6 select-none">
                <div className="relative w-10 h-10 flex items-center justify-center">
-                  <svg viewBox="0 0 100 100" className="w-full h-full">
-                      {/* Wings */}
-                      <path d="M10 40 Q 25 20 45 38" fill="#f8fafc" opacity="0.9" />
-                      <path d="M90 40 Q 75 20 55 38" fill="#f8fafc" opacity="0.9" />
-                      {/* Bulb Body */}
-                      <path d="M32 32 A 23 23 0 1 1 68 32 L 62 65 L 38 65 Z" fill="#1c324e" stroke="#e2d82b" strokeWidth="3" />
-                      {/* Brain */}
-                      <path d="M40 35 Q 50 25 60 35" stroke="#e2d82b" strokeWidth="2" fill="none" />
-                      <path d="M42 45 Q 50 35 58 45" stroke="#e2d82b" strokeWidth="2" fill="none" />
-                      {/* Base */}
-                      <rect x="40" y="68" width="20" height="4" rx="2" fill="#e2d82b" />
-                      <rect x="42" y="74" width="16" height="4" rx="2" fill="#e2d82b" />
-                  </svg>
+                  {/* Use Logo.png */}
+                  <img 
+                    src="Logo.png" 
+                    alt="Firefly Creative Solutions Logo" 
+                    className="w-full h-full object-contain drop-shadow-[0_0_8px_rgba(226,216,43,0.3)]" 
+                  />
                </div>
                <div className="flex flex-col justify-center">
                 <span className="font-serif font-bold text-2xl text-white leading-none tracking-wide">

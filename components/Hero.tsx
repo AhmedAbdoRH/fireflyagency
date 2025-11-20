@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { ArrowRight, Sparkles } from 'lucide-react';
+import { ArrowRight, Sparkles, Play } from 'lucide-react';
 import Reveal from './Reveal';
 import TextReveal from './TextReveal';
 
@@ -147,7 +147,7 @@ const Hero: React.FC = () => {
   }, []);
 
   return (
-    <section id="home" className="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">
+    <section id="home" className="relative min-h-screen flex items-center pt-20 overflow-hidden">
       
       {/* Background Elements */}
       <div className="absolute inset-0 z-0">
@@ -170,57 +170,97 @@ const Hero: React.FC = () => {
         <canvas ref={canvasRef} className="absolute inset-0 w-full h-full pointer-events-auto" />
       </div>
 
-      <div className="container mx-auto px-4 relative z-10 text-center">
-        
-        {/* Badge */}
-        <Reveal width="100%" className="flex justify-center">
-          <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/5 border border-white/10 mb-8 backdrop-blur-sm hover:border-firefly-yellow/50 transition-colors duration-300 group cursor-default">
-            <Sparkles className="w-4 h-4 text-firefly-yellow animate-spin-slow group-hover:text-white transition-colors" />
-            <span className="text-sm text-gray-300 font-medium tracking-wide group-hover:text-white transition-colors">The Future of Digital Growth</span>
-          </div>
-        </Reveal>
+      <div className="container mx-auto px-4 relative z-10">
+        <div className="flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-20">
+          
+          {/* Text Content Side */}
+          <div className="w-full lg:w-1/2 text-center lg:text-left pt-10 lg:pt-0">
+            {/* Badge */}
+            <Reveal width="100%" className="flex justify-center lg:justify-start">
+              <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/5 border border-white/10 mb-8 backdrop-blur-sm hover:border-firefly-yellow/50 transition-colors duration-300 group cursor-default">
+                <Sparkles className="w-4 h-4 text-firefly-yellow animate-spin-slow group-hover:text-white transition-colors" />
+                <span className="text-sm text-gray-300 font-medium tracking-wide group-hover:text-white transition-colors">The Future of Digital Growth</span>
+              </div>
+            </Reveal>
 
-        {/* Heading */}
-        <div className="mb-8">
-          <h1 className="font-heading text-5xl md:text-7xl lg:text-8xl font-bold leading-tight tracking-tight">
-            <div className="text-white inline-block mb-2">
-              <TextReveal text="Ignite Your" delay={300} />
+            {/* Heading */}
+            <div className="mb-8">
+              <h1 className="font-heading text-5xl md:text-7xl lg:text-8xl font-bold leading-tight tracking-tight">
+                <div className="text-white block mb-2">
+                  <TextReveal text="Ignite Your" delay={300} />
+                </div>
+                <div className="text-transparent bg-clip-text bg-gradient-to-r from-firefly-yellow via-white to-firefly-green block pb-2">
+                  <TextReveal text="Brand's Potential" delay={1000} />
+                </div>
+              </h1>
             </div>
-            <br />
-            <div className="text-transparent bg-clip-text bg-gradient-to-r from-firefly-yellow via-white to-firefly-green inline-block pb-2">
-              <TextReveal text="Brand's Potential" delay={1000} />
-            </div>
-          </h1>
+
+            {/* Subheading */}
+            <Reveal delay={1500} width="100%">
+              <p className="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto lg:mx-0 mb-10 leading-relaxed">
+                We fuse creativity with data-driven strategies to build systems that generate consistent revenue. Stop chasing leads. Let them find you.
+              </p>
+            </Reveal>
+
+            {/* Buttons */}
+            <Reveal delay={1700} width="100%">
+              <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
+                <button className="group w-full sm:w-auto px-8 py-4 bg-firefly-yellow hover:bg-white text-firefly-dark font-bold rounded-lg transition-all duration-300 transform hover:-translate-y-1 hover:shadow-[0_0_30px_rgba(226,216,43,0.5)] flex items-center justify-center gap-2 text-lg overflow-hidden relative">
+                  <span className="relative z-10 flex items-center gap-2">
+                    Start Your Growth
+                    <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                  </span>
+                </button>
+                
+                <button className="w-full sm:w-auto px-8 py-4 bg-transparent border border-white/20 hover:border-firefly-green hover:text-firefly-green text-white font-semibold rounded-lg transition-all duration-300 flex items-center justify-center gap-2 text-lg backdrop-blur-sm hover:bg-white/5">
+                  <Play className="w-5 h-5 fill-current" />
+                  View Showreel
+                </button>
+              </div>
+            </Reveal>
+          </div>
+
+          {/* Video/Visual Side */}
+          <div className="w-full lg:w-[450px] flex justify-center relative perspective-1000">
+             <Reveal delay={1200} className="w-full max-w-[350px] lg:max-w-full relative">
+                {/* Decorative Glow */}
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-firefly-yellow/20 blur-[60px] rounded-full animate-pulse -z-10"></div>
+                
+                {/* Video Container */}
+                <div className="relative rounded-[2.5rem] overflow-hidden border-4 border-white/10 shadow-2xl bg-firefly-dark/50 backdrop-blur-sm animate-float transform rotate-[-3deg] hover:rotate-0 transition-transform duration-700">
+                  {/* Video Overlay Gradient for better contrast if needed */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-firefly-dark/60 via-transparent to-transparent z-10 pointer-events-none"></div>
+                  
+                  <video 
+                    src="Hero.mp4" 
+                    autoPlay 
+                    loop 
+                    muted 
+                    playsInline
+                    className="w-full h-full object-cover aspect-[9/16] scale-105"
+                  />
+
+                  {/* Floating UI Elements on top of video */}
+                  <div className="absolute bottom-6 left-6 right-6 z-20">
+                     <div className="bg-white/10 backdrop-blur-md border border-white/10 p-4 rounded-xl">
+                        <div className="flex items-center gap-3">
+                           <div className="w-2 h-2 rounded-full bg-red-500 animate-pulse"></div>
+                           <p className="text-xs font-bold text-white tracking-widest uppercase">Live Campaign</p>
+                        </div>
+                        <p className="text-white font-heading font-bold text-lg mt-1">+450% ROI</p>
+                     </div>
+                  </div>
+                </div>
+             </Reveal>
+          </div>
+
         </div>
-
-        {/* Subheading */}
-        <Reveal delay={1500} width="100%">
-          <p className="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto mb-10 leading-relaxed">
-            We fuse creativity with data-driven strategies to build systems that generate consistent revenue. Stop chasing leads. Let them find you.
-          </p>
-        </Reveal>
-
-        {/* Buttons */}
-        <Reveal delay={1700} width="100%">
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <button className="group w-full sm:w-auto px-8 py-4 bg-firefly-yellow hover:bg-white text-firefly-dark font-bold rounded-lg transition-all duration-300 transform hover:-translate-y-1 hover:shadow-[0_0_30px_rgba(226,216,43,0.5)] flex items-center justify-center gap-2 text-lg overflow-hidden relative">
-              <span className="relative z-10 flex items-center gap-2">
-                Start Your Growth
-                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-              </span>
-            </button>
-            
-            <button className="w-full sm:w-auto px-8 py-4 bg-transparent border border-white/20 hover:border-firefly-green hover:text-firefly-green text-white font-semibold rounded-lg transition-all duration-300 flex items-center justify-center gap-2 text-lg backdrop-blur-sm hover:bg-white/5">
-              View Case Studies
-            </button>
-          </div>
-        </Reveal>
 
         {/* Trust Indicators */}
         <Reveal delay={1900} width="100%">
-          <div className="mt-24 pt-10 border-t border-white/5">
-            <p className="text-xs text-gray-500 mb-8 uppercase tracking-[0.2em]">Trusted by Innovative Companies</p>
-            <div className="flex flex-wrap justify-center gap-8 md:gap-16 opacity-60 grayscale hover:grayscale-0 transition-all duration-700 ease-in-out">
+          <div className="mt-20 pt-10 border-t border-white/5">
+            <p className="text-xs text-gray-500 mb-8 uppercase tracking-[0.2em] text-center lg:text-left">Trusted by Innovative Companies</p>
+            <div className="flex flex-wrap justify-center lg:justify-start gap-8 md:gap-16 opacity-60 grayscale hover:grayscale-0 transition-all duration-700 ease-in-out">
                {['Acme Corp', 'GlobalTech', 'Nebula', 'Vertex', 'Oasis'].map((brand, i) => (
                  <span key={i} className="text-xl font-heading font-bold text-white hover:text-firefly-yellow transition-colors cursor-default hover:scale-110 transform duration-300 drop-shadow-md">{brand}</span>
                ))}

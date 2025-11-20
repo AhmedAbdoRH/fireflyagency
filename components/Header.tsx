@@ -27,29 +27,17 @@ const Header: React.FC = () => {
           
           {/* Brand / Logo */}
           <div className="flex items-center gap-4 group cursor-pointer select-none">
-            {/* Icon Container - Increased size for visibility */}
+            {/* Logo Container - Increased size for visibility */}
             <div className="relative w-16 h-16 flex items-center justify-center transition-transform duration-500 group-hover:scale-110">
                {/* Strong Back Glow */}
                <div className="absolute inset-0 bg-firefly-yellow/30 blur-2xl rounded-full opacity-50 group-hover:opacity-100 transition-opacity duration-500"></div>
                
-               {/* NEW Simplified & Bolder Logo SVG */}
-               <svg viewBox="0 0 100 100" className="w-full h-full drop-shadow-[0_0_15px_rgba(226,216,43,0.5)] z-10">
-                  {/* Wings - Solid White */}
-                  <path d="M10 35 C 20 15, 40 35, 50 40 C 60 35, 80 15, 90 35 C 95 45, 85 55, 50 55 C 15 55, 5 45, 10 35 Z" 
-                        fill="#f8fafc" fillOpacity="1" />
-                  
-                  {/* Bulb Shape (Body) - High Contrast Dark Blue with Thick Yellow Stroke */}
-                  <path d="M35 35 C 35 20, 65 20, 65 35 C 65 50, 55 55, 55 65 L 45 65 C 45 55, 35 50, 35 35 Z" 
-                        fill="#1c324e" stroke="#e2d82b" strokeWidth="4" strokeLinejoin="round" />
-                  
-                  {/* Filament - The "Spark" */}
-                  <path d="M45 30 L 55 30 M 50 30 L 50 45" 
-                        stroke="#e2d82b" strokeWidth="4" strokeLinecap="round" />
-                  
-                  {/* Base of Bulb */}
-                  <rect x="42" y="68" width="16" height="6" rx="2" fill="#e2d82b" />
-                  <rect x="44" y="76" width="12" height="4" rx="2" fill="#e2d82b" />
-               </svg>
+               {/* Use Logo.png */}
+               <img 
+                 src="Logo.png" 
+                 alt="Firefly Creative Solutions Logo" 
+                 className="w-full h-full object-contain drop-shadow-[0_0_15px_rgba(226,216,43,0.5)] z-10" 
+               />
             </div>
 
             {/* Text Container */}

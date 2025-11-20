@@ -13,9 +13,9 @@ const SplashScreen = ({ onFinished }: { onFinished: () => void }) => {
 
   useEffect(() => {
     // Timeline of intro animation
-    setTimeout(() => setStep(1), 100); // Start drawing
-    setTimeout(() => setStep(2), 2000); // Fill color + Text Reveal
-    setTimeout(() => setStep(3), 3000); // Exit
+    setTimeout(() => setStep(1), 100); // Logo appears (fade-in, scale-up)
+    setTimeout(() => setStep(2), 2000); // Add glow effect
+    setTimeout(() => setStep(3), 3000); // Exit animation starts
     setTimeout(() => onFinished(), 3500); // Remove component
   }, [onFinished]);
 
@@ -26,39 +26,17 @@ const SplashScreen = ({ onFinished }: { onFinished: () => void }) => {
       }`}
     >
       <div className="relative flex flex-col items-center">
-        {/* Animated Logo SVG */}
-        <div className={`w-32 h-32 mb-4 transition-all duration-1000 ${step >= 2 ? 'scale-110 drop-shadow-[0_0_30px_rgba(226,216,43,0.6)]' : ''}`}>
-           <svg viewBox="0 0 100 100" className="w-full h-full overflow-visible">
-              {/* Wings - Draw animation */}
-              <path 
-                d="M10 35 C 20 15, 40 35, 50 40 C 60 35, 80 15, 90 35 C 95 45, 85 55, 50 55 C 15 55, 5 45, 10 35 Z" 
-                fill={step >= 2 ? "#f8fafc" : "transparent"} 
-                stroke="#f8fafc"
-                strokeWidth="2"
-                strokeDasharray="300"
-                strokeDashoffset={step >= 1 ? "0" : "300"}
-                className="transition-all duration-1000 ease-out"
-                style={{ opacity: 1 }}
-              />
-              
-              {/* Bulb Body */}
-              <path 
-                d="M35 35 C 35 20, 65 20, 65 35 C 65 50, 55 55, 55 65 L 45 65 C 45 55, 35 50, 35 35 Z" 
-                fill={step >= 2 ? "#1c324e" : "transparent"} 
-                stroke="#e2d82b" 
-                strokeWidth="3" 
-                strokeDasharray="200"
-                strokeDashoffset={step >= 1 ? "0" : "200"}
-                className="transition-all duration-[1.5s] ease-in-out"
-              />
-              
-              {/* Spark */}
-              <g className={`transition-opacity duration-500 ${step >= 2 ? 'opacity-100' : 'opacity-0'}`}>
-                <path d="M45 30 L 55 30 M 50 30 L 50 45" stroke="#e2d82b" strokeWidth="3" strokeLinecap="round" />
-                <rect x="42" y="68" width="16" height="6" rx="2" fill="#e2d82b" />
-                <rect x="44" y="76" width="12" height="4" rx="2" fill="#e2d82b" />
-              </g>
-           </svg>
+        {/* Animated Logo Image */}
+        <div className="w-32 h-32 mb-4">
+           <img 
+             src="Logo.png" 
+             alt="Firefly Logo" 
+             className={`w-full h-full object-contain 
+               transition-all duration-1000 ease-out 
+               ${step >= 1 ? 'opacity-100 scale-100' : 'opacity-0 scale-80'} 
+               ${step >= 2 ? 'drop-shadow-[0_0_30px_rgba(226,216,43,0.6)]' : ''}
+             `} 
+           />
         </div>
 
         {/* Text Reveal */}
