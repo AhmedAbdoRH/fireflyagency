@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Firefly Creative Solutions</title>
+    <meta name="description" content="Ignite your brand with Firefly Creative Solutions.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            colors: {
+              firefly: {
+                dark: '#1c324e',
+                yellow: '#e2d82b',
+                green: '#00ee8a',
+                light: '#f8fafc',
+                gray: '#334155'
+              }
+            },
+            fontFamily: {
+              sans: ['Outfit', 'sans-serif'],
+              heading: ['Space Grotesk', 'sans-serif'],
+              serif: ['Playfair Display', 'serif'],
+            },
+            backgroundImage: {
+              'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+              'hero-pattern': "url('https://www.transparenttextures.com/patterns/cubes.png')",
+            },
+            animation: {
+              'draw': 'draw 2s ease-in-out forwards',
+              'fade-in': 'fadeIn 1s ease-out forwards',
+              'float': 'float 6s ease-in-out infinite',
+            },
+            keyframes: {
+              draw: {
+                '0%': { strokeDasharray: '1000', strokeDashoffset: '1000' },
+                '100%': { strokeDashoffset: '0' },
+              },
+              fadeIn: {
+                '0%': { opacity: '0', transform: 'translateY(10px)' },
+                '100%': { opacity: '1', transform: 'translateY(0)' },
+              },
+              float: {
+                '0%, 100%': { transform: 'translateY(0)' },
+                '50%': { transform: 'translateY(-20px)' },
+              }
+            }
+          }
+        }
+      }
+    </script>
+    <style>
+      body {
+        background-color: #1c324e;
+        color: #f8fafc;
+        overflow-x: hidden;
+      }
+      
+      /* Custom scrollbar */
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #1c324e;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #334155;
+        border-radius: 4px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #e2d82b;
+      }
+
+      /* Reveal Animation Utility Classes */
+      .reveal-hidden {
+        opacity: 0;
+        filter: blur(10px);
+        transform: translateY(30px);
+        transition: all 1s cubic-bezier(0.2, 0.8, 0.2, 1);
+      }
+      
+      .reveal-visible {
+        opacity: 1;
+        filter: blur(0);
+        transform: translateY(0);
+      }
+
+      /* Stagger delays */
+      .delay-100 { transition-delay: 100ms; }
+      .delay-200 { transition-delay: 200ms; }
+      .delay-300 { transition-delay: 300ms; }
+      .delay-400 { transition-delay: 400ms; }
+      .delay-500 { transition-delay: 500ms; }
+
+      /* 3D Tilt Effect Container */
+      .tilt-card {
+        transition: transform 0.1s ease-out;
+        transform-style: preserve-3d;
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react/": "https://aistudiocdn.com/react@^19.2.0/",
+    "react": "https://aistudiocdn.com/react@^19.2.0",
+    "lucide-react": "https://aistudiocdn.com/lucide-react@^0.554.0",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/"
+  }
+}
+</script>
+</head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>
