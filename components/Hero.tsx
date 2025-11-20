@@ -197,7 +197,7 @@ const Hero: React.FC = () => {
             {/* Subheading */}
             <Reveal delay={1500} width="100%">
               <p className="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto lg:mx-0 mb-10 leading-relaxed">
-                وكالة فايرفلاي للتسويق: حلول إبداعية واستراتيجية لإضاءة علامتك التجارية، تحقيق النمو، وزيادة الظهور بنتائج ملموسة.
+                Firefly Marketing Agency: Innovative strategies for brand growth and visibility.
               </p>
             </Reveal>
 
