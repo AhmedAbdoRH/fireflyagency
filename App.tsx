@@ -6,6 +6,7 @@ import Stats from './components/Stats';
 import Testimonials from './components/Testimonials';
 import Cta from './components/Cta';
 import Footer from './components/Footer';
+import CustomCursor from './components/CustomCursor';
 
 const SplashScreen = ({ onFinished }: { onFinished: () => void }) => {
   const [step, setStep] = useState(0);
@@ -30,51 +31,32 @@ const SplashScreen = ({ onFinished }: { onFinished: () => void }) => {
            <svg viewBox="0 0 100 100" className="w-full h-full overflow-visible">
               {/* Wings - Draw animation */}
               <path 
-                d="M10 40 Q 25 20 45 38" 
+                d="M10 35 C 20 15, 40 35, 50 40 C 60 35, 80 15, 90 35 C 95 45, 85 55, 50 55 C 15 55, 5 45, 10 35 Z" 
                 fill={step >= 2 ? "#f8fafc" : "transparent"} 
                 stroke="#f8fafc"
                 strokeWidth="2"
-                strokeDasharray="100"
-                strokeDashoffset={step >= 1 ? "0" : "100"}
+                strokeDasharray="300"
+                strokeDashoffset={step >= 1 ? "0" : "300"}
                 className="transition-all duration-1000 ease-out"
-                style={{ opacity: 0.9 }}
-              />
-              <path 
-                d="M90 40 Q 75 20 55 38" 
-                fill={step >= 2 ? "#f8fafc" : "transparent"} 
-                stroke="#f8fafc"
-                strokeWidth="2"
-                strokeDasharray="100"
-                strokeDashoffset={step >= 1 ? "0" : "100"}
-                className="transition-all duration-1000 ease-out"
-                style={{ opacity: 0.9 }}
+                style={{ opacity: 1 }}
               />
               
               {/* Bulb Body */}
               <path 
-                d="M32 32 A 23 23 0 1 1 68 32 L 62 65 L 38 65 Z" 
+                d="M35 35 C 35 20, 65 20, 65 35 C 65 50, 55 55, 55 65 L 45 65 C 45 55, 35 50, 35 35 Z" 
                 fill={step >= 2 ? "#1c324e" : "transparent"} 
                 stroke="#e2d82b" 
-                strokeWidth="2.5" 
+                strokeWidth="3" 
                 strokeDasharray="200"
                 strokeDashoffset={step >= 1 ? "0" : "200"}
                 className="transition-all duration-[1.5s] ease-in-out"
               />
               
-              {/* Brain Pattern */}
+              {/* Spark */}
               <g className={`transition-opacity duration-500 ${step >= 2 ? 'opacity-100' : 'opacity-0'}`}>
-                <path d="M40 35 Q 50 25 60 35" stroke="#e2d82b" strokeWidth="2" fill="none" strokeLinecap="round" />
-                <path d="M42 45 Q 50 35 58 45" stroke="#e2d82b" strokeWidth="2" fill="none" strokeLinecap="round" />
-                <path d="M50 25 V 55" stroke="#e2d82b" strokeWidth="2" strokeLinecap="round" />
-                <rect x="40" y="68" width="20" height="4" rx="2" fill="#e2d82b" />
-                <rect x="42" y="74" width="16" height="4" rx="2" fill="#e2d82b" />
-                
-                {/* Rays pulse */}
-                <g className="animate-pulse">
-                  <path d="M50 5 L 50 10" stroke="#e2d82b" strokeWidth="2" strokeLinecap="round" />
-                  <path d="M25 15 L 28 18" stroke="#e2d82b" strokeWidth="2" strokeLinecap="round" />
-                  <path d="M75 15 L 72 18" stroke="#e2d82b" strokeWidth="2" strokeLinecap="round" />
-                </g>
+                <path d="M45 30 L 55 30 M 50 30 L 50 45" stroke="#e2d82b" strokeWidth="3" strokeLinecap="round" />
+                <rect x="42" y="68" width="16" height="6" rx="2" fill="#e2d82b" />
+                <rect x="44" y="76" width="12" height="4" rx="2" fill="#e2d82b" />
               </g>
            </svg>
         </div>
@@ -106,6 +88,8 @@ const App: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-firefly-dark text-white font-sans selection:bg-firefly-yellow selection:text-firefly-dark overflow-x-hidden">
+      <CustomCursor />
+      
       {loading && <SplashScreen onFinished={() => setLoading(false)} />}
       
       <div className={`transition-opacity duration-1000 ${loading ? 'opacity-0' : 'opacity-100'}`}>

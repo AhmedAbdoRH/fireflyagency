@@ -1,9 +1,11 @@
 import React, { useEffect, useRef } from 'react';
 import { ArrowRight, Sparkles } from 'lucide-react';
 import Reveal from './Reveal';
+import TextReveal from './TextReveal';
 
 const Hero: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const mouseRef = useRef({ x: 0, y: 0 });
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -14,6 +16,14 @@ const Hero: React.FC = () => {
 
     let animationFrameId: number;
     let particles: Particle[] = [];
+
+    const handleMouseMove = (e: MouseEvent) => {
+      const rect = canvas.getBoundingClientRect();
+      mouseRef.current = {
+        x: e.clientX - rect.left,
+        y: e.clientY - rect.top
+      };
+    };
 
     const resizeCanvas = () => {
       canvas.width = window.innerWidth;
@@ -30,38 +40,48 @@ const Hero: React.FC = () => {
       color: string;
       baseAlpha: number;
       alpha: number;
-      pulseOffset: number;
-      pulseSpeed: number;
+      originalX: number;
+      originalY: number;
       
       constructor(w: number, h: number) {
         this.x = Math.random() * w;
         this.y = Math.random() * h;
-        this.vx = (Math.random() - 0.5) * 0.3; 
-        this.vy = (Math.random() - 0.5) * 0.3;
-        this.size = Math.random() * 3 + 0.5;
+        this.originalX = this.x;
+        this.originalY = this.y;
+        this.vx = (Math.random() - 0.5) * 0.5; 
+        this.vy = (Math.random() - 0.5) * 0.5;
+        this.size = Math.random() * 2.5 + 0.5;
         const colors = ['#e2d82b', '#00ee8a', '#ffffff'];
         this.color = colors[Math.floor(Math.random() * colors.length)];
-        this.baseAlpha = Math.random() * 0.5 + 0.2;
+        this.baseAlpha = Math.random() * 0.6 + 0.1;
         this.alpha = this.baseAlpha;
-        this.pulseOffset = Math.random() * Math.PI * 2;
-        this.pulseSpeed = 0.02 + Math.random() * 0.03;
       }
 
-      update(w: number, h: number, time: number) {
+      update(w: number, h: number) {
+        // Base movement
         this.x += this.vx;
         this.y += this.vy;
+
+        // Mouse Interaction (Repulsion)
+        const dx = this.x - mouseRef.current.x;
+        const dy = this.y - mouseRef.current.y;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+        const maxDistance = 150;
+
+        if (distance < maxDistance) {
+          const forceDirectionX = dx / distance;
+          const forceDirectionY = dy / distance;
+          const force = (maxDistance - distance) / maxDistance;
+          const repulsionStrength = 2;
+          this.x += forceDirectionX * force * repulsionStrength;
+          this.y += forceDirectionY * force * repulsionStrength;
+        }
 
         // Wrap around screen
         if (this.x < 0) this.x = w;
         if (this.x > w) this.x = 0;
         if (this.y < 0) this.y = h;
         if (this.y > h) this.y = 0;
-
-        // Subtle pulsing effect
-        this.alpha = this.baseAlpha + Math.sin(time * this.pulseSpeed + this.pulseOffset) * 0.15;
-        // Clamp alpha
-        if (this.alpha < 0.1) this.alpha = 0.1;
-        if (this.alpha > 0.8) this.alpha = 0.8;
       }
 
       draw(ctx: CanvasRenderingContext2D) {
@@ -76,31 +96,52 @@ const Hero: React.FC = () => {
 
     const initParticles = () => {
       particles = [];
-      const particleCount = Math.min(Math.floor(window.innerWidth / 15), 60);
+      const particleCount = Math.min(Math.floor(window.innerWidth / 10), 80);
       for (let i = 0; i < particleCount; i++) {
         particles.push(new Particle(canvas.width, canvas.height));
       }
     };
 
-    let time = 0;
+    const drawConnections = () => {
+      for (let i = 0; i < particles.length; i++) {
+        for (let j = i + 1; j < particles.length; j++) {
+          const dx = particles[i].x - particles[j].x;
+          const dy = particles[i].y - particles[j].y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+
+          if (dist < 100) {
+            ctx.beginPath();
+            ctx.strokeStyle = `rgba(226, 216, 43, ${0.1 - dist / 1000})`;
+            ctx.lineWidth = 0.5;
+            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.stroke();
+          }
+        }
+      }
+    };
+
     const render = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      time += 1;
       
       particles.forEach(p => {
-        p.update(canvas.width, canvas.height, time);
+        p.update(canvas.width, canvas.height);
         p.draw(ctx);
       });
+      
+      drawConnections();
       
       animationFrameId = requestAnimationFrame(render);
     };
 
     window.addEventListener('resize', resizeCanvas);
+    window.addEventListener('mousemove', handleMouseMove);
     resizeCanvas();
     render();
 
     return () => {
       window.removeEventListener('resize', resizeCanvas);
+      window.removeEventListener('mousemove', handleMouseMove);
       cancelAnimationFrame(animationFrameId);
     };
   }, []);
@@ -112,61 +153,61 @@ const Hero: React.FC = () => {
       <div className="absolute inset-0 z-0">
         <div className="absolute top-0 left-0 w-full h-full bg-firefly-dark opacity-90"></div>
         {/* Glow Effect 1 - Animated */}
-        <div className="absolute top-[-10%] right-[-5%] w-[500px] h-[500px] bg-firefly-green/20 rounded-full blur-[120px] animate-pulse"></div>
+        <div className="absolute top-[-10%] right-[-5%] w-[600px] h-[600px] bg-firefly-green/20 rounded-full blur-[120px] animate-pulse"></div>
         {/* Glow Effect 2 - Animated */}
-        <div className="absolute bottom-[-10%] left-[-10%] w-[600px] h-[600px] bg-firefly-yellow/10 rounded-full blur-[100px] animate-pulse" style={{ animationDelay: '2s' }}></div>
+        <div className="absolute bottom-[-10%] left-[-10%] w-[700px] h-[700px] bg-firefly-yellow/10 rounded-full blur-[100px] animate-pulse" style={{ animationDelay: '2s' }}></div>
         
         {/* Grid Pattern Overlay */}
         <div 
-          className="absolute inset-0 opacity-[0.05]" 
+          className="absolute inset-0 opacity-[0.03]" 
           style={{ 
             backgroundImage: `linear-gradient(to right, #ffffff 1px, transparent 1px), linear-gradient(to bottom, #ffffff 1px, transparent 1px)`, 
-            backgroundSize: '50px 50px' 
+            backgroundSize: '60px 60px' 
           }}
         ></div>
 
         {/* Particle Canvas */}
-        <canvas ref={canvasRef} className="absolute inset-0 w-full h-full pointer-events-none" />
+        <canvas ref={canvasRef} className="absolute inset-0 w-full h-full pointer-events-auto" />
       </div>
 
       <div className="container mx-auto px-4 relative z-10 text-center">
         
         {/* Badge */}
         <Reveal width="100%" className="flex justify-center">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-8 backdrop-blur-sm hover:border-firefly-yellow/50 transition-colors duration-300">
-            <Sparkles className="w-4 h-4 text-firefly-yellow animate-spin-slow" />
-            <span className="text-sm text-gray-300 font-medium">The Future of Digital Growth</span>
+          <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/5 border border-white/10 mb-8 backdrop-blur-sm hover:border-firefly-yellow/50 transition-colors duration-300 group cursor-default">
+            <Sparkles className="w-4 h-4 text-firefly-yellow animate-spin-slow group-hover:text-white transition-colors" />
+            <span className="text-sm text-gray-300 font-medium tracking-wide group-hover:text-white transition-colors">The Future of Digital Growth</span>
           </div>
         </Reveal>
 
         {/* Heading */}
-        <Reveal delay={200} width="100%">
-          <h1 className="font-heading text-5xl md:text-7xl lg:text-8xl font-bold leading-tight mb-6 tracking-tight">
-            <span className="text-white inline-block hover:scale-105 transition-transform duration-500 cursor-default">Ignite Your</span>
+        <div className="mb-8">
+          <h1 className="font-heading text-5xl md:text-7xl lg:text-8xl font-bold leading-tight tracking-tight">
+            <div className="text-white inline-block mb-2">
+              <TextReveal text="Ignite Your" delay={300} />
+            </div>
             <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-firefly-yellow via-white to-firefly-green inline-block">
-              Brand's Potential
-            </span>
+            <div className="text-transparent bg-clip-text bg-gradient-to-r from-firefly-yellow via-white to-firefly-green inline-block pb-2">
+              <TextReveal text="Brand's Potential" delay={1000} />
+            </div>
           </h1>
-        </Reveal>
+        </div>
 
         {/* Subheading */}
-        <Reveal delay={400} width="100%">
+        <Reveal delay={1500} width="100%">
           <p className="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto mb-10 leading-relaxed">
             We fuse creativity with data-driven strategies to build systems that generate consistent revenue. Stop chasing leads. Let them find you.
           </p>
         </Reveal>
 
         {/* Buttons */}
-        <Reveal delay={600} width="100%">
+        <Reveal delay={1700} width="100%">
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <button className="group w-full sm:w-auto px-8 py-4 bg-firefly-yellow hover:bg-firefly-green text-firefly-dark font-bold rounded-lg transition-all duration-300 transform hover:-translate-y-1 hover:shadow-[0_10px_30px_-5px_rgba(226,216,43,0.6)] flex items-center justify-center gap-2 text-lg overflow-hidden relative">
+            <button className="group w-full sm:w-auto px-8 py-4 bg-firefly-yellow hover:bg-white text-firefly-dark font-bold rounded-lg transition-all duration-300 transform hover:-translate-y-1 hover:shadow-[0_0_30px_rgba(226,216,43,0.5)] flex items-center justify-center gap-2 text-lg overflow-hidden relative">
               <span className="relative z-10 flex items-center gap-2">
                 Start Your Growth
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </span>
-              {/* Button shine effect */}
-              <div className="absolute top-0 left-[-100%] w-full h-full bg-white/30 -skew-x-12 group-hover:left-[100%] transition-all duration-700"></div>
             </button>
             
             <button className="w-full sm:w-auto px-8 py-4 bg-transparent border border-white/20 hover:border-firefly-green hover:text-firefly-green text-white font-semibold rounded-lg transition-all duration-300 flex items-center justify-center gap-2 text-lg backdrop-blur-sm hover:bg-white/5">
@@ -176,13 +217,12 @@ const Hero: React.FC = () => {
         </Reveal>
 
         {/* Trust Indicators */}
-        <Reveal delay={800} width="100%">
-          <div className="mt-20 pt-10 border-t border-white/5">
-            <p className="text-sm text-gray-500 mb-6 uppercase tracking-widest">Trusted by Innovative Companies</p>
-            <div className="flex flex-wrap justify-center gap-8 md:gap-16 opacity-50 grayscale hover:grayscale-0 transition-all duration-700 ease-in-out">
-               {/* Simple SVG Placeholders for Logos */}
+        <Reveal delay={1900} width="100%">
+          <div className="mt-24 pt-10 border-t border-white/5">
+            <p className="text-xs text-gray-500 mb-8 uppercase tracking-[0.2em]">Trusted by Innovative Companies</p>
+            <div className="flex flex-wrap justify-center gap-8 md:gap-16 opacity-60 grayscale hover:grayscale-0 transition-all duration-700 ease-in-out">
                {['Acme Corp', 'GlobalTech', 'Nebula', 'Vertex', 'Oasis'].map((brand, i) => (
-                 <span key={i} className="text-xl font-heading font-bold text-white hover:text-firefly-yellow transition-colors cursor-default hover:scale-110 transform duration-300">{brand}</span>
+                 <span key={i} className="text-xl font-heading font-bold text-white hover:text-firefly-yellow transition-colors cursor-default hover:scale-110 transform duration-300 drop-shadow-md">{brand}</span>
                ))}
             </div>
           </div>

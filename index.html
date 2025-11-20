@@ -36,6 +36,7 @@
               'draw': 'draw 2s ease-in-out forwards',
               'fade-in': 'fadeIn 1s ease-out forwards',
               'float': 'float 6s ease-in-out infinite',
+              'spin-slow': 'spin 8s linear infinite',
             },
             keyframes: {
               draw: {
@@ -60,6 +61,7 @@
         background-color: #1c324e;
         color: #f8fafc;
         overflow-x: hidden;
+        /* cursor: none; Uncomment if you want to fully hide default cursor, but usually better to keep it for usability */
       }
       
       /* Custom scrollbar */
@@ -91,13 +93,91 @@
         transform: translateY(0);
       }
 
-      /* Stagger delays */
-      .delay-100 { transition-delay: 100ms; }
-      .delay-200 { transition-delay: 200ms; }
-      .delay-300 { transition-delay: 300ms; }
-      .delay-400 { transition-delay: 400ms; }
-      .delay-500 { transition-delay: 500ms; }
+      /* Text Reveal Keyframes */
+      @keyframes revealChar {
+        0% {
+          opacity: 0;
+          transform: translateY(100%);
+        }
+        100% {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
 
+      /* Spotlight Effect */
+      .spotlight-card {
+        position: relative;
+        overflow: hidden;
+      }
+      
+      /* This pseudo-element creates the glowing border following the mouse */
+      .spotlight-card::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        padding: 2px; /* Border width */
+        background: radial-gradient(
+          800px circle at var(--mouse-x) var(--mouse-y), 
+          rgba(226, 216, 43, 0.6), 
+          transparent 40%
+        );
+        -webkit-mask: 
+          linear-gradient(#fff 0 0) content-box, 
+          linear-gradient(#fff 0 0);
+        -webkit-mask-composite: xor;
+        mask-composite: exclude;
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity 0.3s;
+      }
+      
+      .spotlight-card:hover::before {
+        opacity: 1;
+      }
+
+      /* Inner glow spotlight */
+      .spotlight-bg {
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(
+          600px circle at var(--mouse-x) var(--mouse-y), 
+          rgba(226, 216, 43, 0.05), 
+          transparent 40%
+        );
+        opacity: 0;
+        transition: opacity 0.3s;
+        pointer-events: none;
+      }
+
+      .spotlight-card:hover .spotlight-bg {
+        opacity: 1;
+      }
+
+      /* Custom Cursor */
+      .cursor-dot,
+      .cursor-outline {
+        position: fixed;
+        top: 0;
+        left: 0;
+        transform: translate(-50%, -50%);
+        border-radius: 50%;
+        z-index: 9999;
+        pointer-events: none;
+      }
+      .cursor-dot {
+        width: 8px;
+        height: 8px;
+        background-color: #e2d82b;
+      }
+      .cursor-outline {
+        width: 40px;
+        height: 40px;
+        border: 1px solid rgba(226, 216, 43, 0.5);
+        transition: width 0.2s, height 0.2s, background-color 0.2s;
+      }
+      
       /* 3D Tilt Effect Container */
       .tilt-card {
         transition: transform 0.1s ease-out;

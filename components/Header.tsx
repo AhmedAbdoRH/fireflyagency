@@ -16,43 +16,48 @@ const Header: React.FC = () => {
 
   return (
     <header 
-      className={`fixed top-0 w-full z-50 transition-all duration-300 ${
-        scrolled ? 'bg-firefly-dark/90 backdrop-blur-md shadow-lg border-b border-white/5' : 'bg-transparent'
+      className={`fixed top-0 w-full z-50 transition-all duration-500 ease-in-out ${
+        scrolled 
+          ? 'bg-[#1c324e]/90 backdrop-blur-xl shadow-[0_4px_30px_rgba(0,0,0,0.2)] py-3' 
+          : 'bg-transparent py-6'
       }`}
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-24">
-          {/* Logo */}
-          <div className="flex items-center gap-3 group cursor-pointer select-none">
-            <div className="relative w-14 h-14 flex items-center justify-center transition-transform duration-300 group-hover:scale-105">
-               <svg viewBox="0 0 100 100" className="w-full h-full drop-shadow-[0_0_15px_rgba(226,216,43,0.4)]">
-                  {/* Wings */}
-                  <path d="M10 40 Q 25 20 45 38" fill="#f8fafc" opacity="0.9" />
-                  <path d="M90 40 Q 75 20 55 38" fill="#f8fafc" opacity="0.9" />
+        <div className="flex justify-between items-center">
+          
+          {/* Brand / Logo */}
+          <div className="flex items-center gap-4 group cursor-pointer select-none">
+            {/* Icon Container - Increased size for visibility */}
+            <div className="relative w-16 h-16 flex items-center justify-center transition-transform duration-500 group-hover:scale-110">
+               {/* Strong Back Glow */}
+               <div className="absolute inset-0 bg-firefly-yellow/30 blur-2xl rounded-full opacity-50 group-hover:opacity-100 transition-opacity duration-500"></div>
+               
+               {/* NEW Simplified & Bolder Logo SVG */}
+               <svg viewBox="0 0 100 100" className="w-full h-full drop-shadow-[0_0_15px_rgba(226,216,43,0.5)] z-10">
+                  {/* Wings - Solid White */}
+                  <path d="M10 35 C 20 15, 40 35, 50 40 C 60 35, 80 15, 90 35 C 95 45, 85 55, 50 55 C 15 55, 5 45, 10 35 Z" 
+                        fill="#f8fafc" fillOpacity="1" />
                   
-                  {/* Bulb Body (Dark with Yellow Outline) */}
-                  <path d="M32 32 A 23 23 0 1 1 68 32 L 62 65 L 38 65 Z" fill="#1c324e" stroke="#e2d82b" strokeWidth="2.5" />
+                  {/* Bulb Shape (Body) - High Contrast Dark Blue with Thick Yellow Stroke */}
+                  <path d="M35 35 C 35 20, 65 20, 65 35 C 65 50, 55 55, 55 65 L 45 65 C 45 55, 35 50, 35 35 Z" 
+                        fill="#1c324e" stroke="#e2d82b" strokeWidth="4" strokeLinejoin="round" />
                   
-                  {/* Brain/Filament Pattern */}
-                  <path d="M40 35 Q 50 25 60 35" stroke="#e2d82b" strokeWidth="2" fill="none" strokeLinecap="round" />
-                  <path d="M42 45 Q 50 35 58 45" stroke="#e2d82b" strokeWidth="2" fill="none" strokeLinecap="round" />
-                  <path d="M50 25 V 55" stroke="#e2d82b" strokeWidth="2" strokeLinecap="round" />
+                  {/* Filament - The "Spark" */}
+                  <path d="M45 30 L 55 30 M 50 30 L 50 45" 
+                        stroke="#e2d82b" strokeWidth="4" strokeLinecap="round" />
                   
                   {/* Base of Bulb */}
-                  <rect x="40" y="68" width="20" height="4" rx="2" fill="#e2d82b" />
-                  <rect x="42" y="74" width="16" height="4" rx="2" fill="#e2d82b" />
-                  
-                  {/* Top Shine/Rays */}
-                  <path d="M50 5 L 50 10" stroke="#e2d82b" strokeWidth="2" strokeLinecap="round" />
-                  <path d="M25 15 L 28 18" stroke="#e2d82b" strokeWidth="2" strokeLinecap="round" />
-                  <path d="M75 15 L 72 18" stroke="#e2d82b" strokeWidth="2" strokeLinecap="round" />
+                  <rect x="42" y="68" width="16" height="6" rx="2" fill="#e2d82b" />
+                  <rect x="44" y="76" width="12" height="4" rx="2" fill="#e2d82b" />
                </svg>
             </div>
-            <div className="flex flex-col justify-center">
-              <span className="font-serif font-bold text-3xl text-white leading-none tracking-wide">
+
+            {/* Text Container */}
+            <div className="flex flex-col justify-center translate-y-1">
+              <span className="font-serif font-bold text-3xl text-white leading-none tracking-wide drop-shadow-lg">
                 Firefly
               </span>
-              <span className="font-sans text-[0.65rem] font-bold text-firefly-yellow tracking-[0.2em] uppercase leading-none mt-1">
+              <span className="font-sans text-[0.7rem] font-bold text-firefly-yellow tracking-[0.25em] uppercase leading-none mt-1.5 drop-shadow-md">
                 creative solutions
               </span>
             </div>
@@ -64,46 +69,46 @@ const Header: React.FC = () => {
               <a 
                 key={link.name} 
                 href={link.href}
-                className="text-gray-300 hover:text-firefly-yellow transition-colors text-sm font-medium tracking-wide"
+                className="text-gray-200 hover:text-firefly-yellow transition-colors text-sm font-medium tracking-widest uppercase relative group overflow-hidden"
               >
-                {link.name}
+                <span className="relative z-10">{link.name}</span>
+                <span className="absolute bottom-0 left-0 w-full h-0.5 bg-firefly-yellow transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-right group-hover:origin-left"></span>
               </a>
             ))}
-            <button className="bg-firefly-yellow hover:bg-firefly-green text-firefly-dark font-bold py-2.5 px-6 rounded-full transition-all duration-300 transform hover:scale-105 shadow-[0_0_10px_rgba(226,216,43,0.3)]">
-              Get Started
+            <button className="relative overflow-hidden bg-firefly-yellow hover:bg-white text-firefly-dark font-bold py-3 px-7 rounded-full transition-all duration-300 transform hover:scale-105 shadow-[0_0_15px_rgba(226,216,43,0.4)] hover:shadow-[0_0_25px_rgba(255,255,255,0.6)] group">
+              <span className="relative z-10">Get Started</span>
+              <div className="absolute inset-0 h-full w-full bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full group-hover:animate-[shimmer_1.5s_infinite]"></div>
             </button>
           </nav>
 
           {/* Mobile Menu Button */}
           <button 
             onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden text-gray-300 hover:text-white p-2"
+            className="md:hidden text-white p-2 hover:text-firefly-yellow transition-colors"
           >
-            {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            {isOpen ? <X className="w-9 h-9" /> : <Menu className="w-9 h-9" />}
           </button>
         </div>
       </div>
 
-      {/* Mobile Nav */}
-      {isOpen && (
-        <div className="md:hidden bg-firefly-dark/95 backdrop-blur-xl border-b border-white/10 absolute w-full">
-          <div className="px-4 pt-2 pb-8 space-y-4">
-            {NAV_LINKS.map((link) => (
-              <a 
-                key={link.name}
-                href={link.href}
-                onClick={() => setIsOpen(false)}
-                className="block text-gray-300 hover:text-firefly-green font-medium text-lg py-2 border-b border-white/5"
-              >
-                {link.name}
-              </a>
-            ))}
-            <button className="w-full mt-4 bg-gradient-to-r from-firefly-yellow to-firefly-green text-firefly-dark font-bold py-3 px-6 rounded-lg">
-              Book a Call
-            </button>
-          </div>
+      {/* Mobile Nav Overlay */}
+      <div className={`md:hidden absolute top-full left-0 w-full bg-[#1c324e] border-b border-white/10 transition-all duration-300 overflow-hidden shadow-2xl ${isOpen ? 'max-h-[400px] opacity-100' : 'max-h-0 opacity-0'}`}>
+        <div className="px-6 py-6 space-y-4 flex flex-col">
+          {NAV_LINKS.map((link) => (
+            <a 
+              key={link.name}
+              href={link.href}
+              onClick={() => setIsOpen(false)}
+              className="text-lg font-medium text-gray-200 hover:text-firefly-yellow border-l-2 border-transparent hover:border-firefly-yellow pl-4 transition-all"
+            >
+              {link.name}
+            </a>
+          ))}
+          <button className="w-full mt-4 bg-gradient-to-r from-firefly-yellow to-firefly-green text-firefly-dark font-bold py-4 px-6 rounded-xl shadow-lg">
+            Book a Call
+          </button>
         </div>
-      )}
+      </div>
     </header>
   );
 };
