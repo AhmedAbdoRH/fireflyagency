@@ -1,17 +1,12 @@
 import {
-  Zap,
   BarChart3,
   Globe,
-  Cpu,
-  Rocket,
-  ShieldCheck,
-  Layout,
   MessageSquare,
   Camera,
   Palette,
-  Megaphone,
   Video,
-  Mic
+  Pencil,
+  Image
 } from "lucide-react";
 import { ServiceItem, TestimonialItem, NavLink, StatItem } from "./types";
 
@@ -24,34 +19,14 @@ export const NAV_LINKS: NavLink[] = [
 
 export const SERVICES: ServiceItem[] = [
   {
-    title: "Marketing Plan",
+    title: "Marketing Strategy",
     description: "Crafting comprehensive strategies to guide your brand's growth and market penetration.",
     icon: BarChart3,
   },
   {
-    title: "Media Production",
-    description: "High-quality visual and audio content creation, including photography and graphic design.",
-    icon: Camera,
-  },
-  {
-    title: "Branding and Identity",
-    description: "Developing unique brand identities that resonate with your audience and stand out in the market.",
-    icon: Palette,
-  },
-  {
-    title: "Social Media",
-    description: "Managing and optimizing your social media presence to engage your audience and build community.",
-    icon: MessageSquare,
-  },
-  {
-    title: "Digital Marketing",
-    description: "Implementing data-driven online campaigns across various platforms to maximize reach and conversions.",
-    icon: Globe,
-  },
-  {
-    title: "PR",
-    description: "Building and maintaining a positive public image through strategic communication and media relations.",
-    icon: Megaphone,
+    title: "Content Creation",
+    description: "Developing engaging and relevant content across various formats to attract and retain your audience.",
+    icon: Pencil,
   },
   {
     title: "Video Shooting",
@@ -59,9 +34,29 @@ export const SERVICES: ServiceItem[] = [
     icon: Video,
   },
   {
-    title: "Podcasts",
-    description: "Creating and producing engaging podcast content to connect with your audience on a deeper level.",
-    icon: Mic,
+    title: "Branding",
+    description: "Developing unique brand identities that resonate with your audience and stand out in the market.",
+    icon: Palette,
+  },
+  {
+    title: "Websites",
+    description: "Designing and developing modern, responsive, and user-friendly websites that drive results.",
+    icon: Globe,
+  },
+  {
+    title: "Social Media Campaigns",
+    description: "Managing and optimizing your social media presence to engage your audience and build community.",
+    icon: MessageSquare,
+  },
+  {
+    title: "Posts Designs",
+    description: "Creating visually appealing and effective graphic designs for your social media posts and other digital content.",
+    icon: Image,
+  },
+  {
+    title: "Photo Shooting",
+    description: "High-quality professional photography services for products, events, and corporate profiles.",
+    icon: Camera,
   },
 ];
 

@@ -14,6 +14,15 @@ const Cta: React.FC = () => {
               {/* Background glows that move on hover */}
               <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-[600px] h-[300px] bg-firefly-yellow/10 blur-[100px] rounded-full group-hover:bg-firefly-green/10 transition-colors duration-1000"></div>
 
+              <Reveal delay={50} width="100%">
+                <h2 className="relative z-10 font-heading text-4xl md:text-5xl font-bold text-white mb-4">
+                  FireFly - <span className="text-firefly-yellow">raise and shine</span>
+                </h2>
+                <p className="relative z-10 text-gray-300 text-lg md:text-xl max-w-2xl mx-auto mb-10">
+                  At Firefly, “Rise and Shine” is more than a slogan — it’s a promise. We lift brands with smart strategy and make them shine with bold creativity. From branding to digital campaigns and media production, we craft solutions that help your business stand out and grow with confidence.
+                </p>
+              </Reveal>
+
               <Reveal delay={100} width="100%">
                 <h2 className="relative z-10 font-heading text-3xl md:text-4xl font-bold text-white mb-4 flex items-center justify-center gap-3">
                   <Target className="w-8 h-8 text-firefly-yellow" /> Our Mission

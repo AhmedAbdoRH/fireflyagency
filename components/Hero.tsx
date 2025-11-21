@@ -147,7 +147,7 @@ const Hero: React.FC = () => {
   }, []);
 
   return (
-    <section id="home" className="relative min-h-screen flex items-center pt-20 overflow-hidden">
+    <section id="home" className="relative min-h-screen flex items-center pt-20 pb-20 overflow-hidden">
       
       {/* Background Elements */}
       <div className="absolute inset-0 z-0">
@@ -220,8 +220,8 @@ const Hero: React.FC = () => {
           </div>
 
           {/* Video/Visual Side */}
-          <div className="w-full lg:w-[450px] flex justify-center relative perspective-1000">
-             <Reveal delay={1200} className="w-full max-w-[350px] lg:max-w-full relative">
+          <div className="w-full lg:w-[300px] flex justify-center relative perspective-1000">
+             <Reveal delay={1200} className="w-full max-w-[250px] lg:max-w-full relative">
                 {/* Decorative Glow */}
                 <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-firefly-yellow/20 blur-[60px] rounded-full animate-pulse -z-10"></div>
                 
@@ -232,9 +232,8 @@ const Hero: React.FC = () => {
                   
                   <video 
                     src="Hero.mp4" 
-                    autoPlay 
-                    loop 
-                    playsInline
+                  autoPlay 
+                  playsInline
                     className="w-full h-full object-cover aspect-[9/16] scale-105"
                   />
 
@@ -245,17 +244,7 @@ const Hero: React.FC = () => {
 
         </div>
 
-        {/* Trust Indicators */}
-        <Reveal delay={1900} width="100%">
-          <div className="mt-20 pt-10 border-t border-white/5">
-            <p className="text-xs text-gray-500 mb-8 uppercase tracking-[0.2em] text-center lg:text-left">Trusted by Innovative Companies</p>
-            <div className="flex flex-wrap justify-center lg:justify-start gap-8 md:gap-16 opacity-60 grayscale hover:grayscale-0 transition-all duration-700 ease-in-out">
-               {['Acme Corp', 'GlobalTech', 'Nebula', 'Vertex', 'Oasis'].map((brand, i) => (
-                 <span key={i} className="text-xl font-heading font-bold text-white hover:text-firefly-yellow transition-colors cursor-default hover:scale-110 transform duration-300 drop-shadow-md">{brand}</span>
-               ))}
-            </div>
-          </div>
-        </Reveal>
+        
       </div>
     </section>
   );

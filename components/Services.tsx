@@ -1,5 +1,6 @@
 import React from 'react';
 import { SERVICES } from '../constants';
+import { Search, ClipboardList, Rocket, TrendingUp } from 'lucide-react';
 import Reveal from './Reveal';
 
 const Services: React.FC = () => {
@@ -41,14 +42,58 @@ const Services: React.FC = () => {
               Complete Digital <span className="text-firefly-yellow">Solutions</span>
             </h2>
           </Reveal>
-          <Reveal delay={200}>
-            <p className="text-gray-400 text-lg">
-              We are a group of marketers who understand the pain and challenges small and medium businesses face with marketing, which falls under one of these issues:
-              Business owners are burdened by trying to make it all alone. Expensive marketing agencies. Not professional affordable marketing agencies. Having only one marketer in-house tired from the endless business marketing needs.
-              If you find a reflection of your situation in any of these problems, we are here for you!
-              With a collective 10+ years of experience and a proven record of our strong skills in marketing strategies, content writing (social media, emails, blogs, ad copies..), graphic designs, and media buying. We are well-equipped to tailor the best consistent online presence of your brand that you’ve been looking for.
+          <Reveal delay={150} width="100%">
+            <h3 className="font-heading text-3xl md:text-4xl font-bold text-white mb-6">
+              Why partnering with us is a game changer?
+            </h3>
+            <p className="text-gray-400 text-lg max-w-2xl mx-auto mb-8">
+              At fire fly we ensure that not only your marketing objectives are being met, but also that your business is thriving. We're not just about quick wins; we focus on growth that builds your brand.
             </p>
           </Reveal>
+          <Reveal delay={200}>
+            <p className="text-gray-400 text-lg">
+              Firefly Marketing Agency is a dynamic and innovative marketing firm dedicated to illuminating brands and businesses through strategic and creative solutions. Our clients receive customized solutions based on their specific goals and challenges. With a passion for igniting growth and visibility, we specialize in crafting tailored marketing strategies that resonate with target audiences and drive tangible results. Our team consists of skilled professionals with diverse expertise in digital marketing to make you stand out in a competitive digital landscape.
+            </p>
+          </Reveal>
+        </div>
+
+        {/* How we ensure success section */}
+        <div className="mb-20">
+          <Reveal delay={300}>
+            <h3 className="font-heading text-3xl md:text-4xl font-bold text-white mb-12 text-center">
+              Here's how we ensure success for our clients
+            </h3>
+          </Reveal>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <Reveal delay={400}>
+              <div className="flex flex-col items-center text-center p-6 rounded-xl bg-white/5 border border-white/10">
+                <Search className="w-12 h-12 text-firefly-yellow mb-4" />
+                <h4 className="text-xl font-bold text-white mb-2">Discovery</h4>
+                <p className="text-gray-400">We ask the right questions to ensure we do a deep dive to understand your business. We assess current performance and identify opportunities for improvement.</p>
+              </div>
+            </Reveal>
+            <Reveal delay={500}>
+              <div className="flex flex-col items-center text-center p-6 rounded-xl bg-white/5 border border-white/10">
+                <ClipboardList className="w-12 h-12 text-firefly-green mb-4" />
+                <h4 className="text-xl font-bold text-white mb-2">Strategize</h4>
+                <p className="text-gray-400">Create a tailored strategy for your business with our proposed recommendations and road map. We define clear objectives, KPIs, and budget allocations.</p>
+              </div>
+            </Reveal>
+            <Reveal delay={600}>
+              <div className="flex flex-col items-center text-center p-6 rounded-xl bg-white/5 border border-white/10">
+                <Rocket className="w-12 h-12 text-firefly-yellow mb-4" />
+                <h4 className="text-xl font-bold text-white mb-2">Implement</h4>
+                <p className="text-gray-400">We implement the right set of actions with the right packages, to achieve a positive ROI.</p>
+              </div>
+            </Reveal>
+            <Reveal delay={700}>
+              <div className="flex flex-col items-center text-center p-6 rounded-xl bg-white/5 border border-white/10">
+                <TrendingUp className="w-12 h-12 text-firefly-green mb-4" />
+                <h4 className="text-xl font-bold text-white mb-2">Optimization</h4>
+                <p className="text-gray-400">Tracking performance to ensure your business is on track and adjusting strategies when needed.</p>
+              </div>
+            </Reveal>
+          </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
