@@ -48,20 +48,16 @@ const Hero: React.FC<HeroProps> = ({ onShowReel }) => {
       entries.forEach(entry => {
         const video = entry.target as HTMLVideoElement;
         if (entry.isIntersecting) {
-          // 1. Ensure video is muted first to guarantee autoplay works
-          video.muted = true;
-          video.volume = 1;
-
-          // 2. Play the video
+          // Attempt to play the video with sound
+          video.volume = 1; // Ensure volume is set
           const playPromise = video.play();
 
           if (playPromise !== undefined) {
-            playPromise.then(() => {
-              // 3. Once playing, try to unmute
-              video.muted = false;
-            }).catch(() => {
-              // 4. If unmuting causes issues or play fails, ensure it plays muted
-              console.log('Autoplay with sound prevented, playing muted');
+            playPromise.catch((error) => {
+              // Autoplay with sound might be prevented by browser policies
+              // In this case, we can log the error or play muted as a fallback
+              console.log('Autoplay with sound prevented:', error);
+              // Optionally, play muted as a fallback if sound autoplay is blocked
               video.muted = true;
               video.play();
             });
@@ -272,6 +268,7 @@ const Hero: React.FC<HeroProps> = ({ onShowReel }) => {
                   ref={videoRef}
                   src="/Hero.mp4"
                   playsInline
+                  autoplay
                   onTimeUpdate={handleTimeUpdate}
                   className="w-full h-full object-cover aspect-[9/16] scale-105"
                 />
@@ -304,6 +301,7 @@ const Hero: React.FC<HeroProps> = ({ onShowReel }) => {
                     ref={mobileVideoRef}
                     src="/Hero.mp4"
                     playsInline
+                    autoplay
                     onTimeUpdate={handleTimeUpdate}
                     className="w-full h-full object-cover aspect-[9/16] scale-105"
                   />
