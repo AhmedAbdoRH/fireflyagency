@@ -59,11 +59,11 @@ const FloatingButton: React.FC = () => {
       onBlur={() => setExpanded(false)}
     >
       <div
-        className={`relative flex items-center gap-3 px-3 py-3 rounded-full backdrop-blur-xl border border-white/15 bg-white/10 text-white font-semibold tracking-wide shadow-[0_18px_40px_rgba(0,0,0,0.35)] transition-all duration-[1200ms] ease-out overflow-hidden ${
+        className={`relative flex items-center gap-3 px-3 py-3 rounded-full backdrop-blur-xl border border-white/15 bg-white/10 text-white font-semibold tracking-wide shadow-[0_18px_40px_rgba(0,0,0,0.35)] transition-all duration-[1500ms] ease-in-out overflow-hidden ${
           expanded ? 'pl-5 pr-6 w-auto' : 'pl-3 pr-3'
         }`}
       >
-        <div className={`w-10 h-10 rounded-full flex items-center justify-center transition-all duration-[900ms] ${
+        <div className={`w-10 h-10 rounded-full flex items-center justify-center transition-all duration-[1500ms] ease-in-out ${
           expanded ? 'translate-x-0' : 'translate-x-2'
         }`}>
           <MessageCircleMore className="w-7 h-7 text-white" />
@@ -71,7 +71,7 @@ const FloatingButton: React.FC = () => {
 
         <div className="flex items-center">
           <span
-            className={`uppercase text-sm transition-all duration-[900ms] overflow-hidden ${
+            className={`uppercase text-sm transition-all duration-[1500ms] ease-in-out overflow-hidden ${
               expanded ? 'opacity-100 max-w-[300px]' : 'opacity-0 max-w-0'
             }`}
           >
