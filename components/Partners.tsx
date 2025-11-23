@@ -2,9 +2,9 @@ import React, { useEffect, useRef, useState } from 'react';
 import Reveal from './Reveal';
 
 const PARTNER_IMAGES = [
-  '/Our%20partners/1.png',
-  '/Our%20partners/2.png',
-  '/Our%20partners/3.png',
+  '/Our-partners/1.png',
+  '/Our-partners/2.png',
+  '/Our-partners/3.png',
 ];
 
 const Partners: React.FC = () => {

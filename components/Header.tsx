@@ -62,7 +62,7 @@ const Header: React.FC<HeaderProps> = ({ currentPage, onNavigate }) => {
             <div className="relative w-20 h-20 flex items-center justify-center transition-transform duration-500 group-hover:scale-110">
               <div className="absolute inset-0 bg-firefly-yellow/30 blur-2xl rounded-full opacity-50 group-hover:opacity-100 transition-opacity duration-500"></div>
               <img
-                src="Logo.png"
+                src="/Logo.png"
                 alt="Firefly Logo"
                 className="w-full h-full object-contain drop-shadow-[0_0_15px_rgba(226,216,43,0.5)] z-10"
               />

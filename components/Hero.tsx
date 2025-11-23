@@ -202,7 +202,7 @@ const Hero: React.FC<HeroProps> = ({ onShowReel }) => {
 
                 <video
                   ref={videoRef}
-                  src="Hero.mp4"
+                  src="/Hero.mp4"
                   autoPlay
                   playsInline
                   onTimeUpdate={handleTimeUpdate}
@@ -247,7 +247,7 @@ const Hero: React.FC<HeroProps> = ({ onShowReel }) => {
 
                   <video
                     ref={videoRef}
-                    src="Hero.mp4"
+                    src="/Hero.mp4"
                     autoPlay
                     playsInline
                     onTimeUpdate={handleTimeUpdate}

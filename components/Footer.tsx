@@ -15,7 +15,7 @@ const Footer: React.FC = () => {
                <div className="relative w-14 h-14 flex items-center justify-center">
                   {/* Use Logo.png */}
                   <img 
-                    src="Logo.png" 
+                    src="/Logo.png" 
                     alt="Firefly Creative Solutions Logo" 
                     className="w-full h-full object-contain drop-shadow-[0_0_8px_rgba(226,216,43,0.3)]" 
                   />

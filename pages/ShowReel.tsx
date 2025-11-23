@@ -41,11 +41,11 @@ const ShowReel: React.FC<ShowReelProps> = ({ onNavigateHome }) => {
           <div className="relative rounded-[2.5rem] overflow-hidden border border-white/10 bg-white/5 backdrop-blur-md shadow-[0_30px_90px_rgba(0,0,0,0.45)]">
             <div className="absolute inset-0 bg-gradient-to-t from-firefly-dark/70 via-transparent to-transparent pointer-events-none"></div>
             <video
-              src="Hero.mp4"
+              src="/Hero.mp4"
               controls
               loop
               playsInline
-              poster="HeroPoster.png"
+              poster="/HeroPoster.png"
               className="w-full h-full object-cover"
             />
             <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
