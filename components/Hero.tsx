@@ -56,8 +56,7 @@ const Hero: React.FC<HeroProps> = ({ onShowReel }) => {
           if (playPromise !== undefined) {
             playPromise.catch(() => {
               // If autoplay with sound fails, mute and try again
-              console.log('Autoplay with sound prevented, switching to muted');
-              video.muted = true;
+              console.log('Autoplay with sound prevented, trying again without sound');
               video.play();
             });
           }
@@ -252,7 +251,7 @@ const Hero: React.FC<HeroProps> = ({ onShowReel }) => {
               <div className="mb-8"></div>
             </Reveal>
             <div className="mb-8">
-              <h1 className="font-heading text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-bold leading-tight tracking-tight">
+              <h1 className="font-heading text-5xl md:text-7xl lg:text-8xl font-bold leading-tight tracking-tight max-w-xs">
                 <div className="text-white block mb-2">
                   <TextReveal text="Where Creativity" delay={300} />
                 </div>
