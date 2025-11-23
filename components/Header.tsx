@@ -21,7 +21,7 @@ const Header: React.FC<HeaderProps> = ({ currentPage, onNavigate }) => {
   const navLinks = [
     { name: 'Home', value: 'home' },
     { name: 'About Us', value: 'about' },
-    { name: 'Services', value: 'home', section: 'services' },
+    { name: 'Our Services', value: 'home', section: 'services' },
     { name: 'Contact', value: 'home', section: 'contact' },
   ];
 
@@ -84,7 +84,8 @@ const Header: React.FC<HeaderProps> = ({ currentPage, onNavigate }) => {
             {navLinks.map((link) => (
               <a
                 key={link.name}
-                href={`#${link.value}`}
+                href={`#${link.section ?? link.value}`}
+
                 onClick={(e) => handleNavClick(e, link)}
                 className={`text-sm font-medium tracking-widest uppercase relative group overflow-hidden transition-colors ${currentPage === link.value && !link.section ? 'text-firefly-yellow' : 'text-gray-200 hover:text-firefly-yellow'
                   }`}
@@ -116,7 +117,8 @@ const Header: React.FC<HeaderProps> = ({ currentPage, onNavigate }) => {
           {navLinks.map((link) => (
             <a
               key={link.name}
-              href={`#${link.value}`}
+              href={`#${link.section ?? link.value}`}
+
               onClick={(e) => handleNavClick(e, link)}
               className={`text-lg font-medium border-l-2 pl-4 transition-all ${currentPage === link.value && !link.section
                   ? 'text-firefly-yellow border-firefly-yellow'

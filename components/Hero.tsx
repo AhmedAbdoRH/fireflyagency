@@ -3,7 +3,11 @@ import { ArrowRight, Sparkles, Play } from 'lucide-react';
 import Reveal from './Reveal';
 import TextReveal from './TextReveal';
 
-const Hero: React.FC = () => {
+interface HeroProps {
+  onShowReel?: () => void;
+}
+
+const Hero: React.FC<HeroProps> = ({ onShowReel }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const mouseRef = useRef({ x: 0, y: 0 });
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -182,10 +186,11 @@ const Hero: React.FC = () => {
       </div>
 
       <div className="container mx-auto px-4 relative z-10">
-        <div className="flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-20">
+        <div className="flex flex-col lg:flex-row items-center justify-center gap-12 lg:gap-12">
 
           {/* Video/Visual Side */}
-          <div className="w-full lg:w-[300px] flex justify-center relative perspective-1000 hidden lg:block">
+          <div className="w-full lg:w-[300px] flex justify-center relative perspective-1000 hidden lg:block mt-14">
+
             <Reveal delay={1200} className="w-full max-w-[250px] lg:max-w-full relative">
               {/* Decorative Glow */}
               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-firefly-yellow/20 blur-[60px] rounded-full animate-pulse -z-10"></div>
@@ -229,7 +234,8 @@ const Hero: React.FC = () => {
             </div>
 
             {/* Mobile-only Video */}
-            <div className="w-full flex justify-center relative perspective-1000 lg:hidden mb-10">
+            <div className="w-full flex justify-center relative perspective-1000 lg:hidden mb-10 mt-10">
+
               <Reveal delay={1200} className="w-full max-w-[250px] relative">
                 {/* Decorative Glow */}
                 <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-firefly-yellow/20 blur-[60px] rounded-full animate-pulse -z-10"></div>
@@ -268,7 +274,10 @@ const Hero: React.FC = () => {
                   </span>
                 </button>
 
-                <button className="w-full sm:w-auto px-8 py-4 bg-transparent border border-white/20 hover:border-firefly-green hover:text-firefly-green text-white font-semibold rounded-lg transition-all duration-300 flex items-center justify-center gap-2 text-lg backdrop-blur-sm hover:bg-white/5">
+                <button
+                  className="w-full sm:w-auto px-8 py-4 bg-transparent border border-white/20 hover:border-firefly-green hover:text-firefly-green text-white font-semibold rounded-lg transition-all duration-300 flex items-center justify-center gap-2 text-lg backdrop-blur-sm hover:bg-white/5"
+                  onClick={onShowReel}
+                >
                   <Play className="w-5 h-5 fill-current" />
                   View Showreel
                 </button>

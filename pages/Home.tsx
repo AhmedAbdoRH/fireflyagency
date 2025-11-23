@@ -1,16 +1,22 @@
 import React from 'react';
 import Hero from '../components/Hero';
 import Services from '../components/Services';
-import Testimonials from '../components/Testimonials';
+import Partners from '../components/Partners';
 import Cta from '../components/Cta';
+import FounderSection from '../components/FounderSection';
 
-const Home: React.FC = () => {
+interface HomeProps {
+    onShowReel?: () => void;
+}
+
+const Home: React.FC<HomeProps> = ({ onShowReel }) => {
     return (
         <>
-            <Hero />
+            <Hero onShowReel={onShowReel} />
             <Services />
-            <Testimonials />
+            <Partners />
             <Cta />
+            <FounderSection />
         </>
     );
 };

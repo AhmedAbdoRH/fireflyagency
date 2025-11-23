@@ -38,22 +38,48 @@ const Services: React.FC = () => {
       <div className="container mx-auto px-4 relative z-10">
         <div className="text-center max-w-3xl mx-auto mb-20">
           <Reveal>
-            <h2 className="font-heading text-3xl md:text-5xl font-bold text-white mb-6">
-              Complete Digital <span className="text-firefly-yellow">Solutions</span>
-            </h2>
+            <div className="space-y-4">
+              <span className="inline-flex items-center gap-2 px-4 py-1 rounded-full border border-white/10 bg-white/5 text-xs tracking-[0.4em] uppercase text-white/80">
+                Crafted for impact
+                <span className="inline-block w-1.5 h-1.5 rounded-full bg-firefly-yellow"></span>
+              </span>
+              <h2 className="font-heading text-3xl md:text-5xl font-bold text-white">
+                Complete Digital <span className="text-firefly-yellow">Solutions</span>
+              </h2>
+              <p className="text-gray-400 text-base md:text-lg max-w-2xl mx-auto">
+                Precision-built marketing ecosystems that keep your brand visible, memorable, and measurable.
+              </p>
+            </div>
           </Reveal>
           <Reveal delay={150} width="100%">
-            <h3 className="font-heading text-3xl md:text-4xl font-bold text-white mb-6">
-              Why partnering with us is a game changer?
-            </h3>
-            <p className="text-gray-400 text-lg max-w-2xl mx-auto mb-8">
-              At fire fly we ensure that not only your marketing objectives are being met, but also that your business is thriving. We're not just about quick wins; we focus on growth that builds your brand.
-            </p>
-          </Reveal>
-          <Reveal delay={200}>
-            <p className="text-gray-400 text-lg">
-              Firefly Marketing Agency is a dynamic and innovative marketing firm dedicated to illuminating brands and businesses through strategic and creative solutions. Our clients receive customized solutions based on their specific goals and challenges. With a passion for igniting growth and visibility, we specialize in crafting tailored marketing strategies that resonate with target audiences and drive tangible results. Our team consists of skilled professionals with diverse expertise in digital marketing to make you stand out in a competitive digital landscape.
-            </p>
+            <div className="space-y-6">
+              <div className="space-y-3">
+                <h3 className="font-heading text-3xl md:text-4xl font-bold text-white">
+                  Why partnering with us is a <span className="text-firefly-green">game changer?</span>
+                </h3>
+                <div className="w-20 h-1 mx-auto bg-gradient-to-r from-firefly-yellow via-white to-firefly-green rounded-full"></div>
+              </div>
+              <div className="max-w-2xl mx-auto text-left bg-white/5 border border-white/10 rounded-3xl p-6 md:p-8 shadow-[0_20px_60px_rgba(0,0,0,0.35)] space-y-6">
+                <p className="text-gray-200 text-lg leading-relaxed">
+                  <span className="block mb-4 text-white/90">
+                    At fire fly we ensure that not only your marketing objectives are being met, but also that your business is thriving.
+                  </span>
+                  <span className="block text-white">
+                    We're not just about quick wins; we focus on growth that builds your brand.
+                  </span>
+                </p>
+                <div className="grid sm:grid-cols-2 gap-4 pt-4 border-t border-white/10">
+                  <div className="rounded-2xl bg-firefly-dark/40 border border-white/10 p-4">
+                    <p className="text-xs uppercase tracking-[0.3em] text-firefly-yellow mb-2">Sustainable ROI</p>
+                    <p className="text-gray-300 text-sm">Always-on optimization, transparent metrics, and compounding performance.</p>
+                  </div>
+                  <div className="rounded-2xl bg-firefly-dark/40 border border-white/10 p-4">
+                    <p className="text-xs uppercase tracking-[0.3em] text-firefly-green mb-2">Brand-first mindset</p>
+                    <p className="text-gray-300 text-sm">Strategies crafted around your voice, values, and long-term vision.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
           </Reveal>
         </div>
 
