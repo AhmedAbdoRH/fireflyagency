@@ -56,7 +56,8 @@ const Hero: React.FC<HeroProps> = ({ onShowReel }) => {
           if (playPromise !== undefined) {
             playPromise.catch(() => {
               // If autoplay with sound fails, mute and try again
-              console.log('Autoplay with sound prevented, trying again without sound');
+              console.log('Autoplay with sound prevented, switching to muted');
+              video.muted = true;
               video.play();
             });
           }
@@ -73,6 +74,34 @@ const Hero: React.FC<HeroProps> = ({ onShowReel }) => {
 
     return () => {
       observer.disconnect();
+    };
+  }, []);
+
+  // Attempt to unmute on first user interaction if autoplay was muted
+  useEffect(() => {
+    const handleInteraction = () => {
+      if (videoRef.current && videoRef.current.muted) {
+        videoRef.current.muted = false;
+        videoRef.current.volume = 1;
+      }
+      if (mobileVideoRef.current && mobileVideoRef.current.muted) {
+        mobileVideoRef.current.muted = false;
+        mobileVideoRef.current.volume = 1;
+      }
+      // Remove listeners after first interaction
+      window.removeEventListener('click', handleInteraction);
+      window.removeEventListener('touchstart', handleInteraction);
+      window.removeEventListener('keydown', handleInteraction);
+    };
+
+    window.addEventListener('click', handleInteraction);
+    window.addEventListener('touchstart', handleInteraction);
+    window.addEventListener('keydown', handleInteraction);
+
+    return () => {
+      window.removeEventListener('click', handleInteraction);
+      window.removeEventListener('touchstart', handleInteraction);
+      window.removeEventListener('keydown', handleInteraction);
     };
   }, []);
 
@@ -251,7 +280,7 @@ const Hero: React.FC<HeroProps> = ({ onShowReel }) => {
               <div className="mb-8"></div>
             </Reveal>
             <div className="mb-8">
-              <h1 className="font-heading text-5xl md:text-7xl lg:text-8xl font-bold leading-tight tracking-tight max-w-xs">
+              <h1 className="font-heading text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-bold leading-tight tracking-tight max-w-xs sm:max-w-none">
                 <div className="text-white block mb-2">
                   <TextReveal text="Where Creativity" delay={300} />
                 </div>

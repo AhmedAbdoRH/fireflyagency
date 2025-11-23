@@ -34,6 +34,11 @@ export const SERVICES: ServiceItem[] = [
     icon: Video,
   },
   {
+    title: "Media Production",
+    description: "Comprehensive media production services, including concept development, filming, and post-production for various platforms.",
+    icon: Video, // Using Video icon for now, can be changed if a more suitable icon is available
+  },
+  {
     title: "Branding",
     description: "Developing unique brand identities that resonate with your audience and stand out in the market.",
     icon: Palette,
