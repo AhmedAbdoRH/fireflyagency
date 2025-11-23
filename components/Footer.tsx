@@ -9,19 +9,19 @@ const Footer: React.FC = () => {
     <footer className="bg-[#132235] pt-20 pb-10 border-t border-white/5">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
-          
+
           {/* Brand */}
           <div>
             <div className="flex items-center gap-3 mb-6 select-none">
-               <div className="relative w-14 h-14 flex items-center justify-center">
-                  {/* Use Logo.png */}
-                  <img 
-                    src="/Logo.png" 
-                    alt="Firefly Creative Solutions Logo" 
-                    className="w-full h-full object-contain drop-shadow-[0_0_8px_rgba(226,216,43,0.3)]" 
-                  />
-               </div>
-               <div className="flex flex-col justify-center">
+              <div className="relative w-14 h-14 flex items-center justify-center">
+                {/* Use Logo.png */}
+                <img
+                  src="/Logo.png"
+                  alt="Firefly Creative Solutions Logo"
+                  className="w-full h-full object-contain drop-shadow-[0_0_8px_rgba(226,216,43,0.3)]"
+                />
+              </div>
+              <div className="flex flex-col justify-center">
                 <span className="font-serif font-bold text-2xl text-white leading-none tracking-wide">
                   Firefly
                 </span>
@@ -41,20 +41,6 @@ const Footer: React.FC = () => {
                 <Linkedin className="w-5 h-5" />
               </a>
             </div>
-          </div>
-
-          {/* Column 2 */}
-          <div>
-            <h4 className="text-white font-bold mb-6">Services</h4>
-            <ul className="space-y-4 text-sm text-gray-400">
-            : SERVICES.map(service => (
-                <li key={service.title}><a href="#" className="hover:text-firefly-green transition-colors">{service.title}</a></li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Column 3 - Contact Us */}
-          <div>
             <h4 className="text-white font-bold mb-6">Contact Us</h4>
             <ul className="space-y-4 text-sm text-gray-400">
               <li><a href="mailto:info@firefly-agency.com" className="hover:text-firefly-green transition-colors">info@firefly-agency.com</a></li>
@@ -68,9 +54,9 @@ const Footer: React.FC = () => {
             <h4 className="text-white font-bold mb-6">Newsletter</h4>
             <p className="text-gray-400 text-sm mb-4">Get the latest growth hacks delivered to your inbox.</p>
             <div className="flex gap-2">
-              <input 
-                type="email" 
-                placeholder="Enter email" 
+              <input
+                type="email"
+                placeholder="Enter email"
                 className="bg-firefly-dark border border-white/10 rounded-lg px-4 py-2 text-white text-sm focus:outline-none focus:border-firefly-yellow w-full placeholder-gray-500"
               />
               <button className="bg-firefly-yellow hover:bg-firefly-green text-firefly-dark p-2 rounded-lg transition-colors">
