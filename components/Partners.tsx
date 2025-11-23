@@ -1,121 +1,134 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Reveal from './Reveal';
 
-const PARTNER_IMAGES = [
-  '/Our-partners/1.png',
-  '/Our-partners/2.png',
-  '/Our-partners/3.png',
-];
+// Generate array of 33 images
+const PARTNER_IMAGES = Array.from({ length: 33 }, (_, i) => `/Our-partners/${i + 1}.png`);
+
+// Split images into two rows
+const ROW_1 = PARTNER_IMAGES.slice(0, 17);
+const ROW_2 = PARTNER_IMAGES.slice(17);
 
 const Partners: React.FC = () => {
-  const [activeIndex, setActiveIndex] = useState(0);
-  const [isVisible, setIsVisible] = useState(false);
-  const sectionRef = useRef<HTMLElement | null>(null);
+    const [isVisible, setIsVisible] = useState(false);
+    const sectionRef = useRef<HTMLElement | null>(null);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setActiveIndex((prev) => (prev + 1) % PARTNER_IMAGES.length);
-    }, 4500);
+    useEffect(() => {
+        const node = sectionRef.current;
+        if (!node) return;
 
-    return () => clearInterval(interval);
-  }, []);
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        setIsVisible(true);
+                        observer.unobserve(entry.target);
+                    }
+                });
+            },
+            { threshold: 0.1 }
+        );
 
-  useEffect(() => {
-    const node = sectionRef.current;
-    if (!node) return;
+        observer.observe(node);
+        return () => observer.disconnect();
+    }, []);
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setIsVisible(true);
-            observer.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.3 }
-    );
-
-    observer.observe(node);
-    return () => observer.disconnect();
-  }, []);
-
-  return (
-    <section
-      ref={sectionRef}
-      className={`py-24 relative overflow-hidden bg-gradient-to-b from-firefly-dark via-firefly-dark/95 to-firefly-dark/90 transition-all duration-1000 ease-out ${
-        isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-16'
-      }`}
-    >
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-[-10%] left-[5%] w-[380px] h-[380px] bg-firefly-yellow/10 rounded-full blur-[140px]"></div>
-        <div className="absolute bottom-[-15%] right-[10%] w-[420px] h-[420px] bg-firefly-green/10 rounded-full blur-[150px]"></div>
-      </div>
-
-      <div className="container mx-auto px-4 relative z-10">
-        <Reveal width="100%">
-          <div className="text-center max-w-3xl mx-auto mb-14 space-y-4">
-            <span className="inline-flex items-center gap-3 px-5 py-2 rounded-full border border-white/10 bg-white/5 text-xs tracking-[0.4em] uppercase text-white/80">
-              Trusted Allies
-              <span className="w-1.5 h-1.5 rounded-full bg-firefly-green"></span>
-            </span>
-            <h2 className="font-heading text-3xl md:text-5xl font-bold text-white">
-              Our <span className="text-firefly-yellow">Partners</span>
-            </h2>
-            <p className="text-gray-400 text-base md:text-lg">
-              A curated network of innovative brands who rely on Firefly to illuminate their growth.
-            </p>
-          </div>
-        </Reveal>
-
-        <div className="max-w-5xl mx-auto">
-          <div className="relative aspect-[21/9] rounded-[2.5rem] overflow-hidden border border-white/10 backdrop-blur-md bg-white/5 shadow-[0_24px_80px_rgba(0,0,0,0.3)]">
-            <div className="absolute inset-0 bg-gradient-to-t from-firefly-dark/70 via-transparent to-transparent pointer-events-none"></div>
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[70%] h-[70%] rounded-full bg-gradient-to-r from-firefly-yellow/10 to-firefly-green/10 blur-3xl opacity-40"></div>
-
-            {PARTNER_IMAGES.map((image, index) => (
-              <div
-                key={image}
-                className={`absolute inset-0 flex items-center justify-center ${
-                  index === activeIndex
-                    ? 'opacity-100 translate-y-0 scale-100 blur-0'
-                    : 'opacity-0 translate-y-8 scale-95 blur-sm pointer-events-none'
+    return (
+        <section
+            ref={sectionRef}
+            className={`py-24 relative overflow-hidden bg-firefly-dark transition-all duration-1000 ease-out ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-16'
                 }`}
-                style={{
-                  transition: 'opacity 900ms ease, transform 900ms ease, filter 900ms ease, clip-path 950ms ease',
-                  clipPath:
-                    index === activeIndex ? 'circle(150% at 50% 50%)' : 'circle(5% at 50% 50%)'
-                }}
-              >
-                <div className="relative w-full h-full p-8 sm:p-10">
-                  <img
-                    src={image}
-                    alt={`Partners collage ${index + 1}`}
-                    loading="lazy"
-                    className="w-full h-full object-contain drop-shadow-[0_10px_45px_rgba(0,0,0,0.6)]"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-firefly-dark/20"></div>
+        >
+            <style>{`
+        @keyframes scroll-left {
+          0% { transform: translateX(0); }
+          100% { transform: translateX(-50%); }
+        }
+        @keyframes scroll-right {
+          0% { transform: translateX(-50%); }
+          100% { transform: translateX(0); }
+        }
+        .animate-scroll-left {
+          animation: scroll-left 40s linear infinite;
+        }
+        .animate-scroll-right {
+          animation: scroll-right 40s linear infinite;
+        }
+        .pause-on-hover:hover {
+          animation-play-state: paused;
+        }
+      `}</style>
+
+            {/* Background Elements */}
+            <div className="absolute inset-0 pointer-events-none">
+                <div className="absolute top-[-10%] left-[5%] w-[500px] h-[500px] bg-firefly-yellow/5 rounded-full blur-[140px]"></div>
+                <div className="absolute bottom-[-15%] right-[10%] w-[600px] h-[600px] bg-firefly-green/5 rounded-full blur-[150px]"></div>
+                <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 brightness-100 contrast-150 mix-blend-overlay"></div>
+            </div>
+
+            <div className="container-fluid relative z-10">
+                <Reveal width="100%">
+                    <div className="text-center max-w-3xl mx-auto mb-8 space-y-4 px-4">
+                        <span className="inline-flex items-center gap-3 px-5 py-2 rounded-full border border-white/10 bg-white/5 text-xs tracking-[0.4em] uppercase text-white/80 backdrop-blur-sm">
+                            Trusted Allies
+                            <span className="w-1.5 h-1.5 rounded-full bg-firefly-green animate-pulse"></span>
+                        </span>
+                        <h2 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold text-white">
+                            Our <span className="text-transparent bg-clip-text bg-gradient-to-r from-firefly-yellow to-firefly-green">Partners</span>
+                        </h2>
+                        <p className="text-gray-400 text-base md:text-lg max-w-2xl mx-auto leading-relaxed">
+                            We are proud to collaborate with visionary brands that trust us to illuminate their path to growth.
+                        </p>
+                    </div>
+                </Reveal>
+
+                <div className="flex flex-col gap-6">
+                    {/* Row 1 - Moving Left */}
+                    <div className="relative w-full overflow-hidden py-4">
+                        {/* Gradient Masks */}
+                        <div className="absolute left-0 top-0 bottom-0 w-20 md:w-40 bg-gradient-to-r from-firefly-dark to-transparent z-10"></div>
+                        <div className="absolute right-0 top-0 bottom-0 w-20 md:w-40 bg-gradient-to-l from-firefly-dark to-transparent z-10"></div>
+
+                        <div className="flex w-max animate-scroll-left pause-on-hover">
+                            {[...ROW_1, ...ROW_1].map((image, index) => (
+                                <div key={`row1-${index}`} className="mx-2 md:mx-4 w-[150px] md:w-[200px] flex items-center justify-center">
+                                    <div className="group relative p-3 rounded-2xl bg-white/5 border border-white/5 hover:border-white/20 hover:bg-white/10 transition-all duration-300 w-full aspect-[3/2] flex items-center justify-center">
+                                        <div className="absolute inset-0 bg-gradient-to-br from-firefly-yellow/0 to-firefly-green/0 group-hover:from-firefly-yellow/10 group-hover:to-firefly-green/10 rounded-2xl transition-all duration-500 opacity-0 group-hover:opacity-100"></div>
+                                        <img
+                                            src={image}
+                                            alt="Partner"
+                                            className="w-full h-full object-contain transition-all duration-500 transform group-hover:scale-110"
+                                        />
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+
+                    {/* Row 2 - Moving Right */}
+                    <div className="relative w-full overflow-hidden py-4">
+                        {/* Gradient Masks */}
+                        <div className="absolute left-0 top-0 bottom-0 w-20 md:w-40 bg-gradient-to-r from-firefly-dark to-transparent z-10"></div>
+                        <div className="absolute right-0 top-0 bottom-0 w-20 md:w-40 bg-gradient-to-l from-firefly-dark to-transparent z-10"></div>
+
+                        <div className="flex w-max animate-scroll-right pause-on-hover">
+                            {[...ROW_2, ...ROW_2].map((image, index) => (
+                                <div key={`row2-${index}`} className="mx-2 md:mx-4 w-[150px] md:w-[200px] flex items-center justify-center">
+                                    <div className="group relative p-3 rounded-2xl bg-white/5 border border-white/5 hover:border-white/20 hover:bg-white/10 transition-all duration-300 w-full aspect-[3/2] flex items-center justify-center">
+                                        <div className="absolute inset-0 bg-gradient-to-br from-firefly-yellow/0 to-firefly-green/0 group-hover:from-firefly-yellow/10 group-hover:to-firefly-green/10 rounded-2xl transition-all duration-500 opacity-0 group-hover:opacity-100"></div>
+                                        <img
+                                            src={image}
+                                            alt="Partner"
+                                            className="w-full h-full object-contain transition-all duration-500 transform group-hover:scale-110"
+                                        />
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
                 </div>
-              </div>
-            ))}
-          </div>
-
-          <div className="flex items-center justify-center gap-3 mt-8">
-            {PARTNER_IMAGES.map((_, index) => (
-              <button
-                key={index}
-                onClick={() => setActiveIndex(index)}
-                className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                  index === activeIndex ? 'bg-firefly-yellow scale-125 shadow-[0_0_10px_rgba(226,216,43,0.6)]' : 'bg-white/20'
-                }`}
-                aria-label={`Show partners collage ${index + 1}`}
-              />
-            ))}
-          </div>
-        </div>
-      </div>
-    </section>
-  );
+            </div>
+        </section>
+    );
 };
 
 export default Partners;

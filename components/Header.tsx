@@ -46,8 +46,8 @@ const Header: React.FC<HeaderProps> = ({ currentPage, onNavigate }) => {
   return (
     <header
       className={`fixed top-0 w-full z-50 transition-all duration-500 ease-in-out ${isScrolled
-          ? 'bg-[#1c324e]/90 backdrop-blur-xl shadow-[0_4px_30px_rgba(0,0,0,0.2)] py-3'
-          : 'bg-transparent py-6'
+        ? 'bg-[#1c324e]/90 backdrop-blur-xl shadow-[0_4px_30px_rgba(0,0,0,0.2)] py-3'
+        : 'bg-transparent py-6'
         }`}
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -59,10 +59,10 @@ const Header: React.FC<HeaderProps> = ({ currentPage, onNavigate }) => {
             onClick={() => onNavigate('home')}
           >
             {/* Logo Container */}
-            <div className="relative w-20 h-20 flex items-center justify-center transition-transform duration-500 group-hover:scale-110">
+            <div className="relative w-20 h-20 flex items-center justify-center transition-transform duration-500 group-hover:scale-110 translate-y-2">
               <div className="absolute inset-0 bg-firefly-yellow/30 blur-2xl rounded-full opacity-50 group-hover:opacity-100 transition-opacity duration-500"></div>
               <img
-                src="/Logo.png"
+                src="/Fly.png"
                 alt="Firefly Logo"
                 className="w-full h-full object-contain drop-shadow-[0_0_15px_rgba(226,216,43,0.5)] z-10"
               />
@@ -121,8 +121,8 @@ const Header: React.FC<HeaderProps> = ({ currentPage, onNavigate }) => {
 
               onClick={(e) => handleNavClick(e, link)}
               className={`text-lg font-medium border-l-2 pl-4 transition-all ${currentPage === link.value && !link.section
-                  ? 'text-firefly-yellow border-firefly-yellow'
-                  : 'text-gray-200 hover:text-firefly-yellow border-transparent hover:border-firefly-yellow'
+                ? 'text-firefly-yellow border-firefly-yellow'
+                : 'text-gray-200 hover:text-firefly-yellow border-transparent hover:border-firefly-yellow'
                 }`}
             >
               {link.name}
