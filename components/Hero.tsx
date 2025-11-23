@@ -275,57 +275,39 @@ const Hero: React.FC<HeroProps> = ({ onShowReel }) => {
           </div>
 
           {/* Text Content Side */}
-          <div className="w-full lg:w-1/2 text-center lg:text-left pt-10 lg:pt-0">
-            <Reveal width="100%" className="flex justify-center lg:justify-start">
-              <div className="mb-8"></div>
-            </Reveal>
-            <div className="mb-8">
-              <h1 className="font-heading text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-bold leading-tight tracking-tight max-w-xs sm:max-w-none">
-                <div className="text-white block mb-2">
-                  <TextReveal text="Where Creativity" delay={300} />
-                </div>
-                <div className="text-transparent bg-clip-text bg-gradient-to-r from-firefly-yellow via-white to-firefly-green block pb-2">
-                  Meets Strategy
-                </div>
-              </h1>
-            </div>
-            {/* Mobile-only Video */}
-            <div className="w-full flex justify-center relative perspective-1000 lg:hidden mb-10 mt-10">
-              <Reveal delay={1200} className="w-full max-w-[250px] relative">
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-firefly-yellow/20 blur-[60px] rounded-full animate-pulse -z-10"></div>
-                <div className="relative rounded-[2.5rem] overflow-hidden border-4 border-white/10 shadow-2xl bg-firefly-dark/50 backdrop-blur-sm animate-float transform rotate-[-3deg] hover:rotate-0 transition-transform duration-700">
-                  <div className="absolute inset-0 bg-gradient-to-t from-firefly-dark/60 via-transparent to-transparent z-10 pointer-events-none"></div>
-                  <video
-                    ref={mobileVideoRef}
-                    src="/Hero.mp4"
-                    playsInline
-                    onTimeUpdate={handleTimeUpdate}
-                    className="w-full h-full object-cover aspect-[9/16] scale-105"
-                  />
-                </div>
-              </Reveal>
-            </div>
-            <Reveal delay={1500} width="100%">
-              <p className="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto lg:mx-0 mb-10 leading-relaxed"></p>
-            </Reveal>
-            <Reveal delay={1700} width="100%">
-              <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
-                <button className="group w-full sm:w-auto px-8 py-4 bg-firefly-yellow hover:bg-white text-firefly-dark font-bold rounded-lg transition-all duration-300 transform hover:-translate-y-1 hover:shadow-[0_0_30px_rgba(226,216,43,0.5)] flex items-center justify-center gap-2 text-lg overflow-hidden relative">
-                  <span className="relative z-10 flex items-center gap-2">
-                    Start Your Growth
-                    <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                  </span>
-                </button>
-                <button className="w-full sm:w-auto px-8 py-4 bg-transparent border border-white/20 hover:border-firefly-green hover:text-firefly-green text-white font-semibold rounded-lg transition-all duration-300 flex items-center justify-center gap-2 text-lg backdrop-blur-sm hover:bg-white/5" onClick={onShowReel}>
-                  <Play className="w-5 h-5 fill-current" />
-                  View Showreel
-                </button>
-              </div>
-            </Reveal>
+          <div className="relative rounded-[2.5rem] overflow-hidden border-4 border-white/10 shadow-2xl bg-firefly-dark/50 backdrop-blur-sm animate-float transform rotate-[-3deg] hover:rotate-0 transition-transform duration-700">
+            <div className="absolute inset-0 bg-gradient-to-t from-firefly-dark/60 via-transparent to-transparent z-10 pointer-events-none"></div>
+            <video
+              ref={mobileVideoRef}
+              src="/Hero.mp4"
+              playsInline
+              onTimeUpdate={handleTimeUpdate}
+              className="w-full h-full object-cover aspect-[9/16] scale-105"
+            />
           </div>
-        </div>
+        </Reveal>
       </div>
-    </section>
+      <Reveal delay={1500} width="100%">
+        <p className="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto lg:mx-0 mb-10 leading-relaxed"></p>
+      </Reveal>
+      <Reveal delay={1700} width="100%">
+        <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
+          <button className="group w-full sm:w-auto px-8 py-4 bg-firefly-yellow hover:bg-white text-firefly-dark font-bold rounded-lg transition-all duration-300 transform hover:-translate-y-1 hover:shadow-[0_0_30px_rgba(226,216,43,0.5)] flex items-center justify-center gap-2 text-lg overflow-hidden relative">
+            <span className="relative z-10 flex items-center gap-2">
+              Start Your Growth
+              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+            </span>
+          </button>
+          <button className="w-full sm:w-auto px-8 py-4 bg-transparent border border-white/20 hover:border-firefly-green hover:text-firefly-green text-white font-semibold rounded-lg transition-all duration-300 flex items-center justify-center gap-2 text-lg backdrop-blur-sm hover:bg-white/5" onClick={onShowReel}>
+            <Play className="w-5 h-5 fill-current" />
+            View Showreel
+          </button>
+        </div>
+      </Reveal>
+    </div>
+        </div >
+      </div >
+    </section >
   );
 };
 

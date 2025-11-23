@@ -28,9 +28,10 @@ const About: React.FC = () => {
                     </Reveal>
                     <Reveal delay={200} width="100%">
                         <p className="text-lg md:text-xl text-gray-300 max-w-4xl mx-auto leading-relaxed text-justify mb-16">
-                            <span className="font-bold text-white">Firefly Marketing Agency</span> is a dynamic and innovative marketing firm dedicated to illuminating brands and businesses through strategic and creative solutions. Our clients receive customized solutions based on their specific goals and challenges.
-                            <br /><br />
-                            With a passion for igniting growth and visibility, we specialize in crafting tailored marketing strategies that resonate with target audiences and drive tangible results. Our team consists of skilled professionals with diverse expertise in digital marketing to make you stand out in a competitive digital landscape.
+                            Firefly Marketing Agency is a full-service 360° marketing partner dedicated to empowering brands with strategic direction, creative excellence, and measurable performance. 
+                            We provide comprehensive solutions that align with your business objectives, ensuring every campaign is purposeful, data-driven, and built to deliver lasting impact. 
+                            With a commitment to clarity, innovation, and effectiveness, we tailor every strategy to the specific needs and challenges of each client. Our multidisciplinary team brings deep expertise across digital marketing, branding, content creation, media production, and performance management — enabling us to support your brand at every stage of its growth. 
+                            At Firefly, we move beyond traditional agency roles. We integrate seamlessly with your business, offering a holistic 360° partnership designed to elevate visibility, strengthen brand identity, and achieve sustainable results in an increasingly competitive landscape. 
                         </p>
                     </Reveal>
 
