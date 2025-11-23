@@ -71,7 +71,7 @@ const FloatingButton: React.FC = () => {
 
         <div className="flex items-center">
           <span
-            className={`uppercase text-sm transition-all duration-[1500ms] ease-in-out overflow-hidden ${
+            className={`uppercase text-base font-bold tracking-wider transition-all duration-[1500ms] ease-in-out overflow-hidden ${
               expanded ? 'opacity-100 max-w-[300px]' : 'opacity-0 max-w-0'
             }`}
           >
