@@ -48,9 +48,18 @@ const Hero: React.FC<HeroProps> = ({ onShowReel }) => {
       entries.forEach(entry => {
         const video = entry.target as HTMLVideoElement;
         if (entry.isIntersecting) {
-          // Reset volume and play when in view
+          // Try to play with sound first
           video.volume = 1;
-          video.play().catch(e => console.log('Autoplay prevented', e));
+          video.muted = false;
+          const playPromise = video.play();
+          if (playPromise !== undefined) {
+            playPromise.catch(() => {
+              // If autoplay with sound fails, mute and try again
+              console.log('Autoplay with sound prevented, switching to muted');
+              video.muted = true;
+              video.play();
+            });
+          }
         } else {
           // Fade out audio then pause
           fadeOutAndPause(video);
