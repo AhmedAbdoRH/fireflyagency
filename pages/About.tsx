@@ -56,7 +56,7 @@ const About: React.FC = () => {
                                 </div>
                                 <h3 className="text-2xl font-bold text-white mb-4">Our Mission</h3>
                                 <p className="text-gray-400 leading-relaxed">
-                                    Is to be the guiding light for businesses seeking to navigate the complex landscape of modern marketing. We aim to empower our clients by delivering cutting-edge strategies, exceptional creativity, and unparalleled customer service, ultimately helping them shine brightly in their respective industries.
+                                    To be the guiding light for businesses seeking to navigate the complex landscape of modern marketing. We aim to empower our clients by delivering cutting-edge strategies, exceptional creativity, and unparalleled customer service, ultimately helping them shine brightly in their respective industries. 
                                 </p>
                             </div>
                         </Reveal>

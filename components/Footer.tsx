@@ -1,4 +1,5 @@
 import React from 'react';
+import { SERVICES } from '../../constants';
 import { Twitter, Linkedin, Instagram, Github, Flame } from 'lucide-react';
 
 const Footer: React.FC = () => {
@@ -46,8 +47,8 @@ const Footer: React.FC = () => {
           <div>
             <h4 className="text-white font-bold mb-6">Services</h4>
             <ul className="space-y-4 text-sm text-gray-400">
-              {['Outreach Automation', 'CRM Integration', 'Web Design', 'PPC Advertising', 'SEO Strategy'].map(item => (
-                <li key={item}><a href="#" className="hover:text-firefly-green transition-colors">{item}</a></li>
+            : SERVICES.map(service => (
+                <li key={service.title}><a href="#" className="hover:text-firefly-green transition-colors">{service.title}</a></li>
               ))}
             </ul>
           </div>
