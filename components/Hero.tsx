@@ -1,5 +1,5 @@
-import React, { useEffect, useRef } from 'react';
-import { ArrowRight, Play } from 'lucide-react';
+import React, { useEffect, useRef, useState } from 'react';
+import { ArrowRight, Play, Volume2, VolumeX } from 'lucide-react';
 import Reveal from './Reveal';
 import TextReveal from './TextReveal';
 
@@ -12,6 +12,7 @@ const Hero: React.FC<HeroProps> = ({ onShowReel }) => {
   const mouseRef = useRef({ x: 0, y: 0 });
   const videoRef = useRef<HTMLVideoElement>(null);
   const mobileVideoRef = useRef<HTMLVideoElement>(null);
+  const [isMuted, setIsMuted] = useState(true);
 
   const handleTimeUpdate = (e: React.SyntheticEvent<HTMLVideoElement>) => {
     const video = e.currentTarget;
@@ -36,6 +37,21 @@ const Hero: React.FC<HeroProps> = ({ onShowReel }) => {
     }, intervalTime);
   };
 
+  const toggleMute = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    const newState = !isMuted;
+    setIsMuted(newState);
+
+    if (videoRef.current) {
+      videoRef.current.muted = newState;
+      if (!newState) videoRef.current.volume = 1;
+    }
+    if (mobileVideoRef.current) {
+      mobileVideoRef.current.muted = newState;
+      if (!newState) mobileVideoRef.current.volume = 1;
+    }
+  };
+
   // Intersection Observer to handle play/pause on scroll
   useEffect(() => {
     const observerOptions = {
@@ -49,16 +65,22 @@ const Hero: React.FC<HeroProps> = ({ onShowReel }) => {
         const video = entry.target as HTMLVideoElement;
         if (entry.isIntersecting) {
           // Try to play with sound first
-          video.volume = 1;
           video.muted = false;
+          video.volume = 1;
           const playPromise = video.play();
+
           if (playPromise !== undefined) {
-            playPromise.catch(() => {
-              // If autoplay with sound fails, mute and try again
-              console.log('Autoplay with sound prevented, switching to muted');
-              video.muted = true;
-              video.play();
-            });
+            playPromise
+              .then(() => {
+                setIsMuted(false);
+              })
+              .catch(() => {
+                // If autoplay with sound fails, mute and try again
+                console.log('Autoplay with sound prevented, switching to muted');
+                video.muted = true;
+                video.play();
+                setIsMuted(true);
+              });
           }
         } else {
           // Fade out audio then pause
@@ -232,7 +254,7 @@ const Hero: React.FC<HeroProps> = ({ onShowReel }) => {
           <div className="w-full lg:w-[300px] flex justify-center relative perspective-1000 hidden lg:block mt-14">
             <Reveal delay={1200} className="w-full max-w-[250px] lg:max-w-full relative">
               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-firefly-yellow/20 blur-[60px] rounded-full animate-pulse -z-10"></div>
-              <div className="relative rounded-[2.5rem] overflow-hidden border-4 border-white/10 shadow-2xl bg-firefly-dark/50 backdrop-blur-sm animate-float transform rotate-[-3deg] hover:rotate-0 transition-transform duration-700">
+              <div className="relative rounded-[2.5rem] overflow-hidden border-4 border-white/10 shadow-2xl bg-firefly-dark/50 backdrop-blur-sm animate-float transform rotate-[-3deg] hover:rotate-0 transition-transform duration-700 group">
                 <div className="absolute inset-0 bg-gradient-to-t from-firefly-dark/60 via-transparent to-transparent z-10 pointer-events-none"></div>
                 <video
                   ref={videoRef}
@@ -241,6 +263,15 @@ const Hero: React.FC<HeroProps> = ({ onShowReel }) => {
                   onTimeUpdate={handleTimeUpdate}
                   className="w-full h-full object-cover aspect-[9/16] scale-105"
                 />
+
+                {/* Mute Toggle Button */}
+                <button
+                  onClick={toggleMute}
+                  className="absolute bottom-6 right-6 z-20 p-3 bg-black/50 hover:bg-black/70 text-white rounded-full backdrop-blur-sm transition-all duration-300 hover:scale-110"
+                  aria-label={isMuted ? "Unmute video" : "Mute video"}
+                >
+                  {isMuted ? <VolumeX size={20} /> : <Volume2 size={20} />}
+                </button>
               </div>
             </Reveal>
           </div>
@@ -273,6 +304,15 @@ const Hero: React.FC<HeroProps> = ({ onShowReel }) => {
                     onTimeUpdate={handleTimeUpdate}
                     className="w-full h-full object-cover aspect-[9/16] scale-105"
                   />
+
+                  {/* Mute Toggle Button for Mobile */}
+                  <button
+                    onClick={toggleMute}
+                    className="absolute bottom-6 right-6 z-20 p-3 bg-black/50 hover:bg-black/70 text-white rounded-full backdrop-blur-sm transition-all duration-300 hover:scale-110"
+                    aria-label={isMuted ? "Unmute video" : "Mute video"}
+                  >
+                    {isMuted ? <VolumeX size={20} /> : <Volume2 size={20} />}
+                  </button>
                 </div>
               </Reveal>
             </div>

@@ -4,6 +4,7 @@ import { MessageCircleMore } from 'lucide-react';
 const FloatingButton: React.FC = () => {
   const [expanded, setExpanded] = useState(false);
   const [visible, setVisible] = useState(false);
+  const [textVisible, setTextVisible] = useState(false);
 
   useEffect(() => {
     // Show button after 2 seconds with fade-in animation (collapsed)
@@ -46,6 +47,24 @@ const FloatingButton: React.FC = () => {
     };
   }, []);
 
+  useEffect(() => {
+    let showTextTimeout: NodeJS.Timeout;
+    let hideTextTimeout: NodeJS.Timeout;
+
+    if (expanded) {
+      // Show text after a delay when expanding
+      showTextTimeout = setTimeout(() => setTextVisible(true), 500); // Adjust delay as needed
+    } else {
+      // Hide text before collapsing
+      hideTextTimeout = setTimeout(() => setTextVisible(false), 100); // Adjust delay as needed
+    }
+
+    return () => {
+      clearTimeout(showTextTimeout);
+      clearTimeout(hideTextTimeout);
+    };
+  }, [expanded]);
+
   return (
     <a
       href="mailto:hello@fireflyagency.com"
@@ -72,7 +91,7 @@ const FloatingButton: React.FC = () => {
         <div className="flex items-center">
           <span
             className={`uppercase text-base font-bold tracking-wider transition-all duration-[1500ms] ease-in-out overflow-hidden ${
-              expanded ? 'opacity-100 max-w-[300px]' : 'opacity-0 max-w-0'
+              textVisible ? 'opacity-100 max-w-[300px]' : 'opacity-0 max-w-0'
             }`}
           >
             Let's Talk!
