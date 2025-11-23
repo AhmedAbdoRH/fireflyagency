@@ -4,23 +4,23 @@ import { Search, ClipboardList, Rocket, TrendingUp } from 'lucide-react';
 import Reveal from './Reveal';
 
 const Services: React.FC = () => {
-  
+
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const card = e.currentTarget;
     const rect = card.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
-    
+
     // Update CSS variables for the spotlight effect
     card.style.setProperty('--mouse-x', `${x}px`);
     card.style.setProperty('--mouse-y', `${y}px`);
-    
+
     // Tilt Logic
     const centerX = rect.width / 2;
     const centerY = rect.height / 2;
-    const rotateX = ((y - centerY) / centerY) * -3; 
+    const rotateX = ((y - centerY) / centerY) * -3;
     const rotateY = ((x - centerX) / centerX) * 3;
-    
+
     card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.01, 1.01, 1.01)`;
   };
 
@@ -96,17 +96,27 @@ const Services: React.FC = () => {
           </div>
         </div>
 
+        <Reveal width="100%">
+          <div className="text-center mb-16">
+            <span className="text-firefly-yellow font-medium tracking-wider uppercase text-sm mb-2 block">What We Do</span>
+            <h2 className="font-heading text-4xl md:text-5xl font-bold text-white inline-block relative">
+              Our Services
+              <div className="absolute -bottom-4 left-1/2 transform -translate-x-1/2 w-24 h-1 bg-gradient-to-r from-firefly-yellow to-firefly-green rounded-full"></div>
+            </h2>
+          </div>
+        </Reveal>
+
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {SERVICES.map((service, index) => (
             <Reveal key={index} delay={index * 100} className="h-full">
-              <div 
+              <div
                 className="spotlight-card group p-8 rounded-2xl bg-white/5 border border-white/5 transition-all duration-300 h-full flex flex-col relative"
                 onMouseMove={handleMouseMove}
                 onMouseLeave={handleMouseLeave}
               >
                 {/* Spotlight Glow Background */}
                 <div className="spotlight-bg"></div>
-                
+
                 <div className="relative z-10">
                   <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-firefly-yellow/10 to-firefly-green/10 flex items-center justify-center mb-6 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 border border-white/10 group-hover:border-firefly-yellow/30">
                     <service.icon className="w-7 h-7 text-firefly-yellow group-hover:text-white transition-colors" />

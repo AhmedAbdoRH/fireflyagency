@@ -6,6 +6,17 @@ import TextReveal from './TextReveal';
 const Hero: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const mouseRef = useRef({ x: 0, y: 0 });
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  const handleTimeUpdate = () => {
+    if (videoRef.current) {
+      const video = videoRef.current;
+      // Stop 1.5 seconds before the end
+      if (video.duration && video.currentTime >= video.duration - 1.5) {
+        video.pause();
+      }
+    }
+  };
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -42,13 +53,13 @@ const Hero: React.FC = () => {
       alpha: number;
       originalX: number;
       originalY: number;
-      
+
       constructor(w: number, h: number) {
         this.x = Math.random() * w;
         this.y = Math.random() * h;
         this.originalX = this.x;
         this.originalY = this.y;
-        this.vx = (Math.random() - 0.5) * 0.5; 
+        this.vx = (Math.random() - 0.5) * 0.5;
         this.vy = (Math.random() - 0.5) * 0.5;
         this.size = Math.random() * 2.5 + 0.5;
         const colors = ['#e2d82b', '#00ee8a', '#ffffff'];
@@ -123,14 +134,14 @@ const Hero: React.FC = () => {
 
     const render = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      
+
       particles.forEach(p => {
         p.update(canvas.width, canvas.height);
         p.draw(ctx);
       });
-      
+
       drawConnections();
-      
+
       animationFrameId = requestAnimationFrame(render);
     };
 
@@ -148,7 +159,7 @@ const Hero: React.FC = () => {
 
   return (
     <section id="home" className="relative min-h-screen flex items-center pt-20 pb-20 overflow-hidden">
-      
+
       {/* Background Elements */}
       <div className="absolute inset-0 z-0">
         <div className="absolute top-0 left-0 w-full h-full bg-firefly-dark opacity-90"></div>
@@ -156,13 +167,13 @@ const Hero: React.FC = () => {
         <div className="absolute top-[-10%] right-[-5%] w-[600px] h-[600px] bg-firefly-green/20 rounded-full blur-[120px] animate-pulse"></div>
         {/* Glow Effect 2 - Animated */}
         <div className="absolute bottom-[-10%] left-[-10%] w-[700px] h-[700px] bg-firefly-yellow/10 rounded-full blur-[100px] animate-pulse" style={{ animationDelay: '2s' }}></div>
-        
+
         {/* Grid Pattern Overlay */}
-        <div 
-          className="absolute inset-0 opacity-[0.03]" 
-          style={{ 
-            backgroundImage: `linear-gradient(to right, #ffffff 1px, transparent 1px), linear-gradient(to bottom, #ffffff 1px, transparent 1px)`, 
-            backgroundSize: '60px 60px' 
+        <div
+          className="absolute inset-0 opacity-[0.03]"
+          style={{
+            backgroundImage: `linear-gradient(to right, #ffffff 1px, transparent 1px), linear-gradient(to bottom, #ffffff 1px, transparent 1px)`,
+            backgroundSize: '60px 60px'
           }}
         ></div>
 
@@ -172,7 +183,30 @@ const Hero: React.FC = () => {
 
       <div className="container mx-auto px-4 relative z-10">
         <div className="flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-20">
-          
+
+          {/* Video/Visual Side */}
+          <div className="w-full lg:w-[300px] flex justify-center relative perspective-1000 hidden lg:block">
+            <Reveal delay={1200} className="w-full max-w-[250px] lg:max-w-full relative">
+              {/* Decorative Glow */}
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-firefly-yellow/20 blur-[60px] rounded-full animate-pulse -z-10"></div>
+
+              {/* Video Container */}
+              <div className="relative rounded-[2.5rem] overflow-hidden border-4 border-white/10 shadow-2xl bg-firefly-dark/50 backdrop-blur-sm animate-float transform rotate-[-3deg] hover:rotate-0 transition-transform duration-700">
+                {/* Video Overlay Gradient for better contrast if needed */}
+                <div className="absolute inset-0 bg-gradient-to-t from-firefly-dark/60 via-transparent to-transparent z-10 pointer-events-none"></div>
+
+                <video
+                  ref={videoRef}
+                  src="Hero.mp4"
+                  autoPlay
+                  playsInline
+                  onTimeUpdate={handleTimeUpdate}
+                  className="w-full h-full object-cover aspect-[9/16] scale-105"
+                />
+              </div>
+            </Reveal>
+          </div>
+
           {/* Text Content Side */}
           <div className="w-full lg:w-1/2 text-center lg:text-left pt-10 lg:pt-0">
 
@@ -194,10 +228,33 @@ const Hero: React.FC = () => {
               </h1>
             </div>
 
+            {/* Mobile-only Video */}
+            <div className="w-full flex justify-center relative perspective-1000 lg:hidden mb-10">
+              <Reveal delay={1200} className="w-full max-w-[250px] relative">
+                {/* Decorative Glow */}
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-firefly-yellow/20 blur-[60px] rounded-full animate-pulse -z-10"></div>
+
+                {/* Video Container */}
+                <div className="relative rounded-[2.5rem] overflow-hidden border-4 border-white/10 shadow-2xl bg-firefly-dark/50 backdrop-blur-sm animate-float transform rotate-[-3deg] hover:rotate-0 transition-transform duration-700">
+                  {/* Video Overlay Gradient for better contrast if needed */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-firefly-dark/60 via-transparent to-transparent z-10 pointer-events-none"></div>
+
+                  <video
+                    ref={videoRef}
+                    src="Hero.mp4"
+                    autoPlay
+                    playsInline
+                    onTimeUpdate={handleTimeUpdate}
+                    className="w-full h-full object-cover aspect-[9/16] scale-105"
+                  />
+                </div>
+              </Reveal>
+            </div>
+
             {/* Subheading */}
             <Reveal delay={1500} width="100%">
               <p className="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto lg:mx-0 mb-10 leading-relaxed">
-                Firefly Marketing Agency: Innovative strategies for brand growth and visibility.
+
               </p>
             </Reveal>
 
@@ -210,7 +267,7 @@ const Hero: React.FC = () => {
                     <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                   </span>
                 </button>
-                
+
                 <button className="w-full sm:w-auto px-8 py-4 bg-transparent border border-white/20 hover:border-firefly-green hover:text-firefly-green text-white font-semibold rounded-lg transition-all duration-300 flex items-center justify-center gap-2 text-lg backdrop-blur-sm hover:bg-white/5">
                   <Play className="w-5 h-5 fill-current" />
                   View Showreel
@@ -219,32 +276,9 @@ const Hero: React.FC = () => {
             </Reveal>
           </div>
 
-          {/* Video/Visual Side */}
-          <div className="w-full lg:w-[300px] flex justify-center relative perspective-1000">
-             <Reveal delay={1200} className="w-full max-w-[250px] lg:max-w-full relative">
-                {/* Decorative Glow */}
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-firefly-yellow/20 blur-[60px] rounded-full animate-pulse -z-10"></div>
-                
-                {/* Video Container */}
-                <div className="relative rounded-[2.5rem] overflow-hidden border-4 border-white/10 shadow-2xl bg-firefly-dark/50 backdrop-blur-sm animate-float transform rotate-[-3deg] hover:rotate-0 transition-transform duration-700">
-                  {/* Video Overlay Gradient for better contrast if needed */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-firefly-dark/60 via-transparent to-transparent z-10 pointer-events-none"></div>
-                  
-                  <video 
-                    src="Hero.mp4" 
-                  autoPlay 
-                  playsInline
-                    className="w-full h-full object-cover aspect-[9/16] scale-105"
-                  />
-
-
-                </div>
-             </Reveal>
-          </div>
-
         </div>
 
-        
+
       </div>
     </section>
   );
