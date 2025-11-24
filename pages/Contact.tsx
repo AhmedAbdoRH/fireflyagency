@@ -1,6 +1,6 @@
 import React from 'react';
 import Reveal from '../components/Reveal';
-import { Mail, Phone, MapPin, Send, Linkedin, Instagram, Twitter } from 'lucide-react';
+import { Mail, Phone, MapPin, Send, Instagram, Facebook, MessageCircle } from 'lucide-react';
 
 const Contact: React.FC = () => {
     return (
@@ -42,8 +42,20 @@ const Contact: React.FC = () => {
                                         </div>
                                         <div>
                                             <p className="text-sm uppercase tracking-wider text-gray-500 mb-1">Email Us</p>
-                                            <a href="mailto:hello@firefly.com" className="text-xl text-white font-medium hover:text-firefly-yellow transition-colors">
-                                                hello@firefly.com
+                                            <a href="mailto:info@firefly-agency.com" className="text-xl text-white font-medium hover:text-firefly-yellow transition-colors">
+                                                info@firefly-agency.com
+                                            </a>
+                                        </div>
+                                    </div>
+
+                                    <div className="flex items-start gap-6 group">
+                                        <div className="w-12 h-12 rounded-xl bg-green-500/10 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform duration-300">
+                                            <MessageCircle className="w-6 h-6 text-green-400" />
+                                        </div>
+                                        <div>
+                                            <p className="text-sm uppercase tracking-wider text-gray-500 mb-1">WhatsApp</p>
+                                            <a href="https://wa.me/+0201552479991" target="_blank" rel="noopener noreferrer" className="text-xl text-white font-medium hover:text-green-400 transition-colors">
+                                                +0201552479991
                                             </a>
                                         </div>
                                     </div>
@@ -54,8 +66,8 @@ const Contact: React.FC = () => {
                                         </div>
                                         <div>
                                             <p className="text-sm uppercase tracking-wider text-gray-500 mb-1">Call Us</p>
-                                            <a href="tel:+1234567890" className="text-xl text-white font-medium hover:text-firefly-green transition-colors">
-                                                +1 (555) 123-4567
+                                            <a href="tel:+0201552479991" className="text-xl text-white font-medium hover:text-firefly-green transition-colors">
+                                                +0201552479991
                                             </a>
                                         </div>
                                     </div>
@@ -67,8 +79,8 @@ const Contact: React.FC = () => {
                                         <div>
                                             <p className="text-sm uppercase tracking-wider text-gray-500 mb-1">Visit Us</p>
                                             <p className="text-xl text-white font-medium">
-                                                123 Creative Avenue, <br />
-                                                Design District, NY 10001
+                                                2 Almazah Street, <br />
+                                                Cairo, Egypt
                                             </p>
                                         </div>
                                     </div>
@@ -78,20 +90,24 @@ const Contact: React.FC = () => {
                             <div className="bg-white/5 border border-white/10 rounded-3xl p-8 backdrop-blur-sm">
                                 <h3 className="text-xl font-heading font-bold text-white mb-6">Follow Our Journey</h3>
                                 <div className="flex gap-4">
-                                    {[
-                                        { icon: Linkedin, label: 'LinkedIn', href: '#' },
-                                        { icon: Instagram, label: 'Instagram', href: '#' },
-                                        { icon: Twitter, label: 'Twitter', href: '#' }
-                                    ].map((social, index) => (
-                                        <a
-                                            key={index}
-                                            href={social.href}
-                                            className="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:text-firefly-yellow hover:border-firefly-yellow hover:bg-firefly-yellow/10 transition-all duration-300"
-                                            aria-label={social.label}
-                                        >
-                                            <social.icon className="w-5 h-5" />
-                                        </a>
-                                    ))}
+                                    <a
+                                        href="https://www.instagram.com/firefly_creativesolutions/"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:text-firefly-yellow hover:border-firefly-yellow hover:bg-firefly-yellow/10 transition-all duration-300"
+                                        aria-label="Instagram"
+                                    >
+                                        <Instagram className="w-5 h-5" />
+                                    </a>
+                                    <a
+                                        href="https://www.facebook.com/people/Firefly-Creative-Solutions/61552621582651/"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:text-firefly-yellow hover:border-firefly-yellow hover:bg-firefly-yellow/10 transition-all duration-300"
+                                        aria-label="Facebook"
+                                    >
+                                        <Facebook className="w-5 h-5" />
+                                    </a>
                                 </div>
                             </div>
                         </div>

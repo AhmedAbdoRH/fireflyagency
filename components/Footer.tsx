@@ -1,6 +1,6 @@
 import React from 'react';
 import { SERVICES } from "../constants";
-import { Twitter, Linkedin, Instagram, Github, Flame } from 'lucide-react';
+import { Instagram, Facebook, Flame } from 'lucide-react';
 
 const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
@@ -34,11 +34,11 @@ const Footer: React.FC = () => {
               Illuminating the path to digital dominance — we engineer the engines that fuel sustainable business growth.
             </p>
             <div className="flex gap-4">
-              <a href="https://instagram.com/firefly_creativesolutions" className="text-gray-500 hover:text-firefly-yellow transition-colors">
+              <a href="https://www.instagram.com/firefly_creativesolutions/" target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-firefly-yellow transition-colors">
                 <Instagram className="w-5 h-5" />
               </a>
-              <a href="https://www.facebook.com/profile.php?id=61552621582651" className="text-gray-500 hover:text-firefly-yellow transition-colors">
-                <Linkedin className="w-5 h-5" />
+              <a href="https://www.facebook.com/people/Firefly-Creative-Solutions/61552621582651/" target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-firefly-yellow transition-colors">
+                <Facebook className="w-5 h-5" />
               </a>
             </div>
           </div>
