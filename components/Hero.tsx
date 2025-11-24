@@ -16,16 +16,14 @@ const Hero: React.FC<HeroProps> = ({ onShowReel }) => {
 
     const handleTimeUpdate = (e: React.SyntheticEvent<HTMLVideoElement>) => {
         const video = e.currentTarget;
-        // Stop 1.5 seconds before the end
         if (video.duration && video.currentTime >= video.duration - 1.5) {
             video.pause();
         }
     };
 
-    // Helper to fade out audio before pausing
     const fadeOutAndPause = (video: HTMLVideoElement) => {
-        const step = 0.05; // volume decrement per interval
-        const intervalTime = 50; // ms
+        const step = 0.05;
+        const intervalTime = 50;
         const fadeInterval = setInterval(() => {
             if (video.volume > step) {
                 video.volume = Math.max(0, video.volume - step);
@@ -37,23 +35,21 @@ const Hero: React.FC<HeroProps> = ({ onShowReel }) => {
         }, intervalTime);
     };
 
-    // Intersection Observer to handle play/pause on scroll
+    // Intersection Observer
     useEffect(() => {
         const observerOptions = {
             root: null,
             rootMargin: '0px',
-            threshold: 0.5, // Trigger when 50% of the video is visible
+            threshold: 0.5,
         };
 
         const handleIntersection = (entries: IntersectionObserverEntry[]) => {
             entries.forEach(entry => {
                 const video = entry.target as HTMLVideoElement;
                 if (entry.isIntersecting) {
-                    // When visible, ensure it's playing
                     const playPromise = video.play();
                     if (playPromise !== undefined) {
                         playPromise.catch(() => {
-                            // If play fails (e.g. unmuted blocked), ensure muted is on and try again
                             if (!video.muted) {
                                 video.muted = true;
                                 video.play();
@@ -61,7 +57,6 @@ const Hero: React.FC<HeroProps> = ({ onShowReel }) => {
                         });
                     }
                 } else {
-                    // Fade out audio then pause
                     fadeOutAndPause(video);
                 }
             });
@@ -76,57 +71,71 @@ const Hero: React.FC<HeroProps> = ({ onShowReel }) => {
         };
     }, []);
 
-    // Attempt to unmute automatically on load (will likely fail in modern browsers, but worth a try)
+    // Auto-unmute on load - aggressive strategy
     useEffect(() => {
         const attemptUnmute = async (video: HTMLVideoElement) => {
             try {
-                // Try to unmute
+                // First try: play with sound immediately
                 video.muted = false;
                 video.volume = 1;
                 await video.play();
+                console.log('✅ Video playing with sound!');
             } catch (err) {
-                // If failed, revert to muted (so it keeps playing)
-                // But ONLY if user hasn't interacted yet (to avoid race condition)
+                // If that fails, start muted and try to unmute after a delay
                 if (!userInteracted.current) {
-                    console.log('Autoplay with sound prevented, staying muted');
+                    console.log('⚠️ Autoplay with sound blocked, trying workaround...');
                     video.muted = true;
-                    // Ensure it's playing
-                    try { await video.play(); } catch (e) { /* ignore */ }
+                    try {
+                        await video.play();
+                        console.log('▶️ Video playing muted');
+                    } catch (e) {
+                        console.log('❌ Even muted autoplay failed');
+                    }
+
+                    // Try to unmute after 100ms
+                    setTimeout(async () => {
+                        try {
+                            video.muted = false;
+                            video.volume = 1;
+                            await video.play();
+                            console.log('🔊 Sound enabled after delay!');
+                        } catch (retryErr) {
+                            console.log('🔇 Sound still blocked, waiting for user interaction');
+                        }
+                    }, 100);
                 }
             }
         };
 
-        if (videoRef.current) attemptUnmute(videoRef.current);
-        if (mobileVideoRef.current) attemptUnmute(mobileVideoRef.current);
+        const isMobile = window.innerWidth < 1024;
+
+        if (isMobile && mobileVideoRef.current) {
+            attemptUnmute(mobileVideoRef.current);
+        } else if (!isMobile && videoRef.current) {
+            attemptUnmute(videoRef.current);
+        }
     }, []);
 
-    // Global unmute on ANY interaction (Scroll, Click, Mouse move)
+    // Global unmute on ANY interaction
     useEffect(() => {
         const handleInteraction = async () => {
             userInteracted.current = true;
 
-            const videos = [videoRef.current, mobileVideoRef.current];
-            let allUnmuted = true;
+            const isMobile = window.innerWidth < 1024;
+            const activeVideo = isMobile ? mobileVideoRef.current : videoRef.current;
 
-            for (const video of videos) {
-                if (video) {
-                    // Force unmute and play
-                    video.muted = false;
-                    video.volume = 1;
-                    try {
-                        await video.play();
-                    } catch (e) {
-                        // If still blocked, we can't do much, but we keep trying on next interaction
-                        allUnmuted = false;
-                    }
+            if (activeVideo && activeVideo.muted) {
+                activeVideo.muted = false;
+                activeVideo.volume = 1;
+                try {
+                    await activeVideo.play();
+                    console.log('🎉 Sound enabled via user interaction!');
+                    ['click', 'scroll', 'mousemove', 'touchstart', 'keydown'].forEach(event =>
+                        window.removeEventListener(event, handleInteraction)
+                    );
+                } catch (e) {
+                    console.log('Still waiting for interaction...');
                 }
-            }
-
-            // Only remove listeners if we successfully unmuted everything
-            if (allUnmuted) {
-                ['click', 'scroll', 'mousemove', 'touchstart', 'keydown'].forEach(event =>
-                    window.removeEventListener(event, handleInteraction)
-                );
             }
         };
 
@@ -272,14 +281,10 @@ const Hero: React.FC<HeroProps> = ({ onShowReel }) => {
 
     return (
         <section id="home" className="relative min-h-screen flex items-center pt-20 pb-20 overflow-hidden">
-            {/* Background Elements */}
             <div className="absolute inset-0 z-0">
                 <div className="absolute top-0 left-0 w-full h-full bg-firefly-dark opacity-90"></div>
-                {/* Glow Effect 1 - Animated */}
                 <div className="absolute top-[-10%] right-[-5%] w-[600px] h-[600px] bg-firefly-green/20 rounded-full blur-[120px] animate-pulse"></div>
-                {/* Glow Effect 2 - Animated */}
                 <div className="absolute bottom-[-10%] left-[-10%] w-[700px] h-[700px] bg-firefly-yellow/10 rounded-full blur-[100px] animate-pulse" style={{ animationDelay: '2s' }}></div>
-                {/* Grid Pattern Overlay */}
                 <div
                     className="absolute inset-0 opacity-[0.03]"
                     style={{
@@ -287,13 +292,11 @@ const Hero: React.FC<HeroProps> = ({ onShowReel }) => {
                         backgroundSize: '60px 60px',
                     }}
                 ></div>
-                {/* Particle Canvas */}
                 <canvas ref={canvasRef} className="absolute inset-0 w-full h-full pointer-events-auto" />
             </div>
 
             <div className="container mx-auto px-4 relative z-10">
                 <div className="flex flex-col lg:flex-row items-center justify-center gap-12 lg:gap-12">
-                    {/* Video/Visual Side */}
                     <div className="w-full lg:w-[300px] flex justify-center relative perspective-1000 hidden lg:block mt-14">
                         <Reveal delay={1200} className="w-full max-w-[250px] lg:max-w-full relative">
                             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-firefly-yellow/20 blur-[60px] rounded-full animate-pulse -z-10"></div>
@@ -311,7 +314,6 @@ const Hero: React.FC<HeroProps> = ({ onShowReel }) => {
                         </Reveal>
                     </div>
 
-                    {/* Text Content Side */}
                     <div className="w-full lg:w-1/2 text-center lg:text-left pt-10 lg:pt-0">
                         <Reveal width="100%" className="flex justify-center lg:justify-start">
                             <div className="mb-8"></div>
@@ -326,7 +328,6 @@ const Hero: React.FC<HeroProps> = ({ onShowReel }) => {
                                 </div>
                             </h1>
                         </div>
-                        {/* Mobile-only Video */}
                         <div className="w-full flex justify-center relative perspective-1000 lg:hidden mb-10 mt-10">
                             <Reveal delay={1200} className="w-full max-w-[250px] relative">
                                 <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-firefly-yellow/20 blur-[60px] rounded-full animate-pulse -z-10"></div>
