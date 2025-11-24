@@ -1,5 +1,5 @@
-import React, { useEffect, useRef } from 'react';
-import { ArrowRight, Play } from 'lucide-react';
+import React, { useEffect, useRef, useState } from 'react';
+import { ArrowRight, Play, Volume2, VolumeX } from 'lucide-react';
 import Reveal from './Reveal';
 import TextReveal from './TextReveal';
 
@@ -13,6 +13,18 @@ const Hero: React.FC<HeroProps> = ({ onShowReel }) => {
     const videoRef = useRef<HTMLVideoElement>(null);
     const mobileVideoRef = useRef<HTMLVideoElement>(null);
     const userInteracted = useRef(false);
+    const [isMuted, setIsMuted] = useState(false); // نحاول البدء مع الصوت مفعل
+
+    const toggleSound = () => {
+        const isMobile = window.innerWidth < 1024;
+        const activeVideo = isMobile ? mobileVideoRef.current : videoRef.current;
+
+        if (activeVideo) {
+            activeVideo.muted = !activeVideo.muted;
+            activeVideo.volume = activeVideo.muted ? 0 : 1;
+            setIsMuted(activeVideo.muted);
+        }
+    };
 
     const handleTimeUpdate = (e: React.SyntheticEvent<HTMLVideoElement>) => {
         const video = e.currentTarget;
@@ -71,22 +83,27 @@ const Hero: React.FC<HeroProps> = ({ onShowReel }) => {
         };
     }, []);
 
-    // Auto-start video (muted first, then try to unmute)
+    // Auto-start video - محاولة التشغيل مع الصوت أولاً
     useEffect(() => {
         const startVideo = async (video: HTMLVideoElement) => {
-            video.muted = true;
+            // المحاولة الأولى: تشغيل مع الصوت
+            video.muted = false;
+            video.volume = 1;
             try {
                 await video.play();
-                console.log('▶️ Video started');
-
-                // Try unmuting after short delay
-                setTimeout(() => {
-                    video.muted = false;
-                    video.volume = 1;
-                    console.log('🔊 Trying to enable sound...');
-                }, 300);
+                setIsMuted(false);
+                console.log('✨ Video started with SOUND!');
             } catch (err) {
-                console.log('❌ Video failed to start:', err);
+                // إذا فشل، نحاول بدون صوت
+                console.log('⚠️ Sound blocked by browser, trying muted...');
+                video.muted = true;
+                setIsMuted(true);
+                try {
+                    await video.play();
+                    console.log('▶️ Video started (muted)');
+                } catch (err2) {
+                    console.log('❌ Video failed to start:', err2);
+                }
             }
         };
 
@@ -99,9 +116,10 @@ const Hero: React.FC<HeroProps> = ({ onShowReel }) => {
         }
     }, []);
 
-    // Unmute on user interaction
+    // Auto-unmute بمجرد أي حركة بسيطة
     useEffect(() => {
         const handleInteraction = async () => {
+            if (userInteracted.current) return;
             userInteracted.current = true;
 
             const isMobile = window.innerWidth < 1024;
@@ -110,22 +128,18 @@ const Hero: React.FC<HeroProps> = ({ onShowReel }) => {
             if (activeVideo && activeVideo.muted) {
                 activeVideo.muted = false;
                 activeVideo.volume = 1;
-                console.log('🎉 Sound enabled!');
-
-                ['click', 'scroll', 'mousemove', 'touchstart', 'keydown'].forEach(event =>
-                    window.removeEventListener(event, handleInteraction)
-                );
+                setIsMuted(false);
+                console.log('🔊 Sound enabled on first interaction!');
             }
         };
 
-        ['click', 'scroll', 'mousemove', 'touchstart', 'keydown'].forEach(event =>
-            window.addEventListener(event, handleInteraction)
-        );
+        // الاستماع فقط لحركة الماوس أو اللمس
+        window.addEventListener('mousemove', handleInteraction, { once: true });
+        window.addEventListener('touchstart', handleInteraction, { once: true });
 
         return () => {
-            ['click', 'scroll', 'mousemove', 'touchstart', 'keydown'].forEach(event =>
-                window.removeEventListener(event, handleInteraction)
-            );
+            window.removeEventListener('mousemove', handleInteraction);
+            window.removeEventListener('touchstart', handleInteraction);
         };
     }, []);
 
@@ -286,11 +300,20 @@ const Hero: React.FC<HeroProps> = ({ onShowReel }) => {
                                     src="/Hero.mp4"
                                     playsInline
                                     autoPlay
-                                    muted
                                     loop
                                     onTimeUpdate={handleTimeUpdate}
                                     className="w-full h-full object-cover aspect-[9/16] scale-105"
                                 />
+                                {/* Sound Toggle Button - يختفي بعد تشغيل الصوت */}
+                                {isMuted && (
+                                    <button
+                                        onClick={toggleSound}
+                                        className="absolute bottom-4 right-4 z-20 w-10 h-10 rounded-full bg-firefly-dark/80 backdrop-blur-sm border border-white/20 flex items-center justify-center text-white hover:bg-firefly-yellow hover:text-firefly-dark transition-all duration-300 hover:scale-110 animate-pulse"
+                                        aria-label="Unmute video"
+                                    >
+                                        <VolumeX className="w-5 h-5" />
+                                    </button>
+                                )}
                             </div>
                         </Reveal>
                     </div>
@@ -319,11 +342,20 @@ const Hero: React.FC<HeroProps> = ({ onShowReel }) => {
                                         src="/Hero.mp4"
                                         playsInline
                                         autoPlay
-                                        muted
                                         loop
                                         onTimeUpdate={handleTimeUpdate}
                                         className="w-full h-full object-cover aspect-[9/16] scale-105"
                                     />
+                                    {/* Sound Toggle Button - يختفي بعد تشغيل الصوت */}
+                                    {isMuted && (
+                                        <button
+                                            onClick={toggleSound}
+                                            className="absolute bottom-4 right-4 z-20 w-10 h-10 rounded-full bg-firefly-dark/80 backdrop-blur-sm border border-white/20 flex items-center justify-center text-white hover:bg-firefly-yellow hover:text-firefly-dark transition-all duration-300 hover:scale-110 animate-pulse"
+                                            aria-label="Unmute video"
+                                        >
+                                            <VolumeX className="w-5 h-5" />
+                                        </button>
+                                    )}
                                 </div>
                             </Reveal>
                         </div>
