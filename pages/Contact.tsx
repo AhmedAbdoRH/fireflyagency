@@ -54,8 +54,8 @@ const Contact: React.FC = () => {
                                         </div>
                                         <div>
                                             <p className="text-sm uppercase tracking-wider text-gray-500 mb-1">WhatsApp</p>
-                                            <a href="https://wa.me/+0201552479991" target="_blank" rel="noopener noreferrer" className="text-xl text-white font-medium hover:text-green-400 transition-colors">
-                                                +0201552479991
+                                            <a href="https://wa.me/+201552479991" target="_blank" rel="noopener noreferrer" className="text-xl text-white font-medium hover:text-green-400 transition-colors">
+                                                01552479991
                                             </a>
                                         </div>
                                     </div>
@@ -66,8 +66,8 @@ const Contact: React.FC = () => {
                                         </div>
                                         <div>
                                             <p className="text-sm uppercase tracking-wider text-gray-500 mb-1">Call Us</p>
-                                            <a href="tel:+0201552479991" className="text-xl text-white font-medium hover:text-firefly-green transition-colors">
-                                                +0201552479991
+                                            <a href="tel:+201552479991" className="text-xl text-white font-medium hover:text-firefly-green transition-colors">
+                                                01552479991
                                             </a>
                                         </div>
                                     </div>

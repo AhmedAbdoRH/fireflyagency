@@ -67,7 +67,9 @@ const FloatingButton: React.FC = () => {
 
   return (
     <a
-      href="mailto:hello@fireflyagency.com"
+      href="https://wa.me/+201552479991"
+      target="_blank"
+      rel="noopener noreferrer"
       className={`fixed bottom-6 left-6 z-50 group transition-all duration-1000 ease-out ${
         visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 pointer-events-none'
       }`}

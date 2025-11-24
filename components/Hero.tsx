@@ -304,7 +304,6 @@ const Hero: React.FC<HeroProps> = ({ onShowReel }) => {
                                     src="/Hero.mp4"
                                     playsInline
                                     autoPlay
-                                    muted
                                     onTimeUpdate={handleTimeUpdate}
                                     className="w-full h-full object-cover aspect-[9/16] scale-105"
                                 />
@@ -338,7 +337,6 @@ const Hero: React.FC<HeroProps> = ({ onShowReel }) => {
                                         src="/Hero.mp4"
                                         playsInline
                                         autoPlay
-                                        muted
                                         onTimeUpdate={handleTimeUpdate}
                                         className="w-full h-full object-cover aspect-[9/16] scale-105"
                                     />

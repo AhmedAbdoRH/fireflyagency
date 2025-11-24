@@ -62,8 +62,8 @@ const Footer: React.FC = () => {
             <h4 className="text-white font-bold mb-6">Contact Us</h4>
             <ul className="space-y-4 text-sm text-gray-400">
               <li><a href="mailto:info@firefly-agency.com" className="hover:text-firefly-green transition-colors">info@firefly-agency.com</a></li>
-              <li><a href="https://api.whatsapp.com/send?phone=0201552479991" className="hover:text-firefly-green transition-colors">WhatsApp: +0201552479991</a></li>
-              <li><a href="tel:+0201552479991" className="hover:text-firefly-green transition-colors">Phone: +0201552479991</a></li>
+              <li><a href="https://api.whatsapp.com/send?phone=201552479991" className="hover:text-firefly-green transition-colors">WhatsApp: 01552479991</a></li>
+              <li><a href="tel:+201552479991" className="hover:text-firefly-green transition-colors">Phone: 01552479991</a></li>
             </ul>
           </div>
 
