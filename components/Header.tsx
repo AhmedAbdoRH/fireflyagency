@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, Home } from 'lucide-react';
 
 interface HeaderProps {
   currentPage: string;
@@ -59,11 +59,11 @@ const Header: React.FC<HeaderProps> = ({ currentPage, onNavigate }) => {
         }`}
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center">
+        <div className="flex justify-start items-center">
 
           {/* Brand / Logo */}
           <div
-            className="flex items-center gap-4 group cursor-pointer select-none"
+            className="flex items-center gap-4 group cursor-pointer select-none ml-auto md:ml-0"
             onClick={() => {
               onNavigate('home');
               window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -117,7 +117,7 @@ const Header: React.FC<HeaderProps> = ({ currentPage, onNavigate }) => {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="md:hidden text-white p-2 hover:text-firefly-yellow transition-colors"
+            className="md:hidden text-white p-2 hover:text-firefly-yellow transition-colors ml-auto"
           >
             {isMobileMenuOpen ? <X className="w-9 h-9" /> : <Menu className="w-9 h-9" />}
           </button>
