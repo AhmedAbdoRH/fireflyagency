@@ -61,10 +61,21 @@ const Header: React.FC<HeaderProps> = ({ currentPage, onNavigate }) => {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-start items-center">
 
+          {/* Back to Home Button */}
+          <button
+            onClick={() => {
+              onNavigate('home');
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
+            className="md:hidden text-white p-2 hover:text-firefly-yellow transition-colors text-2xl"
+            aria-label="Back to Home"
+          >
+            <Home className="w-9 h-9" />
+          </button>
+
           {/* Brand / Logo */}
           <div
-            className="flex items-center gap-4 group cursor-pointer select-none ml-auto md:ml-0"
-            onClick={() => {
+            className="flex items-center gap-4 group cursor-pointer select-none ml-auto md:ml-0"           onClick={() => {
               onNavigate('home');
               window.scrollTo({ top: 0, behavior: 'smooth' });
             }}
