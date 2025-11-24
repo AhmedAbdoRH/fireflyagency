@@ -1,5 +1,5 @@
 import React from 'react';
-import { SERVICES } from '../../constants';
+import { SERVICES } from "../constants";
 import { Twitter, Linkedin, Instagram, Github, Flame } from 'lucide-react';
 
 const Footer: React.FC = () => {
@@ -16,7 +16,7 @@ const Footer: React.FC = () => {
               <div className="relative w-14 h-14 flex items-center justify-center">
                 {/* Use Logo.png */}
                 <img
-                  src="/Logo.png"
+                  src="/Fly.png"
                   alt="Firefly Creative Solutions Logo"
                   className="w-full h-full object-contain drop-shadow-[0_0_8px_rgba(226,216,43,0.3)]"
                 />
@@ -31,7 +31,7 @@ const Footer: React.FC = () => {
               </div>
             </div>
             <p className="text-gray-400 text-sm leading-relaxed mb-6">
-              Illuminating the path to digital dominance. We build the engines that power modern business growth.
+              Illuminating the path to digital dominance — we engineer the engines that fuel sustainable business growth.
             </p>
             <div className="flex gap-4">
               <a href="https://instagram.com/firefly_creativesolutions" className="text-gray-500 hover:text-firefly-yellow transition-colors">
@@ -41,6 +41,24 @@ const Footer: React.FC = () => {
                 <Linkedin className="w-5 h-5" />
               </a>
             </div>
+          </div>
+
+          {/* Our Services */}
+          <div>
+            <h4 className="text-white font-bold mb-6">Our Services</h4>
+            <ul className="space-y-4 text-sm text-gray-400">
+              {SERVICES.map((service, index) => (
+                <li key={index}>
+                  <a href="#" className="hover:text-firefly-green transition-colors">
+                    {service.title}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Contact Us */}
+          <div>
             <h4 className="text-white font-bold mb-6">Contact Us</h4>
             <ul className="space-y-4 text-sm text-gray-400">
               <li><a href="mailto:info@firefly-agency.com" className="hover:text-firefly-green transition-colors">info@firefly-agency.com</a></li>

@@ -12,7 +12,7 @@ const WhyUs: React.FC = () => {
                 <div className="max-w-4xl mx-auto text-center">
                     <Reveal width="100%">
                         <h2 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold mb-8 leading-tight">
-                            Why partnering with us is a <span className="text-firefly-yellow">game changer?</span>
+                            Why Is partnering with us is a <span className="text-firefly-yellow">game changer?</span>
                         </h2>
                     </Reveal>
 

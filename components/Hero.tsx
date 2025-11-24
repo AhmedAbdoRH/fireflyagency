@@ -54,10 +54,8 @@ const Hero: React.FC<HeroProps> = ({ onShowReel }) => {
 
           if (playPromise !== undefined) {
             playPromise.catch((error) => {
-              // Autoplay with sound might be prevented by browser policies
-              // In this case, we can log the error or play muted as a fallback
               console.log('Autoplay with sound prevented:', error);
-              // Optionally, play muted as a fallback if sound autoplay is blocked
+              // Fallback to muted if blocked
               video.muted = true;
               video.play();
             });
@@ -78,9 +76,31 @@ const Hero: React.FC<HeroProps> = ({ onShowReel }) => {
     };
   }, []);
 
-  // Attempt to unmute on first user interaction if autoplay was muted
+  // Attempt to play with sound automatically
   useEffect(() => {
-    const handleInteraction = () => {
+    const playWithSound = async (video: HTMLVideoElement) => {
+      try {
+        video.muted = false;
+        video.volume = 1;
+        await video.play();
+      } catch (err) {
+        console.log('Autoplay with sound failed, falling back to muted', err);
+        video.muted = true;
+        await video.play();
+      }
+    };
+
+    if (videoRef.current) {
+      playWithSound(videoRef.current);
+    }
+    if (mobileVideoRef.current) {
+      playWithSound(mobileVideoRef.current);
+    }
+  }, []);
+
+  // Global unmute on ANY interaction (Scroll, Click, Mouse move)
+  useEffect(() => {
+    const unmuteAll = () => {
       if (videoRef.current && videoRef.current.muted) {
         videoRef.current.muted = false;
         videoRef.current.volume = 1;
@@ -89,20 +109,29 @@ const Hero: React.FC<HeroProps> = ({ onShowReel }) => {
         mobileVideoRef.current.muted = false;
         mobileVideoRef.current.volume = 1;
       }
-      // Remove listeners after first interaction
-      window.removeEventListener('click', handleInteraction);
-      window.removeEventListener('touchstart', handleInteraction);
-      window.removeEventListener('keydown', handleInteraction);
+
+      // Remove listeners once unmuted
+      if ((videoRef.current && !videoRef.current.muted) || (mobileVideoRef.current && !mobileVideoRef.current.muted)) {
+        window.removeEventListener('click', unmuteAll);
+        window.removeEventListener('scroll', unmuteAll);
+        window.removeEventListener('mousemove', unmuteAll);
+        window.removeEventListener('touchstart', unmuteAll);
+        window.removeEventListener('keydown', unmuteAll);
+      }
     };
 
-    window.addEventListener('click', handleInteraction);
-    window.addEventListener('touchstart', handleInteraction);
-    window.addEventListener('keydown', handleInteraction);
+    window.addEventListener('click', unmuteAll);
+    window.addEventListener('scroll', unmuteAll);
+    window.addEventListener('mousemove', unmuteAll);
+    window.addEventListener('touchstart', unmuteAll);
+    window.addEventListener('keydown', unmuteAll);
 
     return () => {
-      window.removeEventListener('click', handleInteraction);
-      window.removeEventListener('touchstart', handleInteraction);
-      window.removeEventListener('keydown', handleInteraction);
+      window.removeEventListener('click', unmuteAll);
+      window.removeEventListener('scroll', unmuteAll);
+      window.removeEventListener('mousemove', unmuteAll);
+      window.removeEventListener('touchstart', unmuteAll);
+      window.removeEventListener('keydown', unmuteAll);
     };
   }, []);
 
@@ -321,7 +350,7 @@ const Hero: React.FC<HeroProps> = ({ onShowReel }) => {
                 </button>
                 <button className="w-full sm:w-auto px-8 py-4 bg-transparent border border-white/20 hover:border-firefly-green hover:text-firefly-green text-white font-semibold rounded-lg transition-all duration-300 flex items-center justify-center gap-2 text-lg backdrop-blur-sm hover:bg-white/5" onClick={onShowReel}>
                   <Play className="w-5 h-5 fill-current" />
-                  View Showreel
+                  Previous Work
                 </button>
               </div>
             </Reveal>

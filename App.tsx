@@ -4,10 +4,10 @@ import Footer from './components/Footer';
 import CustomCursor from './components/CustomCursor';
 import FlyingButterfly from './components/FlyingButterfly';
 import FloatingButton from './components/FloatingButton';
-import Hero from './components/Hero';
 import Home from './pages/Home';
 import About from './pages/About';
 import ShowReel from './pages/ShowReel';
+import Contact from './pages/Contact';
 
 const App: React.FC = () => {
     const [loading, setLoading] = useState(false);
@@ -25,6 +25,7 @@ const App: React.FC = () => {
                     {currentPage === 'home' && <Home onShowReel={() => setCurrentPage('showreel')} />}
                     {currentPage === 'about' && <About />}
                     {currentPage === 'showreel' && <ShowReel onNavigateHome={() => setCurrentPage('home')} />}
+                    {currentPage === 'contact' && <Contact />}
                 </main>
 
                 <Footer />

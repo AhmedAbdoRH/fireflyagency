@@ -18,14 +18,14 @@ import Reveal from './Reveal';
 const industries = [
     { name: 'Medical', icon: <Stethoscope className="w-6 h-6" /> },
     { name: 'Personal Branding', icon: <UserCircle className="w-6 h-6" /> },
-    { name: 'Industrial', icon: <Factory className="w-6 h-6" /> },
+    { name: 'Industrial Services', icon: <Factory className="w-6 h-6" /> },
     { name: 'Cosmetics', icon: <Sparkles className="w-6 h-6" /> },
     { name: 'Pharmacies', icon: <Pill className="w-6 h-6" /> },
     { name: 'Fashion', icon: <Scissors className="w-6 h-6" /> },
     { name: 'Construction', icon: <HardHat className="w-6 h-6" /> },
     { name: 'Restaurants', icon: <Utensils className="w-6 h-6" /> },
     { name: 'Commercial', icon: <Building2 className="w-6 h-6" /> },
-    { name: 'Courses', icon: <GraduationCap className="w-6 h-6" /> },
+    { name: 'Educational Courses', icon: <GraduationCap className="w-6 h-6" /> },
     { name: 'Travel Agencies', icon: <Plane className="w-6 h-6" /> },
     { name: 'Gold', icon: <Gem className="w-6 h-6" /> },
 ];
@@ -39,7 +39,7 @@ const Industries: React.FC = () => {
                 <div className="max-w-4xl mx-auto text-center mb-16">
                     <Reveal width="100%">
                         <h2 className="font-heading text-3xl md:text-4xl font-bold mb-6 leading-relaxed">
-                            Let's walk you-thru how we crafted these services for our <span className="text-firefly-yellow">partners and clients</span>.
+                            Walk you through how we crafted these services for our <span className="text-firefly-yellow">partners and clients</span>
                         </h2>
                     </Reveal>
                     <Reveal delay={200} width="100%">

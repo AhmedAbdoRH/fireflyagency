@@ -55,14 +55,14 @@ const Services: React.FC = () => {
             <div className="space-y-6">
               <div className="space-y-3">
                 <h3 className="font-heading text-3xl md:text-4xl font-bold text-white">
-                  Why partnering with us is a <span className="text-firefly-green">game changer?</span>
+                  Why Is partnering with us is a <span className="text-firefly-green">game changer?</span>
                 </h3>
                 <div className="w-20 h-1 mx-auto bg-gradient-to-r from-firefly-yellow via-white to-firefly-green rounded-full"></div>
               </div>
               <div className="max-w-2xl mx-auto text-left bg-white/5 border border-white/10 rounded-3xl p-6 md:p-8 shadow-[0_20px_60px_rgba(0,0,0,0.35)] space-y-6">
                 <p className="text-gray-200 text-lg leading-relaxed">
                   <span className="block mb-4 text-white/90">
-                    At fire fly we ensure that not only your marketing objectives are being met, but also that your business is thriving.
+                    At Firefly we ensure that not only your marketing objectives are being met, but also that your business is thriving.
                   </span>
                   <span className="block text-white">
                     We're not just about quick wins; we focus on growth that builds your brand.
@@ -102,7 +102,7 @@ const Services: React.FC = () => {
               <div className="flex flex-col items-center text-center p-6 rounded-xl bg-white/5 border border-white/10">
                 <ClipboardList className="w-12 h-12 text-firefly-green mb-4" />
                 <h4 className="text-xl font-bold text-white mb-2">Strategize</h4>
-                <p className="text-gray-400">Create a tailored strategy for your business with our proposed recommendations and road map. We define clear objectives, KPIs, and budget allocations.</p>
+                <p className="text-gray-400">Create a tailored strategy for your business with our proposed recommendations and Roadmap. We define clear objectives, KPIs, and budget allocations.</p>
               </div>
             </Reveal>
             <Reveal delay={600}>
@@ -116,14 +116,14 @@ const Services: React.FC = () => {
               <div className="flex flex-col items-center text-center p-6 rounded-xl bg-white/5 border border-white/10">
                 <TrendingUp className="w-12 h-12 text-firefly-green mb-4" />
                 <h4 className="text-xl font-bold text-white mb-2">Optimization</h4>
-                <p className="text-gray-400">Tracking performance to ensure your business is on track and adjusting strategies when needed.</p>
+                <p className="text-gray-400">We track performance to ensure your business is on track and adjusting strategies when needed.</p>
               </div>
             </Reveal>
           </div>
         </div>
 
         <Reveal width="100%">
-          <div className="text-center mb-16">
+          <div id="our-services-list" className="text-center mb-16 pt-20 -mt-20">
             <span className="text-firefly-yellow font-medium tracking-wider uppercase text-sm mb-2 block">What We Do</span>
             <h2 className="font-heading text-4xl md:text-5xl font-bold text-white inline-block relative">
               Our Services

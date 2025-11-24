@@ -59,17 +59,17 @@ export const SERVICES: ServiceItem[] = [
     icon: Image,
   },
   {
-    title: "Photo Shooting",
+    title: "Photography & Posts design",
     description: "High-quality professional photography services for products, events, and corporate profiles.",
     icon: Camera,
   },
 ];
 
 export const STATS: StatItem[] = [
-  { label: "Revenue Generated", value: "$500k+" },
-  { label: "Leads Qualified", value: "5k+" },
+  { label: "Revenue Generated", value: "$200k+" },
+  { label: "Leads Qualified", value: "2k+" },
   { label: "Client Satisfaction", value: "99%" },
-  { label: "Campaigns Launched", value: "50+" },
+  { label: "Campaigns Launched", value: "300+" },
 ];
 
 export const TESTIMONIALS: TestimonialItem[] = [

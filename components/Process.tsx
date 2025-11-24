@@ -15,7 +15,7 @@ const steps = [
     {
         id: 2,
         title: 'Strategize',
-        description: 'Create a tailored strategy for your business with our proposed recommendations and road map. We define clear objectives, KPIs, and budget allocations.',
+        description: 'Create a tailored strategy for your business with our proposed recommendations and Roadmap. We define clear objectives, KPIs, and budget allocations.',
         icon: <FileText className="w-8 h-8" />,
         color: 'text-firefly-green',
         bg: 'bg-firefly-green/10',
@@ -33,7 +33,7 @@ const steps = [
     {
         id: 4,
         title: 'Optimization',
-        description: 'Tracking performance to ensure your business is on track and adjusting strategies when needed.',
+        description: 'We track performance to ensure your business is on track and adjusting strategies when needed.',
         icon: <TrendingUp className="w-8 h-8" />,
         color: 'text-purple-400',
         bg: 'bg-purple-400/10',

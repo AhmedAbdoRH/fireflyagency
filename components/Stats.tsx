@@ -7,10 +7,8 @@ const CountUp: React.FC<{ value: string; label: string }> = ({ value, label }) =
   const elementRef = useRef<HTMLDivElement>(null);
   const hasAnimated = useRef(false);
 
-  // Extract number and suffix (e.g., "50" and "M+")
+  // Extract just the number part for animation
   const numberPart = parseFloat(value.replace(/[^0-9.]/g, ''));
-  const prefix = value.match(/^[^0-9]*/)?.[0] ?? '';
-  const suffix = value.match(/[^0-9]*$/)?.[0] ?? '';
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -28,7 +26,14 @@ const CountUp: React.FC<{ value: string; label: string }> = ({ value, label }) =
             const easeProgress = 1 - Math.pow(1 - progress, 4);
             
             const currentCount = Math.floor(easeProgress * numberPart);
-            setDisplayValue(`${prefix}${currentCount}${suffix}`);
+            
+            // Reconstruct the value with the original suffix
+            const originalSuffix = value.replace(/^[\d.,$]+/, ''); // Get everything after the number and symbols
+            if (value.includes('$')) {
+              setDisplayValue(`$${currentCount}${originalSuffix}`);
+            } else {
+              setDisplayValue(`${currentCount}${originalSuffix}`);
+            }
 
             if (progress < 1) {
               window.requestAnimationFrame(step);
@@ -48,7 +53,7 @@ const CountUp: React.FC<{ value: string; label: string }> = ({ value, label }) =
     }
 
     return () => observer.disconnect();
-  }, [value, numberPart, prefix, suffix]);
+  }, [value, numberPart]);
 
   return (
     <div ref={elementRef} className="p-4">

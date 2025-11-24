@@ -21,8 +21,8 @@ const Header: React.FC<HeaderProps> = ({ currentPage, onNavigate }) => {
   const navLinks = [
     { name: 'Home', value: 'home' },
     { name: 'About Us', value: 'about' },
-    { name: 'Our Services', value: 'home', section: 'services' },
-    { name: 'Contact', value: 'home', section: 'contact' },
+    { name: 'Our Services', value: 'home', section: 'our-services-list' },
+    { name: 'Contact', value: 'contact' },
   ];
 
   const handleNavClick = (e: React.MouseEvent, link: any) => {
@@ -31,13 +31,21 @@ const Header: React.FC<HeaderProps> = ({ currentPage, onNavigate }) => {
     setIsMobileMenuOpen(false);
 
     if (link.section) {
-      // Small timeout to allow page change if needed
-      setTimeout(() => {
+      // Retry mechanism to ensure element exists after page transition
+      let attempts = 0;
+      const maxAttempts = 20; // Try for ~2 seconds
+
+      const attemptScroll = () => {
         const element = document.getElementById(link.section);
         if (element) {
           element.scrollIntoView({ behavior: 'smooth' });
+        } else if (attempts < maxAttempts) {
+          attempts++;
+          setTimeout(attemptScroll, 100);
         }
-      }, 100);
+      };
+
+      attemptScroll();
     } else {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
@@ -56,7 +64,10 @@ const Header: React.FC<HeaderProps> = ({ currentPage, onNavigate }) => {
           {/* Brand / Logo */}
           <div
             className="flex items-center gap-4 group cursor-pointer select-none"
-            onClick={() => onNavigate('home')}
+            onClick={() => {
+              onNavigate('home');
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
           >
             {/* Logo Container */}
             <div className="relative w-20 h-20 flex items-center justify-center transition-transform duration-500 group-hover:scale-110 translate-y-2">
@@ -85,7 +96,6 @@ const Header: React.FC<HeaderProps> = ({ currentPage, onNavigate }) => {
               <a
                 key={link.name}
                 href={`#${link.section ?? link.value}`}
-
                 onClick={(e) => handleNavClick(e, link)}
                 className={`text-sm font-medium tracking-widest uppercase relative group overflow-hidden transition-colors ${currentPage === link.value && !link.section ? 'text-firefly-yellow' : 'text-gray-200 hover:text-firefly-yellow'
                   }`}
@@ -95,7 +105,10 @@ const Header: React.FC<HeaderProps> = ({ currentPage, onNavigate }) => {
                   }`}></span>
               </a>
             ))}
-            <button className="relative overflow-hidden bg-firefly-yellow hover:bg-white text-firefly-dark font-bold py-3 px-7 rounded-full transition-all duration-300 transform hover:scale-105 shadow-[0_0_15px_rgba(226,216,43,0.4)] hover:shadow-[0_0_25px_rgba(255,255,255,0.6)] group">
+            <button
+              onClick={(e) => handleNavClick(e, { value: 'home', section: 'cta-section' })}
+              className="relative overflow-hidden bg-firefly-yellow hover:bg-white text-firefly-dark font-bold py-3 px-7 rounded-full transition-all duration-300 transform hover:scale-105 shadow-[0_0_15px_rgba(226,216,43,0.4)] hover:shadow-[0_0_25px_rgba(255,255,255,0.6)] group"
+            >
               <span className="relative z-10">Get Started</span>
               <div className="absolute inset-0 h-full w-full bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full group-hover:animate-[shimmer_1.5s_infinite]"></div>
             </button>
@@ -118,7 +131,6 @@ const Header: React.FC<HeaderProps> = ({ currentPage, onNavigate }) => {
             <a
               key={link.name}
               href={`#${link.section ?? link.value}`}
-
               onClick={(e) => handleNavClick(e, link)}
               className={`text-lg font-medium border-l-2 pl-4 transition-all ${currentPage === link.value && !link.section
                 ? 'text-firefly-yellow border-firefly-yellow'
@@ -128,7 +140,13 @@ const Header: React.FC<HeaderProps> = ({ currentPage, onNavigate }) => {
               {link.name}
             </a>
           ))}
-          <button className="w-full mt-4 bg-gradient-to-r from-firefly-yellow to-firefly-green text-firefly-dark font-bold py-4 px-6 rounded-xl shadow-lg">
+          <button
+            onClick={() => {
+              onNavigate('contact');
+              setIsMobileMenuOpen(false);
+            }}
+            className="w-full mt-4 bg-gradient-to-r from-firefly-yellow to-firefly-green text-firefly-dark font-bold py-4 px-6 rounded-xl shadow-lg"
+          >
             Book a Call
           </button>
         </div>

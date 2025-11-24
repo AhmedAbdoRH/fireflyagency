@@ -4,12 +4,12 @@ import Reveal from './Reveal';
 
 const Cta: React.FC = () => {
   return (
-    <section className="py-20 px-4">
+    <section id="cta-section" className="py-20 px-4">
       <div className="container mx-auto max-w-6xl">
         <Reveal width="100%">
           <div className="relative rounded-[2.5rem] overflow-hidden bg-gradient-to-r from-firefly-yellow via-firefly-green to-firefly-yellow p-[1px] animate-gradient-xy bg-[length:400%_400%]">
             <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-20 mix-blend-overlay"></div>
-            
+
             <div className="bg-firefly-dark rounded-[2.4rem] py-20 px-6 md:px-16 text-center relative overflow-hidden group">
               {/* Background glows that move on hover */}
               <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-[600px] h-[300px] bg-firefly-yellow/10 blur-[100px] rounded-full group-hover:bg-firefly-green/10 transition-colors duration-1000"></div>
@@ -19,7 +19,7 @@ const Cta: React.FC = () => {
                   Ready to <span className="text-firefly-yellow">Light Up</span> Your Industry?
                 </h2>
               </Reveal>
-              
+
               <Reveal delay={300} width="100%">
                 <p className="relative z-10 text-gray-300 text-lg md:text-xl max-w-2xl mx-auto mb-10">
                   Stop relying on guesswork. Implement the systems that top-performing companies use to dominate their market.
