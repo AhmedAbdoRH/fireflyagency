@@ -71,52 +71,35 @@ const Hero: React.FC<HeroProps> = ({ onShowReel }) => {
         };
     }, []);
 
-    // Auto-unmute on load - aggressive strategy
+    // Auto-start video (muted first, then try to unmute)
     useEffect(() => {
-        const attemptUnmute = async (video: HTMLVideoElement) => {
+        const startVideo = async (video: HTMLVideoElement) => {
+            video.muted = true;
             try {
-                // First try: play with sound immediately
-                video.muted = false;
-                video.volume = 1;
                 await video.play();
-                console.log('✅ Video playing with sound!');
-            } catch (err) {
-                // If that fails, start muted and try to unmute after a delay
-                if (!userInteracted.current) {
-                    console.log('⚠️ Autoplay with sound blocked, trying workaround...');
-                    video.muted = true;
-                    try {
-                        await video.play();
-                        console.log('▶️ Video playing muted');
-                    } catch (e) {
-                        console.log('❌ Even muted autoplay failed');
-                    }
+                console.log('▶️ Video started');
 
-                    // Try to unmute after 100ms
-                    setTimeout(async () => {
-                        try {
-                            video.muted = false;
-                            video.volume = 1;
-                            await video.play();
-                            console.log('🔊 Sound enabled after delay!');
-                        } catch (retryErr) {
-                            console.log('🔇 Sound still blocked, waiting for user interaction');
-                        }
-                    }, 100);
-                }
+                // Try unmuting after short delay
+                setTimeout(() => {
+                    video.muted = false;
+                    video.volume = 1;
+                    console.log('🔊 Trying to enable sound...');
+                }, 300);
+            } catch (err) {
+                console.log('❌ Video failed to start:', err);
             }
         };
 
         const isMobile = window.innerWidth < 1024;
 
         if (isMobile && mobileVideoRef.current) {
-            attemptUnmute(mobileVideoRef.current);
+            startVideo(mobileVideoRef.current);
         } else if (!isMobile && videoRef.current) {
-            attemptUnmute(videoRef.current);
+            startVideo(videoRef.current);
         }
     }, []);
 
-    // Global unmute on ANY interaction
+    // Unmute on user interaction
     useEffect(() => {
         const handleInteraction = async () => {
             userInteracted.current = true;
@@ -127,15 +110,11 @@ const Hero: React.FC<HeroProps> = ({ onShowReel }) => {
             if (activeVideo && activeVideo.muted) {
                 activeVideo.muted = false;
                 activeVideo.volume = 1;
-                try {
-                    await activeVideo.play();
-                    console.log('🎉 Sound enabled via user interaction!');
-                    ['click', 'scroll', 'mousemove', 'touchstart', 'keydown'].forEach(event =>
-                        window.removeEventListener(event, handleInteraction)
-                    );
-                } catch (e) {
-                    console.log('Still waiting for interaction...');
-                }
+                console.log('🎉 Sound enabled!');
+
+                ['click', 'scroll', 'mousemove', 'touchstart', 'keydown'].forEach(event =>
+                    window.removeEventListener(event, handleInteraction)
+                );
             }
         };
 
@@ -307,6 +286,8 @@ const Hero: React.FC<HeroProps> = ({ onShowReel }) => {
                                     src="/Hero.mp4"
                                     playsInline
                                     autoPlay
+                                    muted
+                                    loop
                                     onTimeUpdate={handleTimeUpdate}
                                     className="w-full h-full object-cover aspect-[9/16] scale-105"
                                 />
@@ -338,6 +319,8 @@ const Hero: React.FC<HeroProps> = ({ onShowReel }) => {
                                         src="/Hero.mp4"
                                         playsInline
                                         autoPlay
+                                        muted
+                                        loop
                                         onTimeUpdate={handleTimeUpdate}
                                         className="w-full h-full object-cover aspect-[9/16] scale-105"
                                     />
