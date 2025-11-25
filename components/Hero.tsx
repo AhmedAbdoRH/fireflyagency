@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { ArrowRight, Sparkles, Play } from 'lucide-react';
+import { ArrowRight, Sparkles, Play, Volume2, VolumeX } from 'lucide-react';
 import Reveal from './Reveal';
 import TextReveal from './TextReveal';
 
@@ -11,14 +11,24 @@ const Hero: React.FC<HeroProps> = ({ onShowReel }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const mouseRef = useRef({ x: 0, y: 0 });
   const videoRef = useRef<HTMLVideoElement>(null);
+  const [isMuted, setIsMuted] = React.useState(true);
 
-  const handleTimeUpdate = () => {
+  useEffect(() => {
     if (videoRef.current) {
-      const video = videoRef.current;
-      // Stop 1.5 seconds before the end
-      if (video.duration && video.currentTime >= video.duration - 1.5) {
-        video.pause();
-      }
+      videoRef.current.muted = false;
+      videoRef.current.play().catch(() => {
+        // Autoplay with sound failed, fallback to muted
+        videoRef.current!.muted = true;
+        setIsMuted(true);
+        videoRef.current!.play();
+      });
+    }
+  }, []);
+
+  const toggleSound = () => {
+    if (videoRef.current) {
+      videoRef.current.muted = !videoRef.current.muted;
+      setIsMuted(videoRef.current.muted);
     }
   };
 
@@ -201,12 +211,19 @@ const Hero: React.FC<HeroProps> = ({ onShowReel }) => {
                 <div className="absolute inset-0 bg-gradient-to-t from-firefly-dark/60 via-transparent to-transparent z-10 pointer-events-none"></div>
 
                 <video
+                  ref={videoRef}
                   src="/Hero.mp4"
                   autoPlay
                   loop
                   playsInline
                   className="w-full h-full object-cover aspect-[9/16] scale-105"
                 />
+                <button
+                  onClick={toggleSound}
+                  className="absolute bottom-4 right-4 p-2 bg-black/50 hover:bg-black/70 rounded-full text-white transition-colors z-20"
+                >
+                  {isMuted ? <VolumeX size={20} /> : <Volume2 size={20} />}
+                </button>
               </div>
             </Reveal>
           </div>
@@ -247,6 +264,7 @@ const Hero: React.FC<HeroProps> = ({ onShowReel }) => {
                   <video
                     src="/Hero.mp4"
                     autoPlay
+                    muted={isMuted}
                     loop
                     playsInline
                     className="w-full h-full object-cover aspect-[9/16] scale-105"
