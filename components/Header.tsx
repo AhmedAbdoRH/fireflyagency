@@ -63,7 +63,7 @@ const Header: React.FC<HeaderProps> = ({ currentPage, onNavigate }) => {
 
           {/* Brand / Logo */}
           <div
-            className="flex items-center gap-4 group cursor-pointer select-none ml-auto md:ml-0"
+            className="flex items-center gap-4 group cursor-pointer select-none ml-auto md:ml-0 md:mr-16"
             onClick={() => {
               onNavigate('home');
               window.scrollTo({ top: 0, behavior: 'smooth' });

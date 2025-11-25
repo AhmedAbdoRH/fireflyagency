@@ -25,7 +25,7 @@ const industries = [
     { name: 'Construction', icon: <HardHat className="w-6 h-6" /> },
     { name: 'Restaurants', icon: <Utensils className="w-6 h-6" /> },
     { name: 'Commercial', icon: <Building2 className="w-6 h-6" /> },
-    { name: 'Educational Courses', icon: <GraduationCap className="w-6 h-6" /> },
+    { name: 'Education', icon: <GraduationCap className="w-6 h-6" /> },
     { name: 'Travel Agencies', icon: <Plane className="w-6 h-6" /> },
     { name: 'Gold', icon: <Gem className="w-6 h-6" /> },
 ];

@@ -59,7 +59,7 @@ export const SERVICES: ServiceItem[] = [
     icon: Image,
   },
   {
-    title: "Photography & Posts design",
+    title: "Photography",
     description: "High-quality professional photography services for products, events, and corporate profiles.",
     icon: Camera,
   },

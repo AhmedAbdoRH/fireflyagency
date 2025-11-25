@@ -6,7 +6,7 @@ interface Props {
   delay?: number;
 }
 
-const TextReveal: React.FC<Props> = ({ text, className = "", delay = 0 }) => {
+const TextReveal: React.FC<Props> = ({ text = "", className = "", delay = 0 }) => {
   const words = text.split(" ");
 
   return (
