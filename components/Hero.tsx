@@ -10,26 +10,63 @@ interface HeroProps {
 const Hero: React.FC<HeroProps> = ({ onShowReel }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const mouseRef = useRef({ x: 0, y: 0 });
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const [isMuted, setIsMuted] = React.useState(true);
+  const desktopVideoRef = useRef<HTMLVideoElement>(null);
+  const mobileVideoRef = useRef<HTMLVideoElement>(null);
+  const [isMuted, setIsMuted] = React.useState(false);
 
   useEffect(() => {
-    if (videoRef.current) {
-      videoRef.current.muted = false;
-      videoRef.current.play().catch(() => {
-        // Autoplay with sound failed, fallback to muted
-        videoRef.current!.muted = true;
+    const attemptPlay = (video: HTMLVideoElement) => {
+      video.muted = false;
+      video.volume = 1.0;
+      video.play().catch(() => {
+        console.log('Autoplay with sound failed, falling back to muted');
         setIsMuted(true);
-        videoRef.current!.play();
+        video.muted = true;
+        video.play();
       });
-    }
+    };
+
+    if (desktopVideoRef.current) attemptPlay(desktopVideoRef.current);
+    if (mobileVideoRef.current) attemptPlay(mobileVideoRef.current);
+
+    // Unlock audio on first user interaction
+    const unlockAudio = () => {
+      const unlock = (video: HTMLVideoElement | null) => {
+        if (video && video.muted) {
+          video.muted = false;
+          video.play();
+        }
+      };
+      unlock(desktopVideoRef.current);
+      unlock(mobileVideoRef.current);
+      setIsMuted(false);
+
+      // Remove listeners after first interaction
+      window.removeEventListener('click', unlockAudio);
+      window.removeEventListener('keydown', unlockAudio);
+      window.removeEventListener('touchstart', unlockAudio);
+      window.removeEventListener('mousemove', unlockAudio);
+    };
+
+    window.addEventListener('click', unlockAudio);
+    window.addEventListener('keydown', unlockAudio);
+    window.addEventListener('touchstart', unlockAudio);
+    window.addEventListener('mousemove', unlockAudio);
+
+    return () => {
+      window.removeEventListener('click', unlockAudio);
+      window.removeEventListener('keydown', unlockAudio);
+      window.removeEventListener('touchstart', unlockAudio);
+      window.removeEventListener('mousemove', unlockAudio);
+    };
   }, []);
 
   const toggleSound = () => {
-    if (videoRef.current) {
-      videoRef.current.muted = !videoRef.current.muted;
-      setIsMuted(videoRef.current.muted);
-    }
+    const newMutedState = !isMuted;
+    setIsMuted(newMutedState);
+
+    if (desktopVideoRef.current) desktopVideoRef.current.muted = newMutedState;
+    if (mobileVideoRef.current) mobileVideoRef.current.muted = newMutedState;
   };
 
   useEffect(() => {
@@ -211,9 +248,10 @@ const Hero: React.FC<HeroProps> = ({ onShowReel }) => {
                 <div className="absolute inset-0 bg-gradient-to-t from-firefly-dark/60 via-transparent to-transparent z-10 pointer-events-none"></div>
 
                 <video
-                  ref={videoRef}
+                  ref={desktopVideoRef}
                   src="/Hero.mp4"
                   autoPlay
+                  muted={isMuted}
                   loop
                   playsInline
                   className="w-full h-full object-cover aspect-[9/16] scale-105"
@@ -262,6 +300,7 @@ const Hero: React.FC<HeroProps> = ({ onShowReel }) => {
                   <div className="absolute inset-0 bg-gradient-to-t from-firefly-dark/60 via-transparent to-transparent z-10 pointer-events-none"></div>
 
                   <video
+                    ref={mobileVideoRef}
                     src="/Hero.mp4"
                     autoPlay
                     muted={isMuted}
@@ -269,6 +308,12 @@ const Hero: React.FC<HeroProps> = ({ onShowReel }) => {
                     playsInline
                     className="w-full h-full object-cover aspect-[9/16] scale-105"
                   />
+                  <button
+                    onClick={toggleSound}
+                    className="absolute bottom-4 right-4 p-2 bg-black/50 hover:bg-black/70 rounded-full text-white transition-colors z-20"
+                  >
+                    {isMuted ? <VolumeX size={20} /> : <Volume2 size={20} />}
+                  </button>
                 </div>
               </Reveal>
             </div>
