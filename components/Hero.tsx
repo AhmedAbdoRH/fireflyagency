@@ -10,6 +10,17 @@ interface HeroProps {
 const Hero: React.FC<HeroProps> = ({ onShowReel }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const mouseRef = useRef({ x: 0, y: 0 });
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  const handleTimeUpdate = () => {
+    if (videoRef.current) {
+      const video = videoRef.current;
+      // Stop 1.5 seconds before the end
+      if (video.duration && video.currentTime >= video.duration - 1.5) {
+        video.pause();
+      }
+    }
+  };
 
   useEffect(() => {
     const canvas = canvasRef.current;
