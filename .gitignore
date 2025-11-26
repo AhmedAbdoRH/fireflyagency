@@ -22,3 +22,9 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Video files (large files)
+public/Videos/**/*.mp4
+public/Videos/**/*.mov
+public/Videos/**/*.avi
+public/Videos/**/*.mkv
