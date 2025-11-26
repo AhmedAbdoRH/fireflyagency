@@ -391,7 +391,10 @@ const Hero: React.FC<HeroProps> = ({ onShowReel }) => {
             {/* Buttons */}
             <Reveal delay={1700} width="100%">
               <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
-                <button className="group w-full sm:w-auto px-8 py-4 bg-firefly-yellow hover:bg-white text-firefly-dark font-bold rounded-lg transition-all duration-300 transform hover:-translate-y-1 hover:shadow-[0_0_30px_rgba(226,216,43,0.5)] flex items-center justify-center gap-2 text-lg overflow-hidden relative">
+                <button
+                  className="w-full sm:w-auto px-8 py-4 bg-transparent border border-white/20 hover:border-firefly-green hover:text-firefly-green text-white font-semibold rounded-lg transition-all duration-300 flex items-center justify-center gap-2 text-lg backdrop-blur-sm hover:bg-white/5"
+                  onClick={() => document.getElementById('cta-section')?.scrollIntoView({ behavior: 'smooth' })}
+                >
                   <span className="relative z-10 flex items-center gap-2">
                     Start Your Growth
                     <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
@@ -399,7 +402,7 @@ const Hero: React.FC<HeroProps> = ({ onShowReel }) => {
                 </button>
 
                 <button
-                  className="w-full sm:w-auto px-8 py-4 bg-transparent border border-white/20 hover:border-firefly-green hover:text-firefly-green text-white font-semibold rounded-lg transition-all duration-300 flex items-center justify-center gap-2 text-lg backdrop-blur-sm hover:bg-white/5"
+                  className="group w-full sm:w-auto px-8 py-4 bg-firefly-yellow hover:bg-white text-firefly-dark font-bold rounded-lg transition-all duration-300 transform hover:-translate-y-1 hover:shadow-[0_0_30px_rgba(226,216,43,0.5)] flex items-center justify-center gap-2 text-lg overflow-hidden relative"
                   onClick={onShowReel}
                 >
                   <Play className="w-5 h-5 fill-current" />

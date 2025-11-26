@@ -12,12 +12,30 @@ const brandingImages = [
 ];
 
 const designImages = [
-  '/Designs/1.png',
-  '/Designs/2.png',
-  '/Designs/3.png',
-  '/Designs/4.webp',
-  '/Designs/5.webp',
-  '/Designs/6.webp'
+  '/Designs/8.webp',
+  '/Designs/10.webp',
+  '/Designs/13.webp',
+  '/Designs/Copy of 1.webp',
+  '/Designs/Copy of 5.webp',
+  '/Designs/Copy of 7.webp',
+  '/Designs/Copy of Edit-2Bg.webp',
+  '/Designs/Copy of social media 3-3.webp',
+  '/Designs/Fiber laser (1).webp',
+  '/Designs/fried chicken.webp',
+  '/Designs/Gasket machine (3).webp',
+  '/Designs/photo_2025-03-21_00-58-31.webp',
+  '/Designs/pomegranate design (1).webp',
+  '/Designs/Post 10 oc.webp',
+  '/Designs/post 55 (2).webp',
+  '/Designs/post5 (1) (3).webp',
+  '/Designs/post6 (3).webp',
+  '/Designs/post7 (1).webp',
+  '/Designs/post8 (1).webp',
+  '/Designs/post9 (2).webp',
+  '/Designs/Vanilla Breeze post option 2.webp',
+  '/Designs/اختار اللي تحب.webp',
+  '/Designs/جربي طريقة (1).webp',
+  '/Designs/هايشحن طاقتك-01.webp'
 ];
 
 const photographyImages = [
@@ -35,6 +53,14 @@ interface ShowReelProps {
 
 const ShowReel: React.FC<ShowReelProps> = ({ onNavigateHome }) => {
   const [currentBrandingIndex, setCurrentBrandingIndex] = useState(0);
+
+  // Create continuous strips of all images
+  // Create continuous strips of all images
+  const allDesignImages = [...designImages, ...designImages]; // Duplicate for seamless loop
+  // Duplicate photography images 8 times to match the width/count of design images (48 total) for consistent speed
+  const doublePhoto = [...photographyImages, ...photographyImages];
+  const quadPhoto = [...doublePhoto, ...doublePhoto];
+  const allPhotographyImages = [...quadPhoto, ...quadPhoto];
 
   useEffect(() => {
     const brandingInterval = setInterval(() => {
@@ -91,6 +117,14 @@ const ShowReel: React.FC<ShowReelProps> = ({ onNavigateHome }) => {
             filter: blur(15px);
           }
         }
+        @keyframes slideStrip {
+          0% { 
+            transform: translateX(0);
+          }
+          100% { 
+            transform: translateX(-50%);
+          }
+        }
         .bg-gradient-animation {
           background-size: 200% 200%;
           animation: gradient 3s ease infinite;
@@ -104,133 +138,145 @@ const ShowReel: React.FC<ShowReelProps> = ({ onNavigateHome }) => {
         .image-exit {
           animation: imageExit 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
         }
+        .strip-animation {
+          animation: slideStrip 16s linear infinite;
+        }
       `}</style>
       <section className="min-h-screen bg-firefly-dark pt-28 pb-16 px-4 relative overflow-hidden">
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-[-10%] left-[-5%] w-[500px] h-[500px] bg-firefly-yellow/20 rounded-full blur-[160px]"></div>
-        <div className="absolute bottom-[-15%] right-[-10%] w-[600px] h-[600px] bg-firefly-green/15 rounded-full blur-[180px]"></div>
-        <div className="absolute inset-0 opacity-[0.04]" style={{ backgroundImage: `linear-gradient(90deg, rgba(255,255,255,0.3) 1px, transparent 1px), linear-gradient(0deg, rgba(255,255,255,0.3) 1px, transparent 1px)`, backgroundSize: '80px 80px' }}></div>
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute top-[-10%] left-[-5%] w-[500px] h-[500px] bg-firefly-yellow/20 rounded-full blur-[160px]"></div>
+          <div className="absolute bottom-[-15%] right-[-10%] w-[600px] h-[600px] bg-firefly-green/15 rounded-full blur-[180px]"></div>
+          <div className="absolute inset-0 opacity-[0.04]" style={{ backgroundImage: `linear-gradient(90deg, rgba(255,255,255,0.3) 1px, transparent 1px), linear-gradient(0deg, rgba(255,255,255,0.3) 1px, transparent 1px)`, backgroundSize: '80px 80px' }}></div>
         </div>
 
-      <div className="container mx-auto max-w-6xl relative z-10">
-        <Reveal width="100%">
-          <div className="flex flex-col gap-6 mb-12 text-center">
-            <span className="inline-flex mx-auto items-center gap-3 px-5 py-2 rounded-full border border-white/10 bg-white/5 text-xs tracking-[0.4em] uppercase text-white/80">
-              Our previous Work
-              <span className="w-1.5 h-1.5 rounded-full bg-firefly-yellow"></span>
-            </span>
-            <h1 className="font-heading text-4xl md:text-6xl font-bold text-white">
-              Stories that <span className="text-firefly-yellow">glow</span> and strategies that scale
-            </h1>
-          </div>
-        </Reveal>
-
-        {/* Branding Section */}
-        <div className="w-full mt-20 mb-16 text-center">
-          <Reveal>
-            <div className="flex justify-center items-center gap-3 mb-10">
-              <h2 className="text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-firefly-yellow via-white to-firefly-green animate-gradient bg-gradient-animation">
-                Branding & Logo designs
-              </h2>
+        <div className="container mx-auto max-w-6xl relative z-10">
+          <Reveal width="100%">
+            <div className="flex flex-col gap-6 mb-12 text-center">
+              <span className="inline-flex mx-auto items-center gap-3 px-5 py-2 rounded-full border border-white/10 bg-white/5 text-xs tracking-[0.4em] uppercase text-white/80">
+                Our previous Work
+                <span className="w-1.5 h-1.5 rounded-full bg-firefly-yellow"></span>
+              </span>
+              <h1 className="font-heading text-4xl md:text-6xl font-bold text-white">
+                Stories that <span className="text-firefly-yellow">glow</span> and strategies that scale
+              </h1>
             </div>
           </Reveal>
 
-          <div className="flex justify-center items-center">
-            <div className="relative w-full max-w-4xl rounded-2xl overflow-hidden hover:scale-[1.02] transition-all duration-300 hover:shadow-lg">
-              {brandingImages.map((src, index) => (
-                <img
-                  key={index}
-                  src={src}
-                  alt={`Branding Project ${index + 1}`}
-                  className={`w-full h-auto transition-all duration-1000 ${
-                    index === currentBrandingIndex 
-                      ? 'opacity-100 scale-100 rotate-0 blur-0 translate-x-0' 
-                      : 'opacity-0 scale-110 rotate-3 blur-sm translate-x-10'
-                  }`}
-                  loading="lazy"
-                  style={{ 
-                    display: 'block',
-                    position: index === currentBrandingIndex ? 'relative' : 'absolute',
-                    top: index === currentBrandingIndex ? 'auto' : '0',
-                    left: index === currentBrandingIndex ? 'auto' : '0'
-                  }}
-                />
-              ))}
-              
-              {/* Image indicators */}
-              <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-2 z-10">
-                {brandingImages.map((_, index) => (
-                  <button
+          {/* Branding Section */}
+          <div className="w-full mt-20 mb-16 text-center">
+            <Reveal>
+              <div className="flex justify-center items-center gap-3 mb-10">
+                <h2 className="text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-firefly-yellow via-white to-firefly-green animate-gradient bg-gradient-animation">
+                  Branding & Logo designs
+                </h2>
+              </div>
+            </Reveal>
+
+            <div className="flex justify-center items-center">
+              <div className="relative w-full max-w-4xl rounded-2xl overflow-hidden hover:scale-[1.02] transition-all duration-300 hover:shadow-lg">
+                {brandingImages.map((src, index) => (
+                  <img
                     key={index}
-                    onClick={() => handleBrandingClick(index)}
-                    className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                      index === currentBrandingIndex
-                        ? 'bg-firefly-yellow w-8'
-                        : 'bg-white/30 hover:bg-white/50'
-                    }`}
+                    src={src}
+                    alt={`Branding Project ${index + 1}`}
+                    className={`w-full h-auto transition-all duration-1000 ${index === currentBrandingIndex
+                        ? 'opacity-100 scale-100 rotate-0 blur-0 translate-x-0'
+                        : 'opacity-0 scale-110 rotate-3 blur-sm translate-x-10'
+                      }`}
+                    loading="lazy"
+                    style={{
+                      display: 'block',
+                      position: index === currentBrandingIndex ? 'relative' : 'absolute',
+                      top: index === currentBrandingIndex ? 'auto' : '0',
+                      left: index === currentBrandingIndex ? 'auto' : '0'
+                    }}
                   />
+                ))}
+
+                {/* Image indicators */}
+                <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-2 z-10">
+                  {brandingImages.map((_, index) => (
+                    <button
+                      key={index}
+                      onClick={() => handleBrandingClick(index)}
+                      className={`w-2 h-2 rounded-full transition-all duration-300 ${index === currentBrandingIndex
+                          ? 'bg-firefly-yellow w-8'
+                          : 'bg-white/30 hover:bg-white/50'
+                        }`}
+                    />
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Graphic Design Section */}
+          <div className="w-full mt-16 mb-8 text-center">
+            <Reveal>
+              <div className="flex justify-center items-center gap-3 mb-10">
+
+                <h2 className="text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-firefly-yellow via-white to-firefly-green animate-gradient bg-gradient-animation">
+                  Designs
+                </h2>
+              </div>
+            </Reveal>
+
+            <div className="overflow-hidden min-h-[400px]">
+              <div className="flex strip-animation items-center">
+                {allDesignImages.map((src, index) => (
+                  <div
+                    key={`strip-${index}`}
+                    className="flex-shrink-0"
+                  >
+                    <div className="relative overflow-hidden hover:scale-[1.02] transition-all duration-300">
+                      <img
+                        src={src}
+                        alt={`Design Project ${index + 1}`}
+                        className="w-[250px] h-[350px] object-contain"
+                        loading="lazy"
+                      />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Photography Section */}
+          <div className="w-full mt-16 mb-8 text-center">
+            <Reveal>
+              <div className="flex justify-center items-center gap-3 mb-10">
+                <h2 className="text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-firefly-yellow via-white to-firefly-green animate-gradient bg-gradient-animation">
+                  Photography
+                </h2>
+              </div>
+            </Reveal>
+
+            <div className="overflow-hidden min-h-[400px]">
+              <div className="flex strip-animation items-center">
+                {allPhotographyImages.map((src, index) => (
+                  <div
+                    key={`photo-strip-${index}`}
+                    className="flex-shrink-0"
+                  >
+                    <div className="relative overflow-hidden hover:scale-[1.02] transition-all duration-300">
+                      <img
+                        src={src}
+                        alt={`Photography Project ${index + 1}`}
+                        className="w-[250px] h-[350px] object-contain"
+                        loading="lazy"
+                      />
+                    </div>
+                  </div>
                 ))}
               </div>
             </div>
           </div>
         </div>
-
-        {/* Graphic Design Section */}
-        <div className="w-full mt-32 mb-16 text-center">
-          <Reveal>
-            <div className="flex justify-center items-center gap-3 mb-10">
-
-              <h2 className="text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-firefly-yellow via-white to-firefly-green animate-gradient bg-gradient-animation">
-                Designs
-              </h2>
-            </div>
-          </Reveal>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {designImages.map((src, index) => (
-              <Reveal key={index} delay={100 * index} width="100%">
-                <div className="relative aspect-[4/3] rounded-2xl overflow-hidden border border-white/10 bg-white/5 hover:bg-white/10 transition-all duration-300 hover:scale-[1.02] hover:shadow-lg">
-                  <img
-                    src={src}
-                    alt={`Design Project ${index + 1}`}
-                    className="w-full h-full object-cover"
-                    loading="lazy"
-                  />
-                </div>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-
-        {/* Photography Section */}
-        <div className="w-full mt-32 mb-16 text-center">
-          <Reveal>
-            <div className="flex justify-center items-center gap-3 mb-10">
-              <h2 className="text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-firefly-yellow via-white to-firefly-green animate-gradient bg-gradient-animation">
-                Photography
-              </h2>
-            </div>
-          </Reveal>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {photographyImages.map((src, index) => (
-              <Reveal key={index} delay={100 * index} width="100%">
-                <div className="relative aspect-[4/3] rounded-2xl overflow-hidden border border-white/10 bg-white/5 hover:bg-white/10 transition-all duration-300 hover:scale-[1.02] hover:shadow-lg">
-                  <img
-                    src={src}
-                    alt={`Photography Project ${index + 1}`}
-                    className="w-full h-full object-cover"
-                    loading="lazy"
-                  />
-                </div>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </div>
-    </section>
+      </section>
     </>
   );
 };
 
 export default ShowReel;
+
