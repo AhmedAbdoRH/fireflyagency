@@ -153,6 +153,17 @@ const ShowReel: React.FC<ShowReelProps> = ({ onNavigateHome }) => {
     loadVideoMetadata();
   }, []);
 
+  // Set video thumbnails to middle frame
+  useEffect(() => {
+    const videos = document.querySelectorAll('video');
+    videos.forEach((video) => {
+      const videoElement = video as HTMLVideoElement;
+      if (videoElement.src && videoMetadata[videoElement.src]) {
+        videoElement.currentTime = videoMetadata[videoElement.src].duration / 2;
+      }
+    });
+  }, [videoMetadata]);
+
   const handleBrandingClick = (index: number) => {
     setCurrentBrandingIndex(index);
   };
@@ -244,12 +255,21 @@ const ShowReel: React.FC<ShowReelProps> = ({ onNavigateHome }) => {
         .strip-animation {
           animation: slideStrip 8s linear infinite;
         }
+        .strip-animation-reels {
+          animation: slideStrip 15s linear infinite;
+        }
         @media (max-width: 768px) {
           .strip-animation {
             animation: slideStrip 3s linear infinite;
           }
+          .strip-animation-reels {
+            animation: slideStrip 8s linear infinite;
+          }
         }
         .strip-animation:hover {
+          animation-play-state: paused;
+        }
+        .strip-animation-reels:hover {
           animation-play-state: paused;
         }
         .no-scrollbar::-webkit-scrollbar {
@@ -258,6 +278,25 @@ const ShowReel: React.FC<ShowReelProps> = ({ onNavigateHome }) => {
         .no-scrollbar {
           -ms-overflow-style: none;
           scrollbar-width: none;
+        }
+        .video-strip-container {
+          overflow-x: auto;
+          -webkit-overflow-scrolling: touch;
+          scroll-behavior: smooth;
+        }
+        .video-strip-container::-webkit-scrollbar {
+          height: 4px;
+        }
+        .video-strip-container::-webkit-scrollbar-track {
+          background: rgba(255, 255, 255, 0.1);
+          border-radius: 2px;
+        }
+        .video-strip-container::-webkit-scrollbar-thumb {
+          background: rgba(255, 255, 255, 0.3);
+          border-radius: 2px;
+        }
+        .video-strip-container::-webkit-scrollbar-thumb:hover {
+          background: rgba(255, 255, 255, 0.5);
         }
       `}</style>
       <section className="min-h-screen bg-firefly-dark pt-28 pb-16 px-4 relative overflow-hidden">
@@ -339,7 +378,7 @@ const ShowReel: React.FC<ShowReelProps> = ({ onNavigateHome }) => {
               </div>
             </Reveal>
 
-            <div className="overflow-x-auto no-scrollbar min-h-[400px]">
+            <div className="overflow-hidden min-h-[400px]">
               <div className="flex strip-animation items-center">
                 {allDesignImages.map((src, index) => (
                   <div
@@ -370,7 +409,7 @@ const ShowReel: React.FC<ShowReelProps> = ({ onNavigateHome }) => {
               </div>
             </Reveal>
 
-            <div className="overflow-x-auto no-scrollbar min-h-[400px]">
+            <div className="overflow-hidden min-h-[400px]">
               <div className="flex strip-animation items-center">
                 {allPhotographyImages.map((src, index) => (
                   <div
@@ -410,87 +449,148 @@ const ShowReel: React.FC<ShowReelProps> = ({ onNavigateHome }) => {
                     </h3>
                     <div className="w-20 h-1 bg-gradient-to-r from-firefly-yellow to-firefly-green mx-auto rounded-full"></div>
                   </div>
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    {category.videos.map((video, videoIndex) => {
-                      const meta = videoMetadata[video.src];
-                      const aspectRatio = meta ? meta.width / meta.height : 16/9;
-                      
-                      return (
-                        <div key={videoIndex} className="group relative">
-                          <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-black/40 backdrop-blur-sm hover:shadow-2xl hover:shadow-firefly-yellow/20 transition-all duration-700 hover:scale-[1.02]">
-                            {/* Video Container with proper aspect ratio */}
-                            <div 
-                              className="relative w-full"
-                              style={{ aspectRatio }}
-                            >
-                              <video
-                                ref={(el) => {
-                                  if (el && !videoMetadata[video.src]) {
-                                    el.onloadedmetadata = () => {
-                                      setVideoMetadata(prev => ({
-                                        ...prev,
-                                        [video.src]: {
-                                          width: el.videoWidth,
-                                          height: el.videoHeight,
-                                          duration: el.duration
-                                        }
-                                      }));
-                                    };
-                                  }
-                                }}
-                                src={video.src}
-                                className="w-full h-full object-cover transition-all duration-700 group-hover:scale-105"
-                                preload="metadata"
-                                muted={!playingVideos.has(video.src)}
-                                loop
-                                playsInline
-                                onClick={() => toggleVideoPlay(video.src)}
+                  
+                  {/* Special mobile layout for Reels */}
+                  {category.title === 'Reels' ? (
+                    <div className="block md:hidden">
+                      {/* Mobile horizontal scrolling strip for Reels */}
+                      <div className="overflow-hidden">
+                        <div className="flex strip-animation-reels items-center gap-4 py-4">
+                          {/* Create 4 duplicates for truly infinite scrolling */}
+                          {[...category.videos, ...category.videos, ...category.videos, ...category.videos].map((video, videoIndex) => {
+                            const meta = videoMetadata[video.src];
+                            const aspectRatio = meta ? meta.width / meta.height : 9/16; // Vertical aspect ratio for reels
+                            
+                            return (
+                              <div
+                                key={`mobile-reel-${videoIndex}`}
+                                className="flex-shrink-0"
                               >
-                                Your browser does not support the video tag.
-                              </video>
-                              
-                              {/* Overlay gradient */}
-                              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
-                              
-                              {/* Play button overlay */}
-                              {!playingVideos.has(video.src) && (
-                                <div 
-                                  className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500 cursor-pointer"
+                                <div className="relative overflow-hidden rounded-xl border border-white/10 bg-black/40 backdrop-blur-sm hover:shadow-2xl hover:shadow-firefly-yellow/20 transition-all duration-700 hover:scale-[1.02]">
+                                  {/* Smaller video container for mobile */}
+                                  <div 
+                                    className="relative w-32"
+                                    style={{ aspectRatio }}
+                                  >
+                                    <video
+                                      src={video.src}
+                                      className="w-full h-full object-cover transition-all duration-700 group-hover:scale-105"
+                                      preload="metadata"
+                                      muted={!playingVideos.has(video.src)}
+                                      loop
+                                      playsInline
+                                      onClick={() => toggleVideoPlay(video.src)}
+                                    >
+                                      Your browser does not support the video tag.
+                                    </video>
+                                    
+                                    {/* Always visible play icon overlay */}
+                                    <div 
+                                      className="absolute inset-0 flex items-center justify-center bg-black/30"
+                                      onClick={() => toggleVideoPlay(video.src)}
+                                    >
+                                      {!playingVideos.has(video.src) ? (
+                                        <div className="w-10 h-10 rounded-full bg-firefly-yellow/90 backdrop-blur-sm flex items-center justify-center hover:scale-110 transition-transform duration-200">
+                                          <Play className="w-4 h-4 text-black ml-0.5" />
+                                        </div>
+                                      ) : (
+                                        <div className="w-10 h-10 rounded-full bg-black/60 backdrop-blur-sm flex items-center justify-center hover:scale-110 transition-transform duration-200">
+                                          <div className="w-3 h-3.5 bg-white rounded-sm"></div>
+                                        </div>
+                                      )}
+                                    </div>
+                                  </div>
+                                  
+                                  {/* Loading skeleton */}
+                                  {!meta && (
+                                    <div className="absolute inset-0 bg-gray-900/50 animate-pulse flex items-center justify-center">
+                                      <div className="w-4 h-4 border-2 border-firefly-yellow border-t-transparent rounded-full animate-spin"></div>
+                                    </div>
+                                  )}
+                                </div>
+                              </div>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    </div>
+                  ) : null}
+                  
+                  {/* Desktop layout for all categories + mobile layout for non-Reels */}
+                  <div className={`${category.title === 'Reels' ? 'hidden md:block' : 'block'}`}>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                      {category.videos.map((video, videoIndex) => {
+                        const meta = videoMetadata[video.src];
+                        const aspectRatio = meta ? meta.width / meta.height : 16/9;
+                        
+                        return (
+                          <div key={videoIndex} className="group relative">
+                            <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-black/40 backdrop-blur-sm hover:shadow-2xl hover:shadow-firefly-yellow/20 transition-all duration-700 hover:scale-[1.02]">
+                              {/* Video Container with proper aspect ratio */}
+                              <div 
+                                className="relative w-full"
+                                style={{ aspectRatio }}
+                              >
+                                <video
+                                  ref={(el) => {
+                                    if (el && !videoMetadata[video.src]) {
+                                      el.onloadedmetadata = () => {
+                                        setVideoMetadata(prev => ({
+                                          ...prev,
+                                          [video.src]: {
+                                            width: el.videoWidth,
+                                            height: el.videoHeight,
+                                            duration: el.duration
+                                          }
+                                        }));
+                                        // Set video to middle frame for thumbnail
+                                        el.currentTime = el.duration / 2;
+                                      };
+                                    }
+                                  }}
+                                  src={video.src}
+                                  className="w-full h-full object-cover transition-all duration-700 group-hover:scale-105"
+                                  preload="metadata"
+                                  muted={!playingVideos.has(video.src)}
+                                  loop
+                                  playsInline
                                   onClick={() => toggleVideoPlay(video.src)}
                                 >
-                                  <div className="w-16 h-16 rounded-full bg-firefly-yellow/90 backdrop-blur-sm flex items-center justify-center transform scale-0 group-hover:scale-100 transition-transform duration-500 delay-100 hover:scale-110">
-                                    <Play className="w-6 h-6 text-black ml-1" />
-                                  </div>
-                                </div>
-                              )}
-                              
-                              {/* Pause button overlay when playing */}
-                              {playingVideos.has(video.src) && (
+                                  Your browser does not support the video tag.
+                                </video>
+                                
+                                {/* Always visible play button overlay */}
                                 <div 
-                                  className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500 cursor-pointer"
+                                  className="absolute inset-0 flex items-center justify-center bg-black/30"
                                   onClick={() => toggleVideoPlay(video.src)}
                                 >
-                                  <div className="w-16 h-16 rounded-full bg-black/60 backdrop-blur-sm flex items-center justify-center transform scale-0 group-hover:scale-100 transition-transform duration-500 delay-100 hover:scale-110">
-                                    <div className="w-5 h-6 bg-white rounded-sm"></div>
-                                  </div>
+                                  {!playingVideos.has(video.src) ? (
+                                    <div className="w-16 h-16 rounded-full bg-firefly-yellow/90 backdrop-blur-sm flex items-center justify-center hover:scale-110 transition-transform duration-200">
+                                      <Play className="w-6 h-6 text-black ml-1" />
+                                    </div>
+                                  ) : (
+                                    <div className="w-16 h-16 rounded-full bg-black/60 backdrop-blur-sm flex items-center justify-center hover:scale-110 transition-transform duration-200">
+                                      <div className="w-5 h-6 bg-white rounded-sm"></div>
+                                    </div>
+                                  )}
+                                </div>
+                                
+                                {/* Video info overlay - removed */}
+                              </div>
+                              
+                              {/* Loading skeleton */}
+                              {!meta && (
+                                <div className="absolute inset-0 bg-gray-900/50 animate-pulse flex items-center justify-center">
+                                  <div className="w-8 h-8 border-2 border-firefly-yellow border-t-transparent rounded-full animate-spin"></div>
                                 </div>
                               )}
-                              
-                              {/* Video info overlay - removed */}
                             </div>
                             
-                            {/* Loading skeleton */}
-                            {!meta && (
-                              <div className="absolute inset-0 bg-gray-900/50 animate-pulse flex items-center justify-center">
-                                <div className="w-8 h-8 border-2 border-firefly-yellow border-t-transparent rounded-full animate-spin"></div>
-                              </div>
-                            )}
+                            {/* Title below video - removed */}
                           </div>
-                          
-                          {/* Title below video - removed */}
-                        </div>
-                      );
-                    })}
+                        );
+                      })}
+                    </div>
                   </div>
                 </Reveal>
               ))}
