@@ -42,35 +42,46 @@ const photographyImages = [
   '/Photography/1.webp',
   '/Photography/2.webp',
   '/Photography/3.webp',
+  '/Photography/388A8775.webp',
+  '/Photography/388A8869.webp',
+  '/Photography/388A8889.webp',
+  '/Photography/388A8904.webp',
+  '/Photography/388A8926 (1).webp',
   '/Photography/4.webp',
+  '/Photography/451765756_1047568193401914_132117585433680106_n (1).webp',
+  '/Photography/457357359_1074873047338095_1550719257161620040_n (1).webp',
+  '/Photography/457498131_1074730730685660_2151557050323122055_n (1).webp',
+  '/Photography/457553410_1075417507283649_9187292011979397573_vv.webp',
+  '/Photography/457603866_1075386357286764_7156478770906911455_n (1).webp',
   '/Photography/5.webp',
-  '/Photography/6.webp'
+  '/Photography/5d9340c66696b68b20623db0e9f11b44.webp',
+  '/Photography/6.webp',
+  '/Photography/7.webp',
+  '/Photography/Copy of 388A8873.webp',
+  '/Photography/Copy of 388A8899.webp',
+  '/Photography/Copy of 388A8909.webp',
+  '/Photography/DSCF0783.webp',
+  '/Photography/DSCF0880.webp',
+  '/Photography/DSCF0887.webp',
+  '/Photography/DSCF0917.webp',
+  '/Photography/DSCF1006.webp',
+  '/Photography/be3a98b0ee650d29d1a1e525112ab414.webp',
+  '/Photography/d742eb64a83fcbca1385630ea99fb17b.webp',
+  '/Photography/da7ef8097ea0f7843803953fa2e2b648.webp'
 ];
 
 const mediaProductionCategories = [
   {
     title: 'Reels',
     videos: [
-      { src: '/Videos/Reels/234.mp4', title: 'Reel 1' },
-      { src: '/Videos/Reels/2345.mp4', title: 'Reel 2' },
-      { src: '/Videos/Reels/235.mp4', title: 'Reel 3' },
-      { src: '/Videos/Reels/346.mp4', title: 'Reel 4' },
-      { src: '/Videos/Reels/45.mp4', title: 'Reel 5' },
-      { src: '/Videos/Reels/45654.mp4', title: 'Reel 6' },
-      { src: '/Videos/Reels/457.mp4', title: 'Reel 7' },
-      { src: '/Videos/Reels/57.mp4', title: 'Reel 8' },
-      { src: '/Videos/Reels/7675.mp4', title: 'Reel 9' },
+      { src: '/Videos/Reels/235.mp4', title: 'Reel 1' },
+      { src: '/Videos/Reels/346.mp4', title: 'Reel 2' },
+      { src: '/Videos/Reels/457.mp4', title: 'Reel 3' },
+      { src: '/Videos/Reels/57.mp4', title: 'Reel 4' },
       { src: '/Videos/Reels/noor shawky video 4 V01.mp4', title: 'Noor Shawky' },
-      { src: '/Videos/Reels/serene final.mp4', title: 'Serene' }
-    ]
-  },
-  {
-    title: 'Videos',
-    videos: [
-      { src: '/Videos/Videos/234.mp4', title: 'Video 1' },
-      { src: '/Videos/Videos/24.mp4', title: 'Video 2' },
-      { src: '/Videos/Videos/456.mp4', title: 'Video 3' },
-      { src: '/Videos/Videos/567.mp4', title: 'Video 4' }
+      { src: '/Videos/Reels/serene final.mp4', title: 'Serene' },
+      { src: '/Videos/Reels/56.mp4', title: 'Reel 5' },
+      { src: '/Videos/Reels/678.mp4', title: 'Reel 6' }
     ]
   },
   {
@@ -83,14 +94,14 @@ const mediaProductionCategories = [
   {
     title: 'Short Films',
     videos: [
-      { src: '/Videos/Short Films/346.mp4', title: 'Short Film' }
+      { src: 'https://res.cloudinary.com/dvikey3wc/video/upload/v1764248691/1127_1_vvurfk.mp4', title: 'Short Film 1' },
+      { src: 'https://res.cloudinary.com/dvikey3wc/video/upload/v1764249246/1127_4_n4jskf.mp4', title: 'Short Film 2' }
     ]
   },
   {
     title: 'Event Coverage',
     videos: [
-      { src: '/Videos/Event Coverage/56.mp4', title: 'Event Coverage 1' },
-      { src: '/Videos/Event Coverage/678.mp4', title: 'Event Coverage 2' }
+      { src: 'https://res.cloudinary.com/dvikey3wc/video/upload/v1764248198/1127_j1ty5o.mp4', title: 'Event Coverage 1' }
     ]
   }
 ];
@@ -101,16 +112,11 @@ interface ShowReelProps {
 
 const ShowReel: React.FC<ShowReelProps> = ({ onNavigateHome }) => {
   const [currentBrandingIndex, setCurrentBrandingIndex] = useState(0);
-  const [videoMetadata, setVideoMetadata] = useState<{[key: string]: {width: number, height: number, duration: number}}>({});
+  const [videoMetadata, setVideoMetadata] = useState<{ [key: string]: { width: number, height: number, duration: number } }>({});
   const [playingVideos, setPlayingVideos] = useState<Set<string>>(new Set());
 
   // Create continuous strips of all images
-  // Create continuous strips of all images
   const allDesignImages = [...designImages, ...designImages]; // Duplicate for seamless loop
-  // Duplicate photography images 8 times to match the width/count of design images (48 total) for consistent speed
-  const doublePhoto = [...photographyImages, ...photographyImages];
-  const quadPhoto = [...doublePhoto, ...doublePhoto];
-  const allPhotographyImages = [...quadPhoto, ...quadPhoto];
 
   useEffect(() => {
     const brandingInterval = setInterval(() => {
@@ -124,18 +130,18 @@ const ShowReel: React.FC<ShowReelProps> = ({ onNavigateHome }) => {
 
   useEffect(() => {
     const loadVideoMetadata = async () => {
-      const metadata: {[key: string]: {width: number, height: number, duration: number}} = {};
-      
+      const metadata: { [key: string]: { width: number, height: number, duration: number } } = {};
+
       for (const category of mediaProductionCategories) {
         for (const video of category.videos) {
           try {
             const videoElement = document.createElement('video');
             videoElement.src = video.src;
-            
+
             await new Promise((resolve) => {
               videoElement.onloadedmetadata = resolve;
             });
-            
+
             metadata[video.src] = {
               width: videoElement.videoWidth,
               height: videoElement.videoHeight,
@@ -146,7 +152,7 @@ const ShowReel: React.FC<ShowReelProps> = ({ onNavigateHome }) => {
           }
         }
       }
-      
+
       setVideoMetadata(metadata);
     };
 
@@ -173,16 +179,21 @@ const ShowReel: React.FC<ShowReelProps> = ({ onNavigateHome }) => {
       const newSet = new Set(prev);
       if (newSet.has(videoSrc)) {
         newSet.delete(videoSrc);
-        // Pause the video
+        // Pause the video and set back to middle frame
         const videoElement = document.querySelector(`video[src="${videoSrc}"]`) as HTMLVideoElement;
         if (videoElement) {
           videoElement.pause();
+          // Set back to middle frame for thumbnail
+          if (videoMetadata[videoSrc]) {
+            videoElement.currentTime = videoMetadata[videoSrc].duration / 2;
+          }
         }
       } else {
         newSet.add(videoSrc);
-        // Play the video
+        // Play the video from the beginning
         const videoElement = document.querySelector(`video[src="${videoSrc}"]`) as HTMLVideoElement;
         if (videoElement) {
+          videoElement.currentTime = 0; // Start from beginning
           videoElement.play();
         }
       }
@@ -253,23 +264,36 @@ const ShowReel: React.FC<ShowReelProps> = ({ onNavigateHome }) => {
           animation: imageExit 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
         }
         .strip-animation {
-          animation: slideStrip 8s linear infinite;
+          animation: slideStrip 80s linear infinite;
+          width: max-content;
+          will-change: transform;
         }
         .strip-animation-reels {
           animation: slideStrip 15s linear infinite;
         }
+        .strip-animation-photography {
+          animation: slideStrip 100s linear infinite;
+          width: max-content;
+          will-change: transform;
+        }
         @media (max-width: 768px) {
           .strip-animation {
-            animation: slideStrip 3s linear infinite;
+            animation: slideStrip 30s linear infinite;
           }
           .strip-animation-reels {
             animation: slideStrip 8s linear infinite;
+          }
+          .strip-animation-photography {
+            animation: slideStrip 40s linear infinite;
           }
         }
         .strip-animation:hover {
           animation-play-state: paused;
         }
         .strip-animation-reels:hover {
+          animation-play-state: paused;
+        }
+        .strip-animation-photography:hover {
           animation-play-state: paused;
         }
         .no-scrollbar::-webkit-scrollbar {
@@ -380,7 +404,7 @@ const ShowReel: React.FC<ShowReelProps> = ({ onNavigateHome }) => {
 
             <div className="overflow-hidden min-h-[400px]">
               <div className="flex strip-animation items-center">
-                {allDesignImages.map((src, index) => (
+                {[...designImages, ...designImages].map((src, index) => (
                   <div
                     key={`strip-${index}`}
                     className="flex-shrink-0"
@@ -410,8 +434,8 @@ const ShowReel: React.FC<ShowReelProps> = ({ onNavigateHome }) => {
             </Reveal>
 
             <div className="overflow-hidden min-h-[400px]">
-              <div className="flex strip-animation items-center">
-                {allPhotographyImages.map((src, index) => (
+              <div className="flex strip-animation-photography items-center">
+                {[...photographyImages, ...photographyImages].map((src, index) => (
                   <div
                     key={`photo-strip-${index}`}
                     className="flex-shrink-0"
@@ -449,62 +473,75 @@ const ShowReel: React.FC<ShowReelProps> = ({ onNavigateHome }) => {
                     </h3>
                     <div className="w-20 h-1 bg-gradient-to-r from-firefly-yellow to-firefly-green mx-auto rounded-full"></div>
                   </div>
-                  
-                  {/* Special mobile layout for Reels, Podcast, and Event Coverage */}
-                  {category.title === 'Reels' || category.title === 'Podcast' || category.title === 'Event Coverage' ? (
+
+                  {/* Special mobile layout for Reels */}
+                  {category.title === 'Reels' ? (
                     <div className="block md:hidden">
-                      {/* Mobile grid layout - 2x3 grid */}
-                      <div className="grid grid-cols-2 gap-3 max-w-md mx-auto">
-                        {category.videos.slice(0, 6).map((video, videoIndex) => {
+                      {/* Mobile 2x4 grid for Reels */}
+                      <div className="grid grid-cols-2 gap-4 py-4">
+                        {category.videos.map((video, videoIndex) => {
                           const meta = videoMetadata[video.src];
-                          const aspectRatio = category.title === 'Reels' 
-                            ? (meta ? meta.width / meta.height : 9/16) // Vertical for reels
-                            : (meta ? meta.width / meta.height : 16/9); // Horizontal for podcast, event coverage
-                          
+                          const aspectRatio = meta ? meta.width / meta.height : 9 / 16; // Vertical aspect ratio for reels
+
                           return (
                             <div
-                              key={`mobile-${category.title.toLowerCase()}-${videoIndex}`}
-                              className="relative"
+                              key={`mobile-reel-${videoIndex}`}
+                              className="group relative"
                             >
                               <div className="relative overflow-hidden rounded-xl border border-white/10 bg-black/40 backdrop-blur-sm hover:shadow-2xl hover:shadow-firefly-yellow/20 transition-all duration-700 hover:scale-[1.02]">
                                 {/* Video container for mobile */}
-                                <div 
+                                <div
                                   className="relative w-full"
-                                  style={{ aspectRatio }}
+                                  style={{ 
+                                    width: '100%',
+                                    height: 'auto',
+                                    aspectRatio: meta ? `${meta.width}/${meta.height}` : '9/16'
+                                  }}
                                 >
                                   <video
                                     src={video.src}
-                                    className="w-full h-full object-cover transition-all duration-700 group-hover:scale-105"
-                                    preload="metadata"
+                                    className="w-full h-auto object-contain transition-all duration-700 group-hover:scale-105"
+                                    preload="auto"
                                     muted={!playingVideos.has(video.src)}
                                     loop
                                     playsInline
                                     onClick={() => toggleVideoPlay(video.src)}
+                                    onError={(e) => console.error('Video error:', video.src, e)}
+                                    ref={(el) => {
+                                      if (el && !playingVideos.has(video.src) && videoMetadata[video.src]) {
+                                        // Set to middle frame for thumbnail only when not playing
+                                        el.currentTime = videoMetadata[video.src].duration / 2;
+                                      }
+                                    }}
+                                    style={{ 
+                                      maxWidth: '100%',
+                                      height: 'auto'
+                                    }}
                                   >
                                     Your browser does not support the video tag.
                                   </video>
-                                  
+
                                   {/* Always visible play icon overlay */}
-                                  <div 
+                                  <div
                                     className="absolute inset-0 flex items-center justify-center bg-black/30"
                                     onClick={() => toggleVideoPlay(video.src)}
                                   >
                                     {!playingVideos.has(video.src) ? (
-                                      <div className="w-8 h-8 rounded-full bg-firefly-yellow/90 backdrop-blur-sm flex items-center justify-center hover:scale-110 transition-transform duration-200">
-                                        <Play className="w-3 h-3 text-black ml-0.5" />
+                                      <div className="w-12 h-12 rounded-full bg-firefly-yellow/90 backdrop-blur-sm flex items-center justify-center hover:scale-110 transition-transform duration-200">
+                                        <Play className="w-5 h-5 text-black ml-0.5" />
                                       </div>
                                     ) : (
-                                      <div className="w-8 h-8 rounded-full bg-black/60 backdrop-blur-sm flex items-center justify-center hover:scale-110 transition-transform duration-200">
-                                        <div className="w-2.5 h-3 bg-white rounded-sm"></div>
+                                      <div className="w-12 h-12 rounded-full bg-black/60 backdrop-blur-sm flex items-center justify-center hover:scale-110 transition-transform duration-200">
+                                        <div className="w-4 h-4.5 bg-white rounded-sm"></div>
                                       </div>
                                     )}
                                   </div>
                                 </div>
-                                
+
                                 {/* Loading skeleton */}
                                 {!meta && (
                                   <div className="absolute inset-0 bg-gray-900/50 animate-pulse flex items-center justify-center">
-                                    <div className="w-4 h-4 border-2 border-firefly-yellow border-t-transparent rounded-full animate-spin"></div>
+                                    <div className="w-8 h-8 border-2 border-firefly-yellow border-t-transparent rounded-full animate-spin"></div>
                                   </div>
                                 )}
                               </div>
@@ -514,19 +551,97 @@ const ShowReel: React.FC<ShowReelProps> = ({ onNavigateHome }) => {
                       </div>
                     </div>
                   ) : null}
-                  
-                  {/* Desktop layout for all categories + mobile layout for non-Reels/Podcast/Event Coverage */}
-                  <div className={`${category.title === 'Reels' || category.title === 'Podcast' || category.title === 'Event Coverage' ? 'hidden md:block' : 'block'}`}>
+
+                  {/* Special mobile layout for Podcast */}
+                  {category.title === 'Podcast' ? (
+                    <div className="block md:hidden">
+                      {/* Mobile 1x2 grid for Podcast - side by side */}
+                      <div className="grid grid-cols-2 gap-4 py-4">
+                        {category.videos.map((video, videoIndex) => {
+                          const meta = videoMetadata[video.src];
+                          const aspectRatio = meta ? meta.width / meta.height : 16 / 9; // Horizontal aspect ratio for podcasts
+
+                          return (
+                            <div
+                              key={`mobile-podcast-${videoIndex}`}
+                              className="group relative"
+                            >
+                              <div className="relative overflow-hidden rounded-xl border border-white/10 bg-black/40 backdrop-blur-sm hover:shadow-2xl hover:shadow-firefly-yellow/20 transition-all duration-700 hover:scale-[1.02]">
+                                {/* Video container for mobile */}
+                                <div
+                                  className="relative w-full"
+                                  style={{ 
+                                    width: '100%',
+                                    height: 'auto',
+                                    aspectRatio: meta ? `${meta.width}/${meta.height}` : '16/9'
+                                  }}
+                                >
+                                  <video
+                                    src={video.src}
+                                    className="w-full h-auto object-contain transition-all duration-700 group-hover:scale-105"
+                                    preload="auto"
+                                    muted={!playingVideos.has(video.src)}
+                                    loop
+                                    playsInline
+                                    onClick={() => toggleVideoPlay(video.src)}
+                                    onError={(e) => console.error('Video error:', video.src, e)}
+                                    ref={(el) => {
+                                      if (el && !playingVideos.has(video.src) && videoMetadata[video.src]) {
+                                        // Set to middle frame for thumbnail only when not playing
+                                        el.currentTime = videoMetadata[video.src].duration / 2;
+                                      }
+                                    }}
+                                    style={{ 
+                                      maxWidth: '100%',
+                                      height: 'auto'
+                                    }}
+                                  >
+                                    Your browser does not support the video tag.
+                                  </video>
+
+                                  {/* Always visible play icon overlay */}
+                                  <div
+                                    className="absolute inset-0 flex items-center justify-center bg-black/30"
+                                    onClick={() => toggleVideoPlay(video.src)}
+                                  >
+                                    {!playingVideos.has(video.src) ? (
+                                      <div className="w-12 h-12 rounded-full bg-firefly-yellow/90 backdrop-blur-sm flex items-center justify-center hover:scale-110 transition-transform duration-200">
+                                        <Play className="w-5 h-5 text-black ml-0.5" />
+                                      </div>
+                                    ) : (
+                                      <div className="w-12 h-12 rounded-full bg-black/60 backdrop-blur-sm flex items-center justify-center hover:scale-110 transition-transform duration-200">
+                                        <div className="w-4 h-4.5 bg-white rounded-sm"></div>
+                                      </div>
+                                    )}
+                                  </div>
+                                </div>
+
+                                {/* Loading skeleton */}
+                                {!meta && (
+                                  <div className="absolute inset-0 bg-gray-900/50 animate-pulse flex items-center justify-center">
+                                    <div className="w-8 h-8 border-2 border-firefly-yellow border-t-transparent rounded-full animate-spin"></div>
+                                  </div>
+                                )}
+                              </div>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  ) : null}
+
+                  {/* Desktop layout for all categories + mobile layout for non-Reels and non-Podcast */}
+                  <div className={`${(category.title === 'Reels' || category.title === 'Podcast') ? 'hidden md:block' : 'block'}`}>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                       {category.videos.map((video, videoIndex) => {
                         const meta = videoMetadata[video.src];
-                        const aspectRatio = meta ? meta.width / meta.height : 16/9;
-                        
+                        const aspectRatio = meta ? meta.width / meta.height : 16 / 9;
+
                         return (
                           <div key={videoIndex} className="group relative">
                             <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-black/40 backdrop-blur-sm hover:shadow-2xl hover:shadow-firefly-yellow/20 transition-all duration-700 hover:scale-[1.02]">
                               {/* Video Container with proper aspect ratio */}
-                              <div 
+                              <div
                                 className="relative w-full"
                                 style={{ aspectRatio }}
                               >
@@ -546,20 +661,29 @@ const ShowReel: React.FC<ShowReelProps> = ({ onNavigateHome }) => {
                                         el.currentTime = el.duration / 2;
                                       };
                                     }
+                                    // Set to middle frame for thumbnail only when not playing
+                                    if (el && !playingVideos.has(video.src) && videoMetadata[video.src]) {
+                                      el.currentTime = videoMetadata[video.src].duration / 2;
+                                    }
                                   }}
                                   src={video.src}
-                                  className="w-full h-full object-cover transition-all duration-700 group-hover:scale-105"
-                                  preload="metadata"
+                                  className="w-full h-auto object-contain transition-all duration-700 group-hover:scale-105"
+                                  preload="auto"
                                   muted={!playingVideos.has(video.src)}
                                   loop
                                   playsInline
                                   onClick={() => toggleVideoPlay(video.src)}
+                                  onError={(e) => console.error('Video error:', video.src, e)}
+                                  style={{
+                                    maxWidth: '100%',
+                                    height: 'auto'
+                                  }}
                                 >
                                   Your browser does not support the video tag.
                                 </video>
-                                
+
                                 {/* Always visible play button overlay */}
-                                <div 
+                                <div
                                   className="absolute inset-0 flex items-center justify-center bg-black/30"
                                   onClick={() => toggleVideoPlay(video.src)}
                                 >
@@ -573,10 +697,10 @@ const ShowReel: React.FC<ShowReelProps> = ({ onNavigateHome }) => {
                                     </div>
                                   )}
                                 </div>
-                                
+
                                 {/* Video info overlay - removed */}
                               </div>
-                              
+
                               {/* Loading skeleton */}
                               {!meta && (
                                 <div className="absolute inset-0 bg-gray-900/50 animate-pulse flex items-center justify-center">
@@ -584,7 +708,7 @@ const ShowReel: React.FC<ShowReelProps> = ({ onNavigateHome }) => {
                                 </div>
                               )}
                             </div>
-                            
+
                             {/* Title below video - removed */}
                           </div>
                         );
