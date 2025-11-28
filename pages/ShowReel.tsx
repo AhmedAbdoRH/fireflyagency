@@ -32,42 +32,40 @@ const designImages = [
   '/Designs/post7 (1)_resized.webp',
   '/Designs/post8 (1)_resized.webp',
   '/Designs/post9 (2)_resized.webp',
-  '/Designs/اختار اللي تحب_resized.webp',
   '/Designs/جربي طريقة (1)_resized.webp',
   '/Designs/هايشحن طاقتك-01_resized.webp'
 ];
 
 const photographyImages = [
-  '/Photography/1_resized_resized_resized.webp',
-  '/Photography/2_resized_resized_resized.webp',
-  '/Photography/388A8775_resized_resized_resized.webp',
-  '/Photography/388A8869_resized_resized_resized.webp',
-  '/Photography/388A8889_resized_resized_resized.webp',
-  '/Photography/388A8904_resized_resized_resized.webp',
-  '/Photography/388A8926 (1)_resized_resized_resized.webp',
-  '/Photography/3_resized_resized_resized.webp',
-  '/Photography/451765756_1047568193401914_132117585433680106_n (1)_resized_resized_resized.webp',
-  '/Photography/457357359_1074873047338095_1550719257161620040_n (1)_resized_resized_resized.webp',
-  '/Photography/457498131_1074730730685660_2151557050323122055_n (1)_resized_resized_resized.webp',
-  '/Photography/457553410_1075417507283649_9187292011979397573_vv_resized_resized_resized.webp',
-  '/Photography/457603866_1075386357286764_7156478770906911455_n (1)_resized_resized_resized.webp',
-  '/Photography/4_resized_resized_resized.webp',
-  '/Photography/5_resized_resized_resized.webp',
-  '/Photography/5d9340c66696b68b20623db0e9f11b44_resized_resized_resized.webp',
-  '/Photography/6_resized_resized_resized.webp',
-  '/Photography/7_resized_resized_resized.webp',
-  '/Photography/Copy of 388A8873_resized_resized_resized.webp',
-  '/Photography/Copy of 388A8899_resized_resized.webp',
-  '/Photography/Copy of 388A8899_resized_resized_resized.webp',
-  '/Photography/Copy of 388A8909_resized_resized_resized.webp',
-  '/Photography/DSCF0783_resized_resized_resized.webp',
-  '/Photography/DSCF0880_resized_resized_resized.webp',
-  '/Photography/DSCF0887_resized_resized_resized.webp',
-  '/Photography/DSCF0917_resized_resized_resized.webp',
-  '/Photography/DSCF1006_resized_resized_resized.webp',
-  '/Photography/be3a98b0ee650d29d1a1e525112ab414_resized_resized_resized.webp',
-  '/Photography/d742eb64a83fcbca1385630ea99fb17b_resized_resized_resized.webp',
-  '/Photography/da7ef8097ea0f7843803953fa2e2b648_resized_resized_resized.webp'
+  '/Photography/1_resized.webp',
+  '/Photography/2_resized.webp',
+  '/Photography/388A8775_resized.webp',
+  '/Photography/388A8869_resized.webp',
+  '/Photography/388A8889_resized.webp',
+  '/Photography/388A8904_resized.webp',
+  '/Photography/388A8926 (1)_resized.webp',
+  '/Photography/3_resized.webp',
+  '/Photography/451765756_1047568193401914_132117585433680106_n (1)_resized.webp',
+  '/Photography/457357359_1074873047338095_1550719257161620040_n (1)_resized.webp',
+  '/Photography/457498131_1074730730685660_2151557050323122055_n (1)_resized.webp',
+  '/Photography/457553410_1075417507283649_9187292011979397573_vv_resized.webp',
+  '/Photography/457603866_1075386357286764_7156478770906911455_n (1)_resized.webp',
+  '/Photography/4_resized.webp',
+  '/Photography/5_resized.webp',
+  '/Photography/5d9340c66696b68b20623db0e9f11b44_resized.webp',
+  '/Photography/6_resized.webp',
+  '/Photography/7_resized.webp',
+  '/Photography/Copy of 388A8873_resized.webp',
+  '/Photography/Copy of 388A8899_resized.webp',
+  '/Photography/Copy of 388A8909_resized.webp',
+  '/Photography/DSCF0783_resized.webp',
+  '/Photography/DSCF0880_resized.webp',
+  '/Photography/DSCF0887_resized.webp',
+  '/Photography/DSCF0917_resized.webp',
+  '/Photography/DSCF1006_resized.webp',
+  '/Photography/be3a98b0ee650d29d1a1e525112ab414_resized.webp',
+  '/Photography/d742eb64a83fcbca1385630ea99fb17b_resized.webp',
+  '/Photography/da7ef8097ea0f7843803953fa2e2b648_resized.webp'
 ];
 
 const mediaProductionCategories = [
@@ -127,6 +125,9 @@ const ShowReel: React.FC<ShowReelProps> = ({ onNavigateHome }) => {
   const [currentBrandingIndex, setCurrentBrandingIndex] = useState(0);
 
   useEffect(() => {
+    // Scroll to top when component mounts
+    window.scrollTo(0, 0);
+    
     const brandingInterval = setInterval(() => {
       setCurrentBrandingIndex((prevIndex) => (prevIndex + 1) % brandingImages.length);
     }, 3000);
@@ -260,19 +261,7 @@ const ShowReel: React.FC<ShowReelProps> = ({ onNavigateHome }) => {
                   />
                 ))}
 
-                {/* Image indicators */}
-                <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-2 z-10">
-                  {brandingImages.map((_, index) => (
-                    <button
-                      key={index}
-                      onClick={() => handleBrandingClick(index)}
-                      className={`w-2 h-2 rounded-full transition-all duration-300 ${index === currentBrandingIndex
-                        ? 'bg-firefly-yellow w-8'
-                        : 'bg-white/30 hover:bg-white/50'
-                        }`}
-                    />
-                  ))}
-                </div>
+
               </div>
             </div>
           </div>
@@ -362,19 +351,37 @@ const ShowReel: React.FC<ShowReelProps> = ({ onNavigateHome }) => {
                     <div className="w-20 h-1 bg-gradient-to-r from-firefly-yellow to-firefly-green mx-auto rounded-full"></div>
                   </div>
 
-                  <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-4 lg:gap-6">
-                    {category.videos.map((video, videoIndex) => (
-                      <div key={videoIndex} className="w-full max-w-[160px] mx-auto md:max-w-none">
-                        <VideoPlayer
-                          src={video.src}
-                          title={video.title}
-                          aspectRatio={category.aspectRatio}
-                          poster={getCloudinaryThumbnail(video.src)}
-                          className="w-full"
-                        />
-                      </div>
-                    ))}
-                  </div>
+                  {/* Single column layout for Event Coverage and Short Films */}
+                  {category.title === 'Event Coverage' || category.title === 'Short Films' ? (
+                    <div className="flex flex-col items-center gap-6 md:gap-8">
+                      {category.videos.map((video, videoIndex) => (
+                        <div key={videoIndex} className="w-full max-w-2xl mx-auto">
+                          <VideoPlayer
+                            src={video.src}
+                            title={video.title}
+                            aspectRatio={category.aspectRatio}
+                            poster={getCloudinaryThumbnail(video.src)}
+                            className="w-full"
+                          />
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    /* Two column layout for Reels and Podcast */
+                    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-4 lg:gap-6">
+                      {category.videos.map((video, videoIndex) => (
+                        <div key={videoIndex} className="w-full max-w-[160px] mx-auto md:max-w-none">
+                          <VideoPlayer
+                            src={video.src}
+                            title={video.title}
+                            aspectRatio={category.aspectRatio}
+                            poster={getCloudinaryThumbnail(video.src)}
+                            className="w-full"
+                          />
+                        </div>
+                      ))}
+                    </div>
+                  )}
                 </Reveal>
               ))}
             </div>
