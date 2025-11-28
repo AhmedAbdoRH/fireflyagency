@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import Reveal from '../components/Reveal';
-import { ArrowLeft, Play, Palette, Layers } from 'lucide-react';
-import Image from 'next/image';
+import VideoPlayer from '../components/VideoPlayer';
 
 // Import images
 const brandingImages = [
-  '/Branding/1.png',
-  '/Branding/2.png',
-  '/Branding/3.png',
-  '/Branding/4.png'
+  '/Branding/1.webp',
+  '/Branding/2.webp',
+  '/Branding/3.webp',
+  '/Branding/4.webp'
 ];
 
 const designImages = [
@@ -74,19 +73,21 @@ const photographyImages = [
 const mediaProductionCategories = [
   {
     title: 'Reels',
+    aspectRatio: '9/16',
     videos: [
-      { src: 'https://res.cloudinary.com/dvikey3wc/video/upload/v1764252883/57_h0ioey.mp4', title: 'Reel 1' },
-      { src: 'https://res.cloudinary.com/dvikey3wc/video/upload/v1764252886/346_pirtzy.mp4', title: 'Reel 2' },
-      { src: 'https://res.cloudinary.com/dvikey3wc/video/upload/v1764252912/235_hmkoiq.mp4', title: 'Reel 3' },
-      { src: 'https://res.cloudinary.com/dvikey3wc/video/upload/v1764252848/56_bffdvv.mp4', title: 'Reel 4' },
-      { src: 'https://res.cloudinary.com/dvikey3wc/video/upload/v1764252854/noor_shawky_video_4_V01_cdvz5p.mp4', title: 'Noor Shawky' },
-      { src: 'https://res.cloudinary.com/dvikey3wc/video/upload/v1764252855/457_f2oqn9.mp4', title: 'Serene' },
-      { src: 'https://res.cloudinary.com/dvikey3wc/video/upload/v1764252837/serene_final_ckwh5u.mp4', title: 'Reel 5' },
-      { src: 'https://res.cloudinary.com/dvikey3wc/video/upload/v1764252831/678_htyvo2.mp4', title: 'Reel 6' }
+      { src: 'https://res.cloudinary.com/dvikey3wc/video/upload/v1764324733/7_lms4zk.mp4', title: 'Reel 1' },
+      { src: 'https://res.cloudinary.com/dvikey3wc/video/upload/v1764324328/4_bqddy7.mp4', title: 'Reel 2' },
+      { src: 'https://res.cloudinary.com/dvikey3wc/video/upload/v1764326958/9_vefash.mp4', title: 'Reel 8' },
+      { src: 'https://res.cloudinary.com/dvikey3wc/video/upload/v1764324334/1_cittin.mp4', title: 'Reel 3' },
+      { src: 'https://res.cloudinary.com/dvikey3wc/video/upload/v1764324304/5_i08rah.mp4', title: 'Reel 4' },
+      { src: 'https://res.cloudinary.com/dvikey3wc/video/upload/v1764324293/3_khiiuc.mp4', title: 'Reel 5' },
+      { src: 'https://res.cloudinary.com/dvikey3wc/video/upload/v1764324286/8_gc7wjv.mp4', title: 'Reel 6' },
+      { src: 'https://res.cloudinary.com/dvikey3wc/video/upload/v1764326073/6_odmjav.mp4', title: 'Reel 7' }
     ]
   },
   {
     title: 'Podcast',
+    aspectRatio: '16/9',
     videos: [
       { src: 'https://res.cloudinary.com/dvikey3wc/video/upload/v1764313631/678_wqrqyq.mp4', title: 'Podcast Episode 1' },
       { src: 'https://res.cloudinary.com/dvikey3wc/video/upload/v1764313662/789_ilpmqy.mp4', title: 'Podcast Episode 2' },
@@ -94,6 +95,7 @@ const mediaProductionCategories = [
   },
   {
     title: 'Short Films',
+    aspectRatio: '16/9',
     videos: [
       { src: 'https://res.cloudinary.com/dvikey3wc/video/upload/v1764248691/1127_1_vvurfk.mp4', title: 'Short Film 1' },
       { src: 'https://res.cloudinary.com/dvikey3wc/video/upload/v1764249246/1127_4_n4jskf.mp4', title: 'Short Film 2' }
@@ -101,11 +103,21 @@ const mediaProductionCategories = [
   },
   {
     title: 'Event Coverage',
+    aspectRatio: '16/9',
     videos: [
       { src: 'https://res.cloudinary.com/dvikey3wc/video/upload/v1764248198/1127_j1ty5o.mp4', title: 'Event Coverage 1' }
     ]
   }
 ];
+
+const getCloudinaryThumbnail = (videoUrl: string) => {
+  if (!videoUrl.includes('cloudinary.com')) return undefined;
+  // Replace .mp4 with .jpg
+  let thumbnailUrl = videoUrl.replace(/\.[^/.]+$/, ".jpg");
+  // Insert transformation before /v[0-9] to get a frame from the middle (50%)
+  thumbnailUrl = thumbnailUrl.replace(/\/upload\/(v[0-9]+)/, '/upload/so_50p/$1');
+  return thumbnailUrl;
+};
 
 interface ShowReelProps {
   onNavigateHome: () => void;
@@ -113,11 +125,6 @@ interface ShowReelProps {
 
 const ShowReel: React.FC<ShowReelProps> = ({ onNavigateHome }) => {
   const [currentBrandingIndex, setCurrentBrandingIndex] = useState(0);
-  const [videoMetadata, setVideoMetadata] = useState<{ [key: string]: { width: number, height: number, duration: number } }>({});
-  const [playingVideos, setPlayingVideos] = useState<Set<string>>(new Set());
-
-  // Create continuous strips of all images
-  const allDesignImages = [...designImages, ...designImages]; // Duplicate for seamless loop
 
   useEffect(() => {
     const brandingInterval = setInterval(() => {
@@ -129,77 +136,8 @@ const ShowReel: React.FC<ShowReelProps> = ({ onNavigateHome }) => {
     };
   }, []);
 
-  useEffect(() => {
-    const loadVideoMetadata = async () => {
-      const metadata: { [key: string]: { width: number, height: number, duration: number } } = {};
-
-      for (const category of mediaProductionCategories) {
-        for (const video of category.videos) {
-          try {
-            const videoElement = document.createElement('video');
-            videoElement.src = video.src;
-
-            await new Promise((resolve) => {
-              videoElement.onloadedmetadata = resolve;
-            });
-
-            metadata[video.src] = {
-              width: videoElement.videoWidth,
-              height: videoElement.videoHeight,
-              duration: videoElement.duration
-            };
-          } catch (error) {
-            console.warn(`Could not load metadata for ${video.src}:`, error);
-          }
-        }
-      }
-
-      setVideoMetadata(metadata);
-    };
-
-    loadVideoMetadata();
-  }, []);
-
-  // Set video thumbnails to middle frame
-  useEffect(() => {
-    const videos = document.querySelectorAll('video');
-    videos.forEach((video) => {
-      const videoElement = video as HTMLVideoElement;
-      if (videoElement.src && videoMetadata[videoElement.src]) {
-        videoElement.currentTime = videoMetadata[videoElement.src].duration / 2;
-      }
-    });
-  }, [videoMetadata]);
-
   const handleBrandingClick = (index: number) => {
     setCurrentBrandingIndex(index);
-  };
-
-  const toggleVideoPlay = (videoSrc: string) => {
-    setPlayingVideos(prev => {
-      const newSet = new Set(prev);
-      if (newSet.has(videoSrc)) {
-        newSet.delete(videoSrc);
-        // Pause the video and set back to middle frame
-        const videoElement = document.querySelector(`video[src="${videoSrc}"]`) as HTMLVideoElement;
-        if (videoElement) {
-          videoElement.pause();
-          // Set back to middle frame for thumbnail
-          if (videoMetadata[videoSrc]) {
-            videoElement.currentTime = videoMetadata[videoSrc].duration / 2;
-          }
-        }
-      } else {
-        newSet.add(videoSrc);
-        // Play the video from the beginning
-        const videoElement = document.querySelector(`video[src="${videoSrc}"]`) as HTMLVideoElement;
-        if (videoElement) {
-          videoElement.currentTime = 0; // Start from beginning
-          videoElement.play();
-        }
-      }
-      return newSet;
-    });
   };
 
   return (
@@ -213,35 +151,6 @@ const ShowReel: React.FC<ShowReelProps> = ({ onNavigateHome }) => {
         @keyframes float {
           0%, 100% { transform: translateY(0px); }
           50% { transform: translateY(-5px); }
-        }
-        @keyframes imageEnter {
-          0% { 
-            opacity: 0;
-            transform: scale(0.8) rotate(5deg) translateX(-50px);
-            filter: blur(10px);
-          }
-          50% {
-            opacity: 0.5;
-            transform: scale(1.1) rotate(-2deg) translateX(25px);
-            filter: blur(5px);
-          }
-          100% { 
-            opacity: 1;
-            transform: scale(1) rotate(0deg) translateX(0px);
-            filter: blur(0px);
-          }
-        }
-        @keyframes imageExit {
-          0% { 
-            opacity: 1;
-            transform: scale(1) rotate(0deg) translateX(0px);
-            filter: blur(0px);
-          }
-          100% { 
-            opacity: 0;
-            transform: scale(1.2) rotate(-5deg) translateX(50px);
-            filter: blur(15px);
-          }
         }
         @keyframes slideStrip {
           0% { 
@@ -257,12 +166,6 @@ const ShowReel: React.FC<ShowReelProps> = ({ onNavigateHome }) => {
         }
         .animate-float {
           animation: float 3s ease-in-out infinite;
-        }
-        .image-enter {
-          animation: imageEnter 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-        }
-        .image-exit {
-          animation: imageExit 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
         }
         .strip-animation {
           animation: slideStrip 180s linear infinite;
@@ -303,25 +206,6 @@ const ShowReel: React.FC<ShowReelProps> = ({ onNavigateHome }) => {
         .no-scrollbar {
           -ms-overflow-style: none;
           scrollbar-width: none;
-        }
-        .video-strip-container {
-          overflow-x: auto;
-          -webkit-overflow-scrolling: touch;
-          scroll-behavior: smooth;
-        }
-        .video-strip-container::-webkit-scrollbar {
-          height: 4px;
-        }
-        .video-strip-container::-webkit-scrollbar-track {
-          background: rgba(255, 255, 255, 0.1);
-          border-radius: 2px;
-        }
-        .video-strip-container::-webkit-scrollbar-thumb {
-          background: rgba(255, 255, 255, 0.3);
-          border-radius: 2px;
-        }
-        .video-strip-container::-webkit-scrollbar-thumb:hover {
-          background: rgba(255, 255, 255, 0.5);
         }
       `}</style>
       <section className="min-h-screen bg-firefly-dark pt-28 pb-16 px-4 relative overflow-hidden">
@@ -366,6 +250,7 @@ const ShowReel: React.FC<ShowReelProps> = ({ onNavigateHome }) => {
                       : 'opacity-0 scale-110 rotate-3 blur-sm translate-x-10'
                       }`}
                     loading="lazy"
+                    decoding="async"
                     style={{
                       display: 'block',
                       position: index === currentBrandingIndex ? 'relative' : 'absolute',
@@ -416,6 +301,7 @@ const ShowReel: React.FC<ShowReelProps> = ({ onNavigateHome }) => {
                         alt={`Design Project ${index + 1}`}
                         className="w-[250px] h-[350px] object-contain"
                         loading="lazy"
+                        decoding="async"
                       />
                     </div>
                   </div>
@@ -447,6 +333,7 @@ const ShowReel: React.FC<ShowReelProps> = ({ onNavigateHome }) => {
                         alt={`Photography Project ${index + 1}`}
                         className="w-[250px] h-[350px] object-contain"
                         loading="lazy"
+                        decoding="async"
                       />
                     </div>
                   </div>
@@ -475,246 +362,16 @@ const ShowReel: React.FC<ShowReelProps> = ({ onNavigateHome }) => {
                     <div className="w-20 h-1 bg-gradient-to-r from-firefly-yellow to-firefly-green mx-auto rounded-full"></div>
                   </div>
 
-                  {/* Special mobile layout for Reels */}
-                  {category.title === 'Reels' ? (
-                    <div className="block md:hidden">
-                      {/* Mobile 2x4 grid for Reels */}
-                      <div className="grid grid-cols-2 gap-4 py-4">
-                        {category.videos.map((video, videoIndex) => {
-                          const meta = videoMetadata[video.src];
-                          const aspectRatio = meta ? meta.width / meta.height : 9 / 16; // Vertical aspect ratio for reels
-
-                          return (
-                            <div
-                              key={`mobile-reel-${videoIndex}`}
-                              className="group relative"
-                            >
-                              <div className="relative overflow-hidden rounded-xl border border-white/10 bg-black/40 backdrop-blur-sm hover:shadow-2xl hover:shadow-firefly-yellow/20 transition-all duration-700 hover:scale-[1.02]">
-                                {/* Video container for mobile */}
-                                <div
-                                  className="relative w-full"
-                                  style={{
-                                    width: '100%',
-                                    height: 'auto',
-                                    aspectRatio: meta ? `${meta.width}/${meta.height}` : '9/16'
-                                  }}
-                                >
-                                  <video
-                                    src={video.src}
-                                    className="w-full h-auto object-contain transition-all duration-700 group-hover:scale-105"
-                                    preload="auto"
-                                    muted={!playingVideos.has(video.src)}
-                                    loop
-                                    playsInline
-                                    onClick={() => toggleVideoPlay(video.src)}
-                                    onError={(e) => console.error('Video error:', video.src, e)}
-                                    ref={(el) => {
-                                      if (el && !playingVideos.has(video.src) && videoMetadata[video.src]) {
-                                        // Set to middle frame for thumbnail only when not playing
-                                        el.currentTime = videoMetadata[video.src].duration / 2;
-                                      }
-                                    }}
-                                    style={{
-                                      maxWidth: '100%',
-                                      height: 'auto'
-                                    }}
-                                  >
-                                    Your browser does not support the video tag.
-                                  </video>
-
-                                  {/* Always visible play icon overlay */}
-                                  <div
-                                    className="absolute inset-0 flex items-center justify-center bg-black/30"
-                                    onClick={() => toggleVideoPlay(video.src)}
-                                  >
-                                    {!playingVideos.has(video.src) ? (
-                                      <div className="w-12 h-12 rounded-full bg-firefly-yellow/90 backdrop-blur-sm flex items-center justify-center hover:scale-110 transition-transform duration-200">
-                                        <Play className="w-5 h-5 text-black ml-0.5" />
-                                      </div>
-                                    ) : (
-                                      <div className="w-12 h-12 rounded-full bg-black/60 backdrop-blur-sm flex items-center justify-center hover:scale-110 transition-transform duration-200">
-                                        <div className="w-4 h-4.5 bg-white rounded-sm"></div>
-                                      </div>
-                                    )}
-                                  </div>
-                                </div>
-
-                                {/* Loading skeleton */}
-                                {!meta && (
-                                  <div className="absolute inset-0 bg-gray-900/50 animate-pulse flex items-center justify-center">
-                                    <div className="w-8 h-8 border-2 border-firefly-yellow border-t-transparent rounded-full animate-spin"></div>
-                                  </div>
-                                )}
-                              </div>
-                            </div>
-                          );
-                        })}
-                      </div>
-                    </div>
-                  ) : null}
-
-                  {/* Special mobile layout for Podcast */}
-                  {category.title === 'Podcast' ? (
-                    <div className="block md:hidden">
-                      {/* Mobile 1x2 grid for Podcast - side by side */}
-                      <div className="grid grid-cols-2 gap-4 py-4">
-                        {category.videos.map((video, videoIndex) => {
-                          const meta = videoMetadata[video.src];
-                          const aspectRatio = meta ? meta.width / meta.height : 16 / 9; // Horizontal aspect ratio for podcasts
-
-                          return (
-                            <div
-                              key={`mobile-podcast-${videoIndex}`}
-                              className="group relative"
-                            >
-                              <div className="relative overflow-hidden rounded-xl border border-white/10 bg-black/40 backdrop-blur-sm hover:shadow-2xl hover:shadow-firefly-yellow/20 transition-all duration-700 hover:scale-[1.02]">
-                                {/* Video container for mobile */}
-                                <div
-                                  className="relative w-full"
-                                  style={{
-                                    width: '100%',
-                                    height: 'auto',
-                                    aspectRatio: meta ? `${meta.width}/${meta.height}` : '16/9'
-                                  }}
-                                >
-                                  <video
-                                    src={video.src}
-                                    className="w-full h-auto object-contain transition-all duration-700 group-hover:scale-105"
-                                    preload="auto"
-                                    muted={!playingVideos.has(video.src)}
-                                    loop
-                                    playsInline
-                                    onClick={() => toggleVideoPlay(video.src)}
-                                    onError={(e) => console.error('Video error:', video.src, e)}
-                                    ref={(el) => {
-                                      if (el && !playingVideos.has(video.src) && videoMetadata[video.src]) {
-                                        // Set to middle frame for thumbnail only when not playing
-                                        el.currentTime = videoMetadata[video.src].duration / 2;
-                                      }
-                                    }}
-                                    style={{
-                                      maxWidth: '100%',
-                                      height: 'auto'
-                                    }}
-                                  >
-                                    Your browser does not support the video tag.
-                                  </video>
-
-                                  {/* Always visible play icon overlay */}
-                                  <div
-                                    className="absolute inset-0 flex items-center justify-center bg-black/30"
-                                    onClick={() => toggleVideoPlay(video.src)}
-                                  >
-                                    {!playingVideos.has(video.src) ? (
-                                      <div className="w-12 h-12 rounded-full bg-firefly-yellow/90 backdrop-blur-sm flex items-center justify-center hover:scale-110 transition-transform duration-200">
-                                        <Play className="w-5 h-5 text-black ml-0.5" />
-                                      </div>
-                                    ) : (
-                                      <div className="w-12 h-12 rounded-full bg-black/60 backdrop-blur-sm flex items-center justify-center hover:scale-110 transition-transform duration-200">
-                                        <div className="w-4 h-4.5 bg-white rounded-sm"></div>
-                                      </div>
-                                    )}
-                                  </div>
-                                </div>
-
-                                {/* Loading skeleton */}
-                                {!meta && (
-                                  <div className="absolute inset-0 bg-gray-900/50 animate-pulse flex items-center justify-center">
-                                    <div className="w-8 h-8 border-2 border-firefly-yellow border-t-transparent rounded-full animate-spin"></div>
-                                  </div>
-                                )}
-                              </div>
-                            </div>
-                          );
-                        })}
-                      </div>
-                    </div>
-                  ) : null}
-
-                  {/* Desktop layout for all categories + mobile layout for non-Reels and non-Podcast */}
-                  <div className={`${(category.title === 'Reels' || category.title === 'Podcast') ? 'hidden md:block' : 'block'}`}>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                      {category.videos.map((video, videoIndex) => {
-                        const meta = videoMetadata[video.src];
-                        const aspectRatio = meta ? meta.width / meta.height : 16 / 9;
-
-                        return (
-                          <div key={videoIndex} className="group relative">
-                            <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-black/40 backdrop-blur-sm hover:shadow-2xl hover:shadow-firefly-yellow/20 transition-all duration-700 hover:scale-[1.02]">
-                              {/* Video Container with proper aspect ratio */}
-                              <div
-                                className="relative w-full"
-                                style={{ aspectRatio }}
-                              >
-                                <video
-                                  ref={(el) => {
-                                    if (el && !videoMetadata[video.src]) {
-                                      el.onloadedmetadata = () => {
-                                        setVideoMetadata(prev => ({
-                                          ...prev,
-                                          [video.src]: {
-                                            width: el.videoWidth,
-                                            height: el.videoHeight,
-                                            duration: el.duration
-                                          }
-                                        }));
-                                        // Set video to middle frame for thumbnail
-                                        el.currentTime = el.duration / 2;
-                                      };
-                                    }
-                                    // Set to middle frame for thumbnail only when not playing
-                                    if (el && !playingVideos.has(video.src) && videoMetadata[video.src]) {
-                                      el.currentTime = videoMetadata[video.src].duration / 2;
-                                    }
-                                  }}
-                                  src={video.src}
-                                  className="w-full h-auto object-contain transition-all duration-700 group-hover:scale-105"
-                                  preload="auto"
-                                  muted={!playingVideos.has(video.src)}
-                                  loop
-                                  playsInline
-                                  onClick={() => toggleVideoPlay(video.src)}
-                                  onError={(e) => console.error('Video error:', video.src, e)}
-                                  style={{
-                                    maxWidth: '100%',
-                                    height: 'auto'
-                                  }}
-                                >
-                                  Your browser does not support the video tag.
-                                </video>
-
-                                {/* Always visible play button overlay */}
-                                <div
-                                  className="absolute inset-0 flex items-center justify-center bg-black/30"
-                                  onClick={() => toggleVideoPlay(video.src)}
-                                >
-                                  {!playingVideos.has(video.src) ? (
-                                    <div className="w-16 h-16 rounded-full bg-firefly-yellow/90 backdrop-blur-sm flex items-center justify-center hover:scale-110 transition-transform duration-200">
-                                      <Play className="w-6 h-6 text-black ml-1" />
-                                    </div>
-                                  ) : (
-                                    <div className="w-16 h-16 rounded-full bg-black/60 backdrop-blur-sm flex items-center justify-center hover:scale-110 transition-transform duration-200">
-                                      <div className="w-5 h-6 bg-white rounded-sm"></div>
-                                    </div>
-                                  )}
-                                </div>
-
-                                {/* Video info overlay - removed */}
-                              </div>
-
-                              {/* Loading skeleton */}
-                              {!meta && (
-                                <div className="absolute inset-0 bg-gray-900/50 animate-pulse flex items-center justify-center">
-                                  <div className="w-8 h-8 border-2 border-firefly-yellow border-t-transparent rounded-full animate-spin"></div>
-                                </div>
-                              )}
-                            </div>
-
-                            {/* Title below video - removed */}
-                          </div>
-                        );
-                      })}
-                    </div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    {category.videos.map((video, videoIndex) => (
+                      <VideoPlayer
+                        key={videoIndex}
+                        src={video.src}
+                        title={video.title}
+                        aspectRatio={category.aspectRatio}
+                        poster={getCloudinaryThumbnail(video.src)}
+                      />
+                    ))}
                   </div>
                 </Reveal>
               ))}

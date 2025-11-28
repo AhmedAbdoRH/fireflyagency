@@ -30,7 +30,7 @@ const FloatingButton: React.FC = () => {
       const interval = setInterval(() => {
         const timeoutId = expandTemporarily();
         return () => clearTimeout(timeoutId);
-      }, longDelayBeforeExpand + 5000); 
+      }, longDelayBeforeExpand + 5000);
       // 15000 = انكماش طويل
       // 10000 = مدة بقاء الزر مفتوح قبل الانكماش
       // المجموع = دورة كاملة
@@ -70,9 +70,8 @@ const FloatingButton: React.FC = () => {
       href="https://wa.me/+201552479991"
       target="_blank"
       rel="noopener noreferrer"
-      className={`fixed bottom-6 left-6 z-50 group transition-all duration-1000 ease-out ${
-        visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 pointer-events-none'
-      }`}
+      className={`fixed bottom-6 left-6 z-50 group transition-all duration-1000 ease-out ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 pointer-events-none'
+        }`}
       aria-label="Let's Talk"
       onMouseEnter={() => setExpanded(true)}
       onFocus={() => setExpanded(true)}
@@ -80,21 +79,19 @@ const FloatingButton: React.FC = () => {
       onBlur={() => setExpanded(false)}
     >
       <div
-        className={`relative flex items-center gap-3 px-3 py-3 rounded-full backdrop-blur-xl border border-white/15 bg-white/10 text-white font-semibold tracking-wide shadow-[0_18px_40px_rgba(0,0,0,0.35)] transition-all duration-[1500ms] ease-in-out overflow-hidden ${
-          expanded ? 'pl-5 pr-6 w-auto' : 'pl-3 pr-3'
-        }`}
+        className={`relative flex items-center gap-3 px-3 py-3 rounded-full backdrop-blur-xl border border-white/15 bg-white/10 text-white font-semibold tracking-wide shadow-[0_18px_40px_rgba(0,0,0,0.35)] transition-all duration-[1500ms] ease-in-out overflow-hidden ${expanded ? 'pl-5 pr-6 w-auto' : 'pl-3 pr-3'
+          }`}
       >
-        <div className={`w-10 h-10 rounded-full flex items-center justify-center transition-all duration-[1500ms] ease-in-out ${
-          expanded ? 'translate-x-0' : 'translate-x-2'
-        }`}>
+        <div className={`w-10 h-10 rounded-full flex items-center justify-center transition-all duration-[1500ms] ease-in-out ${expanded ? 'translate-x-0' : 'translate-x-2'
+          }`}>
           <MessageCircleMore className="w-7 h-7 text-white" />
         </div>
 
         <div className="flex items-center">
           <span
-            className={`uppercase text-base font-bold tracking-wider transition-all duration-[1500ms] ease-in-out overflow-hidden ${
-              textVisible ? 'opacity-100 max-w-[300px]' : 'opacity-0 max-w-0'
-            }`}
+            className={`uppercase text-base font-bold tracking-wider transition-all duration-[1500ms] ease-in-out whitespace-nowrap ${textVisible ? 'opacity-100 max-w-[300px]' : 'opacity-0 max-w-0'
+              }`}
+            style={{ whiteSpace: 'nowrap' }}
           >
             Let's Talk!
           </span>
