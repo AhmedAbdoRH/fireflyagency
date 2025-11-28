@@ -74,21 +74,21 @@ const mediaProductionCategories = [
   {
     title: 'Reels',
     videos: [
-      { src: '/Videos/Reels/235.mp4', title: 'Reel 1' },
-      { src: '/Videos/Reels/346.mp4', title: 'Reel 2' },
-      { src: '/Videos/Reels/457.mp4', title: 'Reel 3' },
-      { src: '/Videos/Reels/57.mp4', title: 'Reel 4' },
-      { src: '/Videos/Reels/noor shawky video 4 V01.mp4', title: 'Noor Shawky' },
-      { src: '/Videos/Reels/serene final.mp4', title: 'Serene' },
-      { src: '/Videos/Reels/56.mp4', title: 'Reel 5' },
-      { src: '/Videos/Reels/678.mp4', title: 'Reel 6' }
+      { src: 'https://res.cloudinary.com/dvikey3wc/video/upload/v1764252883/57_h0ioey.mp4', title: 'Reel 1' },
+      { src: 'https://res.cloudinary.com/dvikey3wc/video/upload/v1764252886/346_pirtzy.mp4', title: 'Reel 2' },
+      { src: 'https://res.cloudinary.com/dvikey3wc/video/upload/v1764252912/235_hmkoiq.mp4', title: 'Reel 3' },
+      { src: 'https://res.cloudinary.com/dvikey3wc/video/upload/v1764252848/56_bffdvv.mp4', title: 'Reel 4' },
+      { src: 'https://res.cloudinary.com/dvikey3wc/video/upload/v1764252854/noor_shawky_video_4_V01_cdvz5p.mp4', title: 'Noor Shawky' },
+      { src: 'https://res.cloudinary.com/dvikey3wc/video/upload/v1764252855/457_f2oqn9.mp4', title: 'Serene' },
+      { src: 'https://res.cloudinary.com/dvikey3wc/video/upload/v1764252837/serene_final_ckwh5u.mp4', title: 'Reel 5' },
+      { src: 'https://res.cloudinary.com/dvikey3wc/video/upload/v1764252831/678_htyvo2.mp4', title: 'Reel 6' }
     ]
   },
   {
     title: 'Podcast',
     videos: [
-      { src: '/Videos/Podcast/678.mp4', title: 'Podcast Episode 1' },
-      { src: '/Videos/Podcast/789.mp4', title: 'Podcast Episode 2' }
+      { src: 'https://res.cloudinary.com/dvikey3wc/video/upload/v1764313631/678_wqrqyq.mp4', title: 'Podcast Episode 1' },
+      { src: 'https://res.cloudinary.com/dvikey3wc/video/upload/v1764313662/789_ilpmqy.mp4', title: 'Podcast Episode 2' },
     ]
   },
   {
@@ -264,7 +264,7 @@ const ShowReel: React.FC<ShowReelProps> = ({ onNavigateHome }) => {
           animation: imageExit 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
         }
         .strip-animation {
-          animation: slideStrip 80s linear infinite;
+          animation: slideStrip 180s linear infinite;
           width: max-content;
           will-change: transform;
         }
@@ -272,19 +272,19 @@ const ShowReel: React.FC<ShowReelProps> = ({ onNavigateHome }) => {
           animation: slideStrip 15s linear infinite;
         }
         .strip-animation-photography {
-          animation: slideStrip 100s linear infinite;
+          animation: slideStrip 200s linear infinite;
           width: max-content;
           will-change: transform;
         }
         @media (max-width: 768px) {
           .strip-animation {
-            animation: slideStrip 30s linear infinite;
+            animation: slideStrip 80s linear infinite;
           }
           .strip-animation-reels {
             animation: slideStrip 8s linear infinite;
           }
           .strip-animation-photography {
-            animation: slideStrip 40s linear infinite;
+            animation: slideStrip 90s linear infinite;
           }
         }
         .strip-animation:hover {
@@ -492,7 +492,7 @@ const ShowReel: React.FC<ShowReelProps> = ({ onNavigateHome }) => {
                                 {/* Video container for mobile */}
                                 <div
                                   className="relative w-full"
-                                  style={{ 
+                                  style={{
                                     width: '100%',
                                     height: 'auto',
                                     aspectRatio: meta ? `${meta.width}/${meta.height}` : '9/16'
@@ -513,7 +513,7 @@ const ShowReel: React.FC<ShowReelProps> = ({ onNavigateHome }) => {
                                         el.currentTime = videoMetadata[video.src].duration / 2;
                                       }
                                     }}
-                                    style={{ 
+                                    style={{
                                       maxWidth: '100%',
                                       height: 'auto'
                                     }}
@@ -570,7 +570,7 @@ const ShowReel: React.FC<ShowReelProps> = ({ onNavigateHome }) => {
                                 {/* Video container for mobile */}
                                 <div
                                   className="relative w-full"
-                                  style={{ 
+                                  style={{
                                     width: '100%',
                                     height: 'auto',
                                     aspectRatio: meta ? `${meta.width}/${meta.height}` : '16/9'
@@ -591,7 +591,7 @@ const ShowReel: React.FC<ShowReelProps> = ({ onNavigateHome }) => {
                                         el.currentTime = videoMetadata[video.src].duration / 2;
                                       }
                                     }}
-                                    style={{ 
+                                    style={{
                                       maxWidth: '100%',
                                       height: 'auto'
                                     }}
