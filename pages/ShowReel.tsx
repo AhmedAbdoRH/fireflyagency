@@ -87,7 +87,7 @@ const mediaProductionCategories = [
   },
   {
     title: 'Podcast',
-    aspectRatio: '16/9',
+    aspectRatio: '9/16',
     videos: [
       { src: 'https://res.cloudinary.com/dvikey3wc/video/upload/v1764313631/678_wqrqyq.mp4', title: 'Podcast Episode 1' },
       { src: 'https://res.cloudinary.com/dvikey3wc/video/upload/v1764313662/789_ilpmqy.mp4', title: 'Podcast Episode 2' },
@@ -229,9 +229,9 @@ const ShowReel: React.FC<ShowReelProps> = ({ onNavigateHome }) => {
           </Reveal>
 
           {/* Branding Section */}
-          <div className="w-full mt-20 mb-16 text-center">
+          <div className="w-full mt-8 mb-12 text-center">
             <Reveal>
-              <div className="flex justify-center items-center gap-3 mb-10">
+              <div className="flex justify-center items-center gap-3 mb-8">
                 <h2 className="text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-firefly-yellow via-white to-firefly-green animate-gradient bg-gradient-animation">
                   Branding & Logo designs
                 </h2>
@@ -278,9 +278,9 @@ const ShowReel: React.FC<ShowReelProps> = ({ onNavigateHome }) => {
           </div>
 
           {/* Graphic Design Section */}
-          <div className="w-full mt-16 mb-8 text-center">
+          <div className="w-full mt-8 mb-8 text-center">
             <Reveal>
-              <div className="flex justify-center items-center gap-3 mb-10">
+              <div className="flex justify-center items-center gap-3 mb-6">
 
                 <h2 className="text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-firefly-yellow via-white to-firefly-green animate-gradient bg-gradient-animation">
                   Designs
@@ -288,7 +288,7 @@ const ShowReel: React.FC<ShowReelProps> = ({ onNavigateHome }) => {
               </div>
             </Reveal>
 
-            <div className="overflow-hidden min-h-[400px]">
+            <div className="overflow-hidden min-h-[300px] md:min-h-[400px]">
               <div className="flex strip-animation items-center">
                 {[...designImages, ...designImages].map((src, index) => (
                   <div
@@ -299,7 +299,7 @@ const ShowReel: React.FC<ShowReelProps> = ({ onNavigateHome }) => {
                       <img
                         src={src}
                         alt={`Design Project ${index + 1}`}
-                        className="w-[250px] h-[350px] object-contain"
+                        className="w-[200px] h-[280px] md:w-[250px] md:h-[350px] object-contain"
                         loading="lazy"
                         decoding="async"
                       />
@@ -311,16 +311,16 @@ const ShowReel: React.FC<ShowReelProps> = ({ onNavigateHome }) => {
           </div>
 
           {/* Photography Section */}
-          <div className="w-full mt-16 mb-8 text-center">
+          <div className="w-full mt-8 mb-8 text-center">
             <Reveal>
-              <div className="flex justify-center items-center gap-3 mb-10">
+              <div className="flex justify-center items-center gap-3 mb-6">
                 <h2 className="text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-firefly-yellow via-white to-firefly-green animate-gradient bg-gradient-animation">
                   Photography
                 </h2>
               </div>
             </Reveal>
 
-            <div className="overflow-hidden min-h-[400px]">
+            <div className="overflow-hidden min-h-[300px] md:min-h-[400px]">
               <div className="flex strip-animation-photography items-center">
                 {[...photographyImages, ...photographyImages].map((src, index) => (
                   <div
@@ -331,7 +331,7 @@ const ShowReel: React.FC<ShowReelProps> = ({ onNavigateHome }) => {
                       <img
                         src={src}
                         alt={`Photography Project ${index + 1}`}
-                        className="w-[250px] h-[350px] object-contain"
+                        className="w-[200px] h-[280px] md:w-[250px] md:h-[350px] object-contain"
                         loading="lazy"
                         decoding="async"
                       />
@@ -343,7 +343,7 @@ const ShowReel: React.FC<ShowReelProps> = ({ onNavigateHome }) => {
           </div>
 
           {/* Media Production Section */}
-          <div className="w-full mt-16 mb-24 text-center">
+          <div className="w-full mt-8 mb-24 text-center">
             <Reveal>
               <div className="flex justify-center items-center gap-3 mb-10">
                 <h2 className="text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-firefly-yellow via-white to-firefly-green animate-gradient bg-gradient-animation">
@@ -352,25 +352,27 @@ const ShowReel: React.FC<ShowReelProps> = ({ onNavigateHome }) => {
               </div>
             </Reveal>
 
-            <div className="space-y-16">
+            <div className="space-y-8 md:space-y-16">
               {mediaProductionCategories.map((category, categoryIndex) => (
-                <Reveal key={categoryIndex} width="100%">
-                  <div className="text-center mb-8">
-                    <h3 className="text-2xl md:text-3xl font-bold text-white mb-2">
+                <Reveal key={categoryIndex} width="100%" delay={categoryIndex * 100}>
+                  <div className="text-center mb-4 md:mb-8">
+                    <h3 className="text-xl md:text-2xl lg:text-3xl font-bold text-white mb-2">
                       {category.title}
                     </h3>
                     <div className="w-20 h-1 bg-gradient-to-r from-firefly-yellow to-firefly-green mx-auto rounded-full"></div>
                   </div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                  <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-4 lg:gap-6">
                     {category.videos.map((video, videoIndex) => (
-                      <VideoPlayer
-                        key={videoIndex}
-                        src={video.src}
-                        title={video.title}
-                        aspectRatio={category.aspectRatio}
-                        poster={getCloudinaryThumbnail(video.src)}
-                      />
+                      <div key={videoIndex} className="w-full max-w-[160px] mx-auto md:max-w-none">
+                        <VideoPlayer
+                          src={video.src}
+                          title={video.title}
+                          aspectRatio={category.aspectRatio}
+                          poster={getCloudinaryThumbnail(video.src)}
+                          className="w-full"
+                        />
+                      </div>
                     ))}
                   </div>
                 </Reveal>

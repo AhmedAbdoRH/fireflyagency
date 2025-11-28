@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import Header from './components/Header';
 import Footer from './components/Footer';
-import CustomCursor from './components/CustomCursor';
 import FlyingButterfly from './components/FlyingButterfly';
 import FloatingButton from './components/FloatingButton';
 import Home from './pages/Home';
@@ -15,7 +14,6 @@ const App: React.FC = () => {
 
     return (
         <div className="min-h-screen bg-firefly-dark text-white font-sans selection:bg-firefly-yellow selection:text-firefly-dark overflow-x-hidden">
-            <CustomCursor />
             <FlyingButterfly />
             <FloatingButton />
 

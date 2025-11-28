@@ -11,15 +11,40 @@ interface VideoPlayerProps {
 
 const VideoPlayer: React.FC<VideoPlayerProps> = ({ src, title, aspectRatio = "16/9", className = "", poster }) => {
     const [isPlaying, setIsPlaying] = useState(false);
+    const [showControls, setShowControls] = useState(false);
     const videoRef = useRef<HTMLVideoElement>(null);
+    const controlsTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
     const handlePlay = () => {
         setIsPlaying(true);
+        setShowControls(false);
+    };
+
+    const handleVideoInteraction = () => {
+        setShowControls(true);
+        
+        // Clear existing timeout
+        if (controlsTimeoutRef.current) {
+            clearTimeout(controlsTimeoutRef.current);
+        }
+        
+        // Hide controls after 3 seconds of inactivity
+        controlsTimeoutRef.current = setTimeout(() => {
+            setShowControls(false);
+        }, 3000);
+    };
+
+    const handleMouseLeave = () => {
+        // Hide controls immediately when mouse leaves
+        if (controlsTimeoutRef.current) {
+            clearTimeout(controlsTimeoutRef.current);
+        }
+        setShowControls(false);
     };
 
     return (
         <div
-            className={`relative overflow-hidden rounded-xl border border-white/10 bg-black/40 backdrop-blur-sm hover:shadow-2xl hover:shadow-firefly-yellow/20 transition-all duration-700 hover:scale-[1.02] group ${className}`}
+            className={`relative overflow-hidden rounded-xl border border-white/10 bg-black/40 backdrop-blur-sm hover:shadow-2xl hover:shadow-firefly-yellow/20 transition-all duration-700 hover:scale-[1.02] group w-full ${className}`}
             style={{ aspectRatio }}
         >
             {!isPlaying ? (
@@ -50,17 +75,35 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ src, title, aspectRatio = "16
                 </div>
             ) : (
                 /* Video State */
-                <video
-                    ref={videoRef}
-                    src={src}
-                    className="w-full h-full object-contain"
-                    controls
-                    autoPlay
-                    playsInline
-                    style={{ maxWidth: '100%', height: '100%' }}
+                <div 
+                    className="relative w-full h-full"
+                    onMouseEnter={handleVideoInteraction}
+                    onMouseMove={handleVideoInteraction}
+                    onMouseLeave={handleMouseLeave}
+                    onTouchStart={handleVideoInteraction}
+                    onTouchMove={handleVideoInteraction}
                 >
-                    Your browser does not support the video tag.
-                </video>
+                    <video
+                        ref={videoRef}
+                        src={src}
+                        className="w-full h-full object-contain"
+                        controls={showControls}
+                        autoPlay
+                        playsInline
+                        style={{ maxWidth: '100%', height: '100%' }}
+                    >
+                        Your browser does not support the video tag.
+                    </video>
+                    
+                    {/* Custom overlay for touch interaction */}
+                    {!showControls && (
+                        <div 
+                            className="absolute inset-0 cursor-pointer"
+                            onClick={handleVideoInteraction}
+                            onTouchStart={handleVideoInteraction}
+                        />
+                    )}
+                </div>
             )}
         </div>
     );
