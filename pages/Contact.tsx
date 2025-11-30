@@ -121,7 +121,7 @@ const Contact: React.FC = () => {
                             <h3 className="text-2xl font-heading font-bold text-white mb-8 relative z-10">Send us a Message</h3>
 
                             <form 
-                                action="https://getform.io/f/awnxyjzb"
+                                action="https://getform.io/f/ayvegllb"
                                 method="POST"
                                 className="space-y-6 relative z-10"
                             >
