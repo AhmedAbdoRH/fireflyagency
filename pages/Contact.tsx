@@ -120,13 +120,20 @@ const Contact: React.FC = () => {
 
                             <h3 className="text-2xl font-heading font-bold text-white mb-8 relative z-10">Send us a Message</h3>
 
-                            <form className="space-y-6 relative z-10">
+                            <form 
+                                action="https://getform.io/f/awnxyjzb"
+                                method="POST"
+                                className="space-y-6 relative z-10"
+                            >
+                                <input type="hidden" name="_gotcha" value="info@firefly-agency.com" />
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                     <div className="space-y-2">
                                         <label htmlFor="name" className="text-sm text-gray-400 ml-2">Your Name</label>
                                         <input
                                             type="text"
                                             id="name"
+                                            name="name"
+                                            required
                                             className="w-full bg-firefly-dark/50 border border-white/10 rounded-xl px-5 py-4 text-white focus:outline-none focus:border-firefly-yellow/50 focus:ring-1 focus:ring-firefly-yellow/50 transition-all placeholder:text-gray-600"
                                             placeholder="John Doe"
                                         />
@@ -136,6 +143,8 @@ const Contact: React.FC = () => {
                                         <input
                                             type="email"
                                             id="email"
+                                            name="email"
+                                            required
                                             className="w-full bg-firefly-dark/50 border border-white/10 rounded-xl px-5 py-4 text-white focus:outline-none focus:border-firefly-yellow/50 focus:ring-1 focus:ring-firefly-yellow/50 transition-all placeholder:text-gray-600"
                                             placeholder="john@example.com"
                                         />
@@ -146,6 +155,8 @@ const Contact: React.FC = () => {
                                     <label htmlFor="subject" className="text-sm text-gray-400 ml-2">Subject</label>
                                     <select
                                         id="subject"
+                                        name="subject"
+                                        required
                                         className="w-full bg-firefly-dark/50 border border-white/10 rounded-xl px-5 py-4 text-white focus:outline-none focus:border-firefly-yellow/50 focus:ring-1 focus:ring-firefly-yellow/50 transition-all appearance-none"
                                     >
                                         <option value="" className="bg-firefly-dark text-gray-500">Select a topic</option>
@@ -159,7 +170,9 @@ const Contact: React.FC = () => {
                                     <label htmlFor="message" className="text-sm text-gray-400 ml-2">Message</label>
                                     <textarea
                                         id="message"
+                                        name="message"
                                         rows={5}
+                                        required
                                         className="w-full bg-firefly-dark/50 border border-white/10 rounded-xl px-5 py-4 text-white focus:outline-none focus:border-firefly-yellow/50 focus:ring-1 focus:ring-firefly-yellow/50 transition-all placeholder:text-gray-600 resize-none"
                                         placeholder="Tell us about your project..."
                                     ></textarea>
