@@ -198,7 +198,7 @@ const Hero: React.FC<HeroProps> = ({ onShowReel }) => {
     if (videoElement) {
       const handleLoadedMetadata = () => {
         if (videoElement.duration > 1) { // Ensure video is long enough
-          videoElement.currentTime = videoElement.duration - 1;
+          videoElement.currentTime = videoElement.duration * 0.03;
         }
       };
 
