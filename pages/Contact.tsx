@@ -127,6 +127,7 @@ const Contact: React.FC = () => {
                             >
                                 <input type="hidden" name="access_key" value="b047a217-61aa-412d-bd95-d4092bcb583a" />
                                 <input type="hidden" name="email" value="info@firefly-agency.com" />
+                                <input type="hidden" name="subject" value="New Contact Form Submission From Website" />
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                     <div className="space-y-2">
                                         <label htmlFor="name" className="text-sm text-gray-400 ml-2">Your Name</label>
