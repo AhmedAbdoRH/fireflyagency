@@ -9,49 +9,92 @@ interface HeroProps {
 
 const Hero: React.FC<HeroProps> = ({ onShowReel }) => {
   const [isPlaying, setIsPlaying] = useState(false);
+  const [isMuted, setIsMuted] = useState(false);
+  const [volume, setVolume] = useState(0.7);
   const [likes, setLikes] = useState(1200); // Initial likes, representing 1.2K
   const [isLiked, setIsLiked] = useState(false); // Track if user has liked
   const [comments, setComments] = useState(245);
   const [shares, setShares] = useState(88);
   const [isInteracting, setIsInteracting] = useState(false);
+  const [showVolumeControl, setShowVolumeControl] = useState(false);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const mouseRef = useRef({ x: 0, y: 0 });
-  const videoRef = useRef<HTMLVideoElement>(null);
+  const desktopVideoRef = useRef<HTMLVideoElement>(null);
+  const mobileVideoRef = useRef<HTMLVideoElement>(null);
+  const volumeRef = useRef<HTMLDivElement>(null);
 
-  const handleTimeUpdate = () => {
-    if (videoRef.current) {
-      const video = videoRef.current;
-      // Stop 1.5 seconds before the end
-      if (video.duration && video.currentTime >= video.duration - 1.5) {
+  const handleTimeUpdate = (e: React.SyntheticEvent<HTMLVideoElement>) => {
+    const video = e.currentTarget;
+    // Stop 1.5 seconds before the end
+    if (video.duration && video.currentTime >= video.duration - 1.5) {
+      video.pause();
+      setIsPlaying(false);
+    }
+  };
+
+  // Function to handle video play/pause
+  const toggleVideoPlayback = async () => {
+    const video = window.innerWidth >= 1024 ? desktopVideoRef.current : mobileVideoRef.current;
+    if (!video) return;
+
+    try {
+      if (video.paused) {
+        // Always start from the beginning
+        video.currentTime = 0;
+
+        // Set volume before playing
+        video.volume = volume;
+        video.muted = isMuted;
+
+        // Try to play the video
+        await video.play();
+        setIsPlaying(true);
+      } else {
         video.pause();
+        setIsPlaying(false);
+      }
+    } catch (error) {
+      console.error('Error toggling video playback:', error);
+      // Try to load the video first if there's an error
+      try {
+        await video.load();
+        video.volume = volume;
+        video.muted = isMuted;
+        await video.play();
+        setIsPlaying(true);
+      } catch (loadError) {
+        console.error('Failed to load and play video:', loadError);
         setIsPlaying(false);
       }
     }
   };
 
-  const toggleVideoPlayback = async () => {
-    if (videoRef.current) {
-      try {
-        if (videoRef.current.paused) {
-          // Reset video to beginning if it's at the end
-          if (videoRef.current.currentTime >= videoRef.current.duration - 1.5) {
-            videoRef.current.currentTime = 0;
-          }
-          await videoRef.current.play();
-          setIsPlaying(true);
-        } else {
-          videoRef.current.pause();
-          setIsPlaying(false);
-        }
-      } catch (error) {
-        console.error('Error toggling video playback:', error);
-        // Fallback: Try to load and play the video again
-        if (videoRef.current) {
-          videoRef.current.load();
-          videoRef.current.play().catch(e => console.error('Failed to play video:', e));
+  const toggleMute = () => {
+    const newMutedState = !isMuted;
+    setIsMuted(newMutedState);
+    if (desktopVideoRef.current) desktopVideoRef.current.muted = newMutedState;
+    if (mobileVideoRef.current) mobileVideoRef.current.muted = newMutedState;
+  };
+
+  const handleVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newVolume = parseFloat(e.target.value);
+    setVolume(newVolume);
+
+    const updateVideo = (video: HTMLVideoElement | null) => {
+      if (video) {
+        video.volume = newVolume;
+        if (newVolume === 0) {
+          video.muted = true;
+          setIsMuted(true);
+        } else if (isMuted) {
+          video.muted = false;
+          setIsMuted(false);
         }
       }
-    }
+    };
+
+    updateVideo(desktopVideoRef.current);
+    updateVideo(mobileVideoRef.current);
   };
 
   useEffect(() => {
@@ -194,20 +237,28 @@ const Hero: React.FC<HeroProps> = ({ onShowReel }) => {
   }, []);
 
   useEffect(() => {
-    const videoElement = videoRef.current;
-    if (videoElement) {
-      const handleLoadedMetadata = () => {
-        if (videoElement.duration > 1) { // Ensure video is long enough
-          videoElement.currentTime = videoElement.duration * 0.03;
-        }
-      };
+    const setupVideo = (videoElement: HTMLVideoElement | null) => {
+      if (videoElement) {
+        const handleLoadedMetadata = () => {
+          if (videoElement.duration > 1) { // Ensure video is long enough
+            videoElement.currentTime = videoElement.duration * 0.03;
+          }
+        };
+        videoElement.addEventListener('loadedmetadata', handleLoadedMetadata);
+        return () => {
+          videoElement.removeEventListener('loadedmetadata', handleLoadedMetadata);
+        };
+      }
+      return undefined;
+    };
 
-      videoElement.addEventListener('loadedmetadata', handleLoadedMetadata);
+    const cleanupDesktop = setupVideo(desktopVideoRef.current);
+    const cleanupMobile = setupVideo(mobileVideoRef.current);
 
-      return () => {
-        videoElement.removeEventListener('loadedmetadata', handleLoadedMetadata);
-      };
-    }
+    return () => {
+      if (cleanupDesktop) cleanupDesktop();
+      if (cleanupMobile) cleanupMobile();
+    };
   }, []);
 
   return (
@@ -255,16 +306,87 @@ const Hero: React.FC<HeroProps> = ({ onShowReel }) => {
                   onMouseEnter={() => setIsInteracting(true)}
                   onMouseLeave={() => setIsInteracting(false)}
                 >
-                  <video
-                    ref={videoRef}
-                    src="/Hero.mp4"
-                    playsInline
-                    muted
-                    loop
-                    onEnded={() => setIsPlaying(false)}
-                    onTimeUpdate={handleTimeUpdate}
-                    className="w-full h-full object-cover aspect-[9/16] scale-105 cursor-pointer"
-                  />
+                  <div className="relative w-full h-full">
+                    <div className="relative w-full h-full bg-black">
+                      <video
+                        ref={desktopVideoRef}
+                        src="/Hero.mp4"
+                        className="w-full h-full object-cover aspect-[9/16]"
+                        playsInline
+                        loop
+                        onTimeUpdate={handleTimeUpdate}
+                        poster="/Fly.png"
+                        onError={(e) => {
+                          console.error('Video error:', e);
+                          console.error('Video error details:', {
+                            error: e.currentTarget.error,
+                            readyState: desktopVideoRef.current?.readyState,
+                            networkState: desktopVideoRef.current?.networkState
+                          });
+                        }}
+                      >
+                        Your browser does not support the video tag.
+                      </video>
+                    </div>
+
+                    {/* Volume Control */}
+                    <div className="absolute bottom-4 right-4 z-20 flex items-center space-x-2">
+                      <button
+                        onClick={toggleMute}
+                        className="p-2 bg-black/50 rounded-full hover:bg-black/70 transition-colors"
+                        onMouseEnter={() => setShowVolumeControl(true)}
+                        onMouseLeave={() => setShowVolumeControl(false)}
+                      >
+                        {isMuted || volume === 0 ? (
+                          <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" clipRule="evenodd" />
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2" />
+                          </svg>
+                        ) : volume > 0.5 ? (
+                          <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.536 8.464a5 5 0 010 7.072M12 5.5a7.5 7.5 0 010 15v0a7.5 7.5 0 01-7.5-7.5H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.5A7.5 7.5 0 0112 5.5v0z" />
+                          </svg>
+                        ) : (
+                          <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" clipRule="evenodd" />
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.536 8.464a5 5 0 010 7.072" />
+                          </svg>
+                        )}
+                      </button>
+
+                      <div
+                        className={`bg-black/50 rounded-full overflow-hidden transition-all duration-300 ${showVolumeControl ? 'w-24 px-3' : 'w-0'}`}
+                        onMouseEnter={() => setShowVolumeControl(true)}
+                        onMouseLeave={() => setShowVolumeControl(false)}
+                      >
+                        <input
+                          type="range"
+                          min="0"
+                          max="1"
+                          step="0.01"
+                          value={isMuted ? 0 : volume}
+                          onChange={handleVolumeChange}
+                          className="w-full h-1.5 bg-gray-600 rounded-full appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:h-3 [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-white"
+                        />
+                      </div>
+                    </div>
+
+                    {/* Play/Pause Overlay */}
+                    <div
+                      className={`absolute inset-0 flex items-center justify-center transition-opacity duration-300 ${isPlaying ? 'opacity-0 hover:opacity-100' : 'opacity-100'}`}
+                      style={{
+                        background: 'rgba(0, 0, 0, 0.3)',
+                        backdropFilter: 'blur(2px)'
+                      }}
+                    >
+                      {!isPlaying && (
+                        <div className="w-16 h-16 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center cursor-pointer hover:bg-white/30 transition-colors">
+                          <Play className="w-8 h-8 text-white" fill="currentColor" />
+                        </div>
+                      )}
+                    </div>
+                  </div>
                   <div className={`absolute inset-0 flex items-center justify-center bg-black/0 ${!isPlaying ? 'animate-pulse' : ''}`}>
                     {!isPlaying ? (
                       <Play className="w-12 h-12 text-white/80" fill="currentColor" />
@@ -340,7 +462,7 @@ const Hero: React.FC<HeroProps> = ({ onShowReel }) => {
                     onMouseLeave={() => setIsInteracting(false)}
                   >
                     <video
-                      ref={videoRef}
+                      ref={mobileVideoRef}
                       src="/Hero.mp4"
                       playsInline
                       onTimeUpdate={handleTimeUpdate}
