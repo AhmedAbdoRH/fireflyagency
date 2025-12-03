@@ -29,7 +29,7 @@ const Cta: React.FC = () => {
               <Reveal delay={400} width="100%">
                 <div className="relative z-10 flex flex-col sm:flex-row items-center justify-center gap-4">
                   <a
-                    href="tel:+201552479991"
+                    href="tel:+2001552479991"
                     className="w-full sm:w-auto px-8 py-4 bg-white text-firefly-dark font-bold rounded-xl hover:bg-gray-100 transition-all duration-300 flex items-center justify-center gap-2 text-lg shadow-[0_0_20px_rgba(255,255,255,0.2)] hover:shadow-[0_0_30px_rgba(255,255,255,0.4)] hover:-translate-y-1"
                   >
                     Call Us

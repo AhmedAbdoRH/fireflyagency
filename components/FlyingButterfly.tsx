@@ -44,21 +44,21 @@ const FlyingButterfly: React.FC = () => {
         const animate = () => {
             time.current += 0.01;
 
-            // Add some wandering noise
-            const noiseX = Math.sin(time.current * 2) * 2;
-            const noiseY = Math.cos(time.current * 3) * 2;
+            // Add very subtle wandering noise
+            const noiseX = Math.sin(time.current * 0.3) * 0.5;
+            const noiseY = Math.cos(time.current * 0.4) * 0.5;
 
             // Calculate attraction to target
             const dx = target.current.x - position.current.x;
             const dy = target.current.y - position.current.y;
 
-            // Smooth follow with lerp-like physics
-            velocity.current.x += dx * 0.001 + noiseX * 0.05;
-            velocity.current.y += dy * 0.001 + noiseY * 0.05;
+            // Even smoother follow with much reduced acceleration
+            velocity.current.x += dx * 0.0003 + noiseX * 0.01;
+            velocity.current.y += dy * 0.0003 + noiseY * 0.01;
 
-            // Dampen velocity (friction)
-            velocity.current.x *= 0.95;
-            velocity.current.y *= 0.95;
+            // Increased friction for much smoother deceleration
+            velocity.current.x *= 0.98;
+            velocity.current.y *= 0.98;
 
             // Update position
             position.current.x += velocity.current.x;
@@ -121,12 +121,12 @@ const FlyingButterfly: React.FC = () => {
             transform: scaleX(1) translateY(0);
           }
           50% {
-            transform: scaleX(0.6) translateY(-2px);
+            transform: scaleX(0.7) translateY(-1.5px);
           }
         }
 
         .animate-flutter {
-          animation: flutter 0.6s ease-in-out infinite;
+          animation: flutter 1s ease-in-out infinite;
           transform-origin: center;
         }
       `}</style>
