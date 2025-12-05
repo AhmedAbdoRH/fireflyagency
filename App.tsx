@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import FlyingButterfly from './components/FlyingButterfly';
@@ -7,8 +8,9 @@ import Home from './pages/Home';
 import About from './pages/About';
 import ShowReel from './pages/ShowReel';
 import Contact from './pages/Contact';
+import Catalog from './pages/Catalog';
 
-const App: React.FC = () => {
+const MainSite: React.FC = () => {
     const [loading, setLoading] = useState(false);
     const [currentPage, setCurrentPage] = useState('home');
 
@@ -29,6 +31,17 @@ const App: React.FC = () => {
                 <Footer />
             </div>
         </div>
+    );
+};
+
+const App: React.FC = () => {
+    return (
+        <Router>
+            <Routes>
+                <Route path="/:catalogName" element={<Catalog />} />
+                <Route path="/" element={<MainSite />} />
+            </Routes>
+        </Router>
     );
 };
 
