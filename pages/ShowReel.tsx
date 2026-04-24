@@ -72,6 +72,7 @@ const mediaProductionCategories = [
   {
     title: 'Reels',
     aspectRatio: '9/16',
+    layout: 'grid',
     videos: [
       { src: 'https://res.cloudinary.com/dvikey3wc/video/upload/v1764324733/7_lms4zk.mp4', title: 'Reel 1' },
       { src: 'https://res.cloudinary.com/dvikey3wc/video/upload/v1764324328/4_bqddy7.mp4', title: 'Reel 2' },
@@ -80,20 +81,69 @@ const mediaProductionCategories = [
       { src: 'https://res.cloudinary.com/dvikey3wc/video/upload/v1764324304/5_i08rah.mp4', title: 'Reel 4' },
       { src: 'https://res.cloudinary.com/dvikey3wc/video/upload/v1764324293/3_khiiuc.mp4', title: 'Reel 5' },
       { src: 'https://res.cloudinary.com/dvikey3wc/video/upload/v1764324286/8_gc7wjv.mp4', title: 'Reel 6' },
-      { src: 'https://res.cloudinary.com/dvikey3wc/video/upload/v1764326073/6_odmjav.mp4', title: 'Reel 7' }
+      { src: 'https://res.cloudinary.com/dvikey3wc/video/upload/v1764326073/6_odmjav.mp4', title: 'Reel 7' },
+      { src: 'https://res.cloudinary.com/dvikey3wc/video/upload/v1776688898/Dr._Ahmed_Shawky_7_%D8%A7%D9%85%D8%A7%D9%86_%D8%AC%D8%B1%D8%A7%D8%AD%D8%A7%D8%AA_%D8%A7%D9%84%D8%B9%D9%85%D9%88%D8%AF_%D8%A7%D9%84%D9%81%D9%82%D8%B1%D9%8A.compressed_wr45bu.mp4', title: 'Dr. Ahmed Shawky - أمان جراحات العمود الفقري' },
+      { src: 'https://res.cloudinary.com/dvikey3wc/video/upload/v1776689031/%D8%A3%D8%B3%D8%A8%D8%A7%D8%A8_%D8%B4%D9%83%D9%88%D9%89_%D8%A7%D9%84%D8%B4%D8%A8%D8%A7%D8%A8_%D9%85%D9%86_%D8%A2%D9%84%D8%A7%D9%85_%D8%A7%D9%84%D9%81%D9%82%D8%B1%D8%A7%D8%AA_%D8%A7%D9%84%D8%B9%D9%86%D9%82%D9%8A%D8%A9.compressed_vt7lgg.mp4', title: 'أسباب شكوى الشباب من آلام الفقرات العنقية' },
+      { src: 'https://res.cloudinary.com/dvikey3wc/video/upload/v1776939807/VideoCompressorResizeCompressVideo1447_11_06_11_29_23_cfg7ff.mp4', title: 'Reel 9' }
     ]
   },
   {
     title: 'Podcast',
     aspectRatio: '9/16',
+    layout: 'grid',
     videos: [
       { src: 'https://res.cloudinary.com/dvikey3wc/video/upload/v1764313631/678_wqrqyq.mp4', title: 'Podcast Episode 1' },
       { src: 'https://res.cloudinary.com/dvikey3wc/video/upload/v1764313662/789_ilpmqy.mp4', title: 'Podcast Episode 2' },
+      { src: 'https://res.cloudinary.com/dvikey3wc/video/upload/v1776846306/VideoCompressorResizeCompressVideo1447_11_05_07_53_35_f7kf2q.mp4', title: 'Podcast Episode 3' },
+      { src: 'https://res.cloudinary.com/dvikey3wc/video/upload/v1776846376/VideoCompressorResizeCompressVideo1447_11_05_08_22_27_ew8mfg.mp4', title: 'Podcast Episode 4' }
+    ]
+  },
+  {
+    title: 'Ai videos',
+    aspectRatio: '9/16',
+    layout: 'grid',
+    videos: [
+      { src: 'https://res.cloudinary.com/dvikey3wc/video/upload/v1776932139/%D8%A7%D8%B9%D8%B1%D8%A7%D8%B6_%D8%AE%D8%B4%D9%88%D9%86%D8%A9_%D8%A7%D9%84%D9%81%D9%82%D8%B1%D8%A7%D8%AA_ai_gy9dtm.mp4', title: 'Ai video 1' },
+      { src: 'https://res.cloudinary.com/dvikey3wc/video/upload/v1777021028/%D8%B9%D8%B1%D9%82_%D8%A7%D9%84%D9%86%D8%B3%D8%A7_ai_edit_rf2cfk.mp4', title: 'Ai video 2' },
+      { src: 'https://res.cloudinary.com/dvikey3wc/video/upload/v1776932046/%D8%A7%D8%B9%D8%B1%D8%A7%D8%B6_%D8%A7%D9%86%D8%B2%D9%84%D8%A7%D9%82_%D8%A7%D9%84%D8%BA%D8%B6%D8%B1%D9%88%D9%81%D9%8A_%D9%84%D9%84%D8%B1%D9%82%D8%A8%D8%A9_b7ox45.mp4', title: 'Ai video 3' },
+      { src: 'https://res.cloudinary.com/dvikey3wc/video/upload/v1776932258/%D9%83%D9%8A%D9%81%D9%8A%D9%87_%D8%A7%D8%AE%D8%AA%D9%8A%D8%A7%D8%B1_%D8%A7%D9%84%D8%AA%D8%B5%D9%85%D9%8A%D9%85_%D8%A7%D9%84%D9%85%D9%86%D8%A7%D8%B3%D8%A8_%D9%84%D9%84%D9%81%D8%B1%D8%A7%D8%BA_ai_k9mkoq.mp4', title: 'Ai video 4' },
+      { src: 'https://res.cloudinary.com/dvikey3wc/video/upload/v1776936697/VideoCompressorResizeCompressVideo1447_11_06_10_15_20_vy4v7v.mp4', title: 'Ai video 5' },
+      { src: 'https://res.cloudinary.com/dvikey3wc/video/upload/v1776938211/VideoCompressorResizeCompressVideo1447_11_06_11_27_58_ewawod.mp4', title: 'Ai video 6' }
+    ]
+  },
+  {
+    title: 'Real estate videos',
+    aspectRatio: '16/9',
+    layout: 'single',
+    videos: [
+      { src: 'https://res.cloudinary.com/dvikey3wc/video/upload/v1776929958/Project_Completion_Client_-_gsk_HQ_Location_-_New_Cairo_cfmait.mp4', title: 'Real estate video 1' },
+      { src: 'https://res.cloudinary.com/dvikey3wc/video/upload/v1776939101/VideoCompressorResizeCompressVideo1447_11_06_11_21_58_gw8kwn.mp4', title: 'Real estate video 2' },
+      { src: 'https://res.cloudinary.com/dvikey3wc/video/upload/v1776937176/VideoCompressorResizeCompressVideo1447_11_06_11_18_03_pt3vnx.mp4', title: 'Real estate video 3' }
+    ]
+  },
+  {
+    title: 'YouTube videos',
+    aspectRatio: '16/9',
+    layout: 'single',
+    videos: [
+      { src: 'https://res.cloudinary.com/dvikey3wc/video/upload/v1776937180/VideoCompressorResizeCompressVideo1447_11_06_09_59_24_ivnatq.mp4', title: 'YouTube video 1' },
+      { src: 'https://res.cloudinary.com/dvikey3wc/video/upload/v1776689386/%D8%AD%D9%84%D9%82%D8%A9_%D9%8A%D9%88%D8%AA%D9%8A%D9%88%D8%A8_YT_%D8%AA%D9%85%D8%A7%D8%B1%D9%8A%D9%86_%D8%A8%D8%B9%D8%AF_%D8%B9%D9%85%D9%84%D9%8A%D8%A7%D8%AA_%D8%A7%D9%84%D9%81%D9%82%D8%B1%D8%A7%D8%AA_%D8%A7%D9%84%D9%82%D8%B7%D9%86%D9%8A%D8%A9.compressed_mq6ohu.mp4', title: 'YouTube video 2' }
+    ]
+  },
+  {
+    title: 'Media production making',
+    aspectRatio: '16/9',
+    layout: 'single',
+    videos: [
+      { src: 'https://res.cloudinary.com/dvikey3wc/video/upload/v1776929216/%D8%B9%D9%86%D8%AF%D9%83_%D9%81%D9%83%D8%B1%D8%A9_%D8%A7%D8%B9%D9%84%D8%A7%D9%86_%D9%88_%D8%A8%D8%AA%D8%AF%D9%88%D8%B1_%D8%B9%D9%84%D9%8A_%D8%B4%D8%B1%D9%83%D8%A9_%D8%AA%D9%86%D9%81%D8%B0%D9%84%D9%83_%D8%A7%D9%84%D8%A7%D8%B9%D9%84%D8%A7%D9%86_%D9%88_%D9%83%D9%85%D8%A7%D9%86_%D8%AA%D8%B3%D9%88%D9%82_%D9%84%D8%A7%D8%B9%D9%84%D8%A7%D9%86%D9%83_%D9%8A%D8%A8%D9%82%D9%8A_Firefly_Marketing_Age_ab7zar.mp4', title: 'Making 1' },
+      { src: 'https://res.cloudinary.com/dvikey3wc/video/upload/v1776688410/gopro_making_01.compressed_s4ochg.mp4', title: 'Making 2' },
+      { src: 'https://res.cloudinary.com/dvikey3wc/video/upload/v1776688506/PODCAST_MAKING.compressed_sid88f.mp4', title: 'Making 3' }
     ]
   },
   {
     title: 'Short Films',
     aspectRatio: '16/9',
+    layout: 'single',
     videos: [
       { src: 'https://res.cloudinary.com/dvikey3wc/video/upload/v1764248691/1127_1_vvurfk.mp4', title: 'Short Film 1' },
       { src: 'https://res.cloudinary.com/dvikey3wc/video/upload/v1764249246/1127_4_n4jskf.mp4', title: 'Short Film 2' }
@@ -102,18 +152,19 @@ const mediaProductionCategories = [
   {
     title: 'Event Coverage',
     aspectRatio: '16/9',
+    layout: 'single',
     videos: [
-      { src: 'https://res.cloudinary.com/dvikey3wc/video/upload/v1764248198/1127_j1ty5o.mp4', title: 'Event Coverage 1' }
+      { src: 'https://res.cloudinary.com/dvikey3wc/video/upload/v1764248198/1127_j1ty5o.mp4', title: 'Event Coverage 1', posterSeekSeconds: 5 }
     ]
   }
 ];
 
-const getCloudinaryThumbnail = (videoUrl: string) => {
+const getCloudinaryThumbnail = (videoUrl: string, seekSeconds?: number) => {
   if (!videoUrl.includes('cloudinary.com')) return undefined;
   // Replace .mp4 with .jpg
   let thumbnailUrl = videoUrl.replace(/\.[^/.]+$/, ".jpg");
-  // Insert transformation before /v[0-9] to get a frame from the middle (50%)
-  thumbnailUrl = thumbnailUrl.replace(/\/upload\/(v[0-9]+)/, '/upload/so_50p/$1');
+  const seekTransform = typeof seekSeconds === 'number' ? `so_${seekSeconds}` : 'so_50p';
+  thumbnailUrl = thumbnailUrl.replace(/\/upload\/(v[0-9]+)/, `/upload/${seekTransform}/$1`);
   return thumbnailUrl;
 };
 
@@ -351,8 +402,8 @@ const ShowReel: React.FC<ShowReelProps> = ({ onNavigateHome }) => {
                     <div className="w-20 h-1 bg-gradient-to-r from-firefly-yellow to-firefly-green mx-auto rounded-full"></div>
                   </div>
 
-                  {/* Single column layout for Event Coverage and Short Films */}
-                  {category.title === 'Event Coverage' || category.title === 'Short Films' ? (
+                  {/* Single column layout */}
+                  {category.layout === 'single' ? (
                     <div className="flex flex-col items-center gap-6 md:gap-8">
                       {category.videos.map((video, videoIndex) => (
                         <div key={videoIndex} className="w-full max-w-2xl mx-auto">
@@ -360,7 +411,7 @@ const ShowReel: React.FC<ShowReelProps> = ({ onNavigateHome }) => {
                             src={video.src}
                             title={video.title}
                             aspectRatio={category.aspectRatio}
-                            poster={getCloudinaryThumbnail(video.src)}
+                            poster={getCloudinaryThumbnail(video.src, video.posterSeekSeconds)}
                             className="w-full"
                           />
                         </div>
@@ -375,7 +426,7 @@ const ShowReel: React.FC<ShowReelProps> = ({ onNavigateHome }) => {
                             src={video.src}
                             title={video.title}
                             aspectRatio={category.aspectRatio}
-                            poster={getCloudinaryThumbnail(video.src)}
+                            poster={getCloudinaryThumbnail(video.src, video.posterSeekSeconds)}
                             className="w-full"
                           />
                         </div>
