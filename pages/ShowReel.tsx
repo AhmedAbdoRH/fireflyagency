@@ -68,7 +68,22 @@ const photographyImages = [
   '/Photography/da7ef8097ea0f7843803953fa2e2b648_resized.webp'
 ];
 
-const mediaProductionCategories = [
+type MediaProductionLayout = 'grid' | 'single';
+
+interface MediaProductionVideo {
+  src: string;
+  title: string;
+  posterSeekSeconds?: number;
+}
+
+interface MediaProductionCategory {
+  title: string;
+  aspectRatio: string;
+  layout: MediaProductionLayout;
+  videos: MediaProductionVideo[];
+}
+
+const mediaProductionCategories: MediaProductionCategory[] = [
   {
     title: 'Reels',
     aspectRatio: '9/16',
@@ -118,7 +133,7 @@ const mediaProductionCategories = [
     videos: [
       { src: 'https://res.cloudinary.com/dvikey3wc/video/upload/v1776929958/Project_Completion_Client_-_gsk_HQ_Location_-_New_Cairo_cfmait.mp4', title: 'Real estate video 1' },
       { src: 'https://res.cloudinary.com/dvikey3wc/video/upload/v1776939101/VideoCompressorResizeCompressVideo1447_11_06_11_21_58_gw8kwn.mp4', title: 'Real estate video 2' },
-      { src: 'https://res.cloudinary.com/dvikey3wc/video/upload/v1776937176/VideoCompressorResizeCompressVideo1447_11_06_11_18_03_pt3vnx.mp4', title: 'Real estate video 3' }
+      { src: 'https://res.cloudinary.com/dvikey3wc/video/upload/v1776937176/VideoCompressorResizeCompressVideo1447_11_06_11_18_03_pt3vnx.mp4', title: 'Real estate video 3', posterSeekSeconds: 15 }
     ]
   },
   {
@@ -127,7 +142,7 @@ const mediaProductionCategories = [
     layout: 'single',
     videos: [
       { src: 'https://res.cloudinary.com/dvikey3wc/video/upload/v1776937180/VideoCompressorResizeCompressVideo1447_11_06_09_59_24_ivnatq.mp4', title: 'YouTube video 1' },
-      { src: 'https://res.cloudinary.com/dvikey3wc/video/upload/v1776689386/%D8%AD%D9%84%D9%82%D8%A9_%D9%8A%D9%88%D8%AA%D9%8A%D9%88%D8%A8_YT_%D8%AA%D9%85%D8%A7%D8%B1%D9%8A%D9%86_%D8%A8%D8%B9%D8%AF_%D8%B9%D9%85%D9%84%D9%8A%D8%A7%D8%AA_%D8%A7%D9%84%D9%81%D9%82%D8%B1%D8%A7%D8%AA_%D8%A7%D9%84%D9%82%D8%B7%D9%86%D9%8A%D8%A9.compressed_mq6ohu.mp4', title: 'YouTube video 2' }
+      { src: 'https://res.cloudinary.com/dvikey3wc/video/upload/v1776689386/%D8%AD%D9%84%D9%82%D8%A9_%D9%8A%D9%88%D8%AA%D9%8A%D9%88%D8%A8_YT_%D8%AA%D9%85%D8%A7%D8%B1%D9%8A%D9%86_%D8%A8%D8%B9%D8%AF_%D8%B9%D9%85%D9%84%D9%8A%D8%A7%D8%AA_%D8%A7%D9%84%D9%81%D9%82%D8%B1%D8%A7%D8%AA_%D8%A7%D9%84%D9%82%D8%B7%D9%86%D9%8A%D8%A9.compressed_mq6ohu.mp4', title: 'YouTube video 2', posterSeekSeconds: 67 }
     ]
   },
   {
@@ -405,7 +420,7 @@ const ShowReel: React.FC<ShowReelProps> = ({ onNavigateHome }) => {
                   {/* Single column layout */}
                   {category.layout === 'single' ? (
                     <div className="flex flex-col items-center gap-6 md:gap-8">
-                      {category.videos.map((video, videoIndex) => (
+                      {category.videos.slice().reverse().map((video, videoIndex) => (
                         <div key={videoIndex} className="w-full max-w-2xl mx-auto">
                           <VideoPlayer
                             src={video.src}
@@ -420,7 +435,7 @@ const ShowReel: React.FC<ShowReelProps> = ({ onNavigateHome }) => {
                   ) : (
                     /* Two column layout for Reels and Podcast */
                     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-4 lg:gap-6">
-                      {category.videos.map((video, videoIndex) => (
+                      {category.videos.slice().reverse().map((video, videoIndex) => (
                         <div key={videoIndex} className="w-full max-w-[160px] mx-auto md:max-w-none">
                           <VideoPlayer
                             src={video.src}
