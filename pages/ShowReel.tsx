@@ -109,7 +109,7 @@ const mediaProductionCategories: MediaProductionCategory[] = [
     videos: [
       { src: 'https://res.cloudinary.com/dvikey3wc/video/upload/v1764313631/678_wqrqyq.mp4', title: 'Podcast Episode 1' },
       { src: 'https://res.cloudinary.com/dvikey3wc/video/upload/v1764313662/789_ilpmqy.mp4', title: 'Podcast Episode 2' },
-      { src: 'https://res.cloudinary.com/dvikey3wc/video/upload/v1776846306/VideoCompressorResizeCompressVideo1447_11_05_07_53_35_f7kf2q.mp4', title: 'Podcast Episode 3' },
+      { src: 'https://res.cloudinary.com/dvikey3wc/video/upload/v1776846306/VideoCompressorResizeCompressVideo1447_11_05_07_53_35_f7kf2q.mp4', title: 'Podcast Episode 3', posterSeekSeconds: 42 },
       { src: 'https://res.cloudinary.com/dvikey3wc/video/upload/v1776846376/VideoCompressorResizeCompressVideo1447_11_05_08_22_27_ew8mfg.mp4', title: 'Podcast Episode 4', posterSeekSeconds: 34 }
     ]
   },
