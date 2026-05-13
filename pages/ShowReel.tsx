@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Reveal from '../components/Reveal';
 import VideoPlayer from '../components/VideoPlayer';
+import SoftwarePortfolio from '../components/SoftwarePortfolio';
 
 // Import images
 const brandingImages = [
@@ -11,6 +12,18 @@ const brandingImages = [
 ];
 
 const designImages = [
+  '/Designs/compressed_1778601349978.webp',
+  '/Designs/compressed_1778601350474.webp',
+  '/Designs/compressed_1778601350904.webp',
+  '/Designs/compressed_1778601351430.webp',
+  '/Designs/compressed_1778601351862.webp',
+  '/Designs/compressed_1778601352360.webp',
+  '/Designs/compressed_1778601352799.webp',
+  '/Designs/compressed_1778601353252.webp',
+  '/Designs/compressed_1778601353718.webp',
+  '/Designs/compressed_1778601354232.webp',
+  '/Designs/compressed_1778601354727.webp',
+  '/Designs/compressed_1778601355221.webp',
   '/Designs/10_resized.webp',
   '/Designs/13_resized.webp',
   '/Designs/8_resized.webp',
@@ -396,6 +409,9 @@ const ShowReel: React.FC<ShowReelProps> = ({ onNavigateHome }) => {
               </div>
             </div>
           </div>
+
+          {/* Software & Web Development Section */}
+          <SoftwarePortfolio />
 
           {/* Media Production Section */}
           <div className="w-full mt-8 mb-24 text-center">
