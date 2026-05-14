@@ -82,14 +82,6 @@ const projects: Project[] = [
     displayUrl: 'Elroaa-Store.com',
   },
   {
-    id: 101,
-    title: 'Momtn App',
-    category: 'apps',
-    image: '/androin/oc.png',
-    link: 'https://momtn.app/',
-    displayUrl: 'Momtn.app',
-  },
-  {
     id: 102,
     title: 'Tagr Online App',
     category: 'apps',
