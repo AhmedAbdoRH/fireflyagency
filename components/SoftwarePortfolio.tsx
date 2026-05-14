@@ -27,7 +27,7 @@ const sections: {
 const projects: Project[] = [
   {
     id: 1,
-    title: 'منصة أنا كفو التعليمية',
+    title: 'Ana Kafou Educational Platform',
     category: 'web',
     image: '/website/1.webp',
     link: 'https://Ana-Kafou.com',
@@ -35,7 +35,7 @@ const projects: Project[] = [
   },
   {
     id: 7,
-    title: 'موقع وكالة بوفا التسويقية',
+    title: 'Pova Media Agency',
     category: 'web',
     image: '/website/bova-agency.webp',
     link: 'https://PovaAgency.com',
@@ -43,7 +43,7 @@ const projects: Project[] = [
   },
   {
     id: 14,
-    title: 'جاردينيا للاستشارات البيئية',
+    title: 'Gardenia Environmental Consulting',
     category: 'web',
     image: '/website/14.jpeg',
     link: 'https://GardeniaEC.com',
@@ -51,7 +51,7 @@ const projects: Project[] = [
   },
   {
     id: 13,
-    title: 'شركة الوسام ليموزين',
+    title: 'El-Wessam Limousine',
     category: 'web',
     image: '/website/13.webp',
     link: 'https://el-wessam.netlify.app',
@@ -59,7 +59,7 @@ const projects: Project[] = [
   },
   {
     id: 12,
-    title: 'الرؤى للتجارة والتوريدات',
+    title: 'Elroaa Trading & Supplies',
     category: 'web',
     image: '/website/12.png',
     link: 'https://elroaa-store.com',
@@ -67,7 +67,7 @@ const projects: Project[] = [
   },
   {
     id: 5,
-    title: 'موقع شركة الماسة الصناعية',
+    title: 'Almasa Industrial Company',
     category: 'web',
     image: '/website/5.webp',
     link: 'https://Almasa.com.sa',
@@ -75,7 +75,7 @@ const projects: Project[] = [
   },
   {
     id: 15,
-    title: 'موقع د. حاتم جلال سعيد',
+    title: 'Dr. Hatem Galal Said',
     category: 'web',
     image: '/website/15.webp',
     link: 'https://Dr-HatemGalalSaid.com',
@@ -83,7 +83,7 @@ const projects: Project[] = [
   },
   {
     id: 101,
-    title: 'تطبيق ممتن',
+    title: 'Momtn App',
     category: 'apps',
     image: '/androin/oc.png',
     link: 'https://momtn.app/',
@@ -91,34 +91,33 @@ const projects: Project[] = [
   },
   {
     id: 102,
-    title: 'تطبيق تاجر أونلاين',
+    title: 'Tagr Online App',
     category: 'apps',
     image: '/androin/momtn.png',
-    link: 'https://play.google.com/store/apps/details?id=com.tagronline.app',
+    link: 'https://Tagr-Online.com',
     displayUrl: 'Tagr-Online.com',
   },
   {
     id: 301,
-    title: 'وكيل الرد على العملاء (Ai Chat Agent)',
+    title: 'AI Customer Support Agent',
     category: 'ai',
     image: '/Ai/1.png',
     link: '#',
-    displayUrl: 'شركة سمارت تيم للإنشاءات',
+    displayUrl: 'Smart Team Construction',
   },
   {
     id: 302,
-    title: 'برنامج التحدث مع ملفات البيانات (ChatWithData)',
+    title: 'ChatWithData Software',
     category: 'ai',
     image: '/Ai/2.png',
     link: '#',
-    displayUrl: 'جمعية رسالة للأعمال الخيرية',
+    displayUrl: 'Resala Charity Organization',
   },
 ];
 
 function ProjectCard({ project, index }: { project: Project; index: number }) {
   const cat = project.category;
   const Icon = cat === 'apps' ? Smartphone : cat === 'ai' ? Bot : Globe;
-  const ctaLabel = cat === 'apps' ? 'عرض التطبيق' : 'عرض الموقع';
 
   return (
     <Reveal delay={index * 80} width="100%">
@@ -183,9 +182,9 @@ export default function SoftwarePortfolio() {
   const featuredProject = projects[featuredIndex];
 
   return (
-    <div className="w-full mt-16 mb-24" dir="rtl">
+    <div className="w-full mt-16 mb-24" dir="ltr">
       <Reveal width="100%">
-        <div className="w-full flex justify-center items-center mb-8 md:mb-12 px-4" dir="ltr">
+        <div className="w-full flex justify-center items-center mb-8 md:mb-12 px-4">
           <h2 className="w-full max-w-4xl mx-auto text-center text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-firefly-yellow via-white to-firefly-green animate-gradient bg-gradient-animation">
             Websites & Apps
           </h2>
@@ -202,7 +201,7 @@ export default function SoftwarePortfolio() {
             className="group relative px-8 py-3 rounded-xl bg-white/5 border border-white/10 hover:border-firefly-green hover:bg-firefly-green/10 text-white font-bold transition-all duration-300 shadow-lg overflow-hidden"
           >
             <div className="relative z-10 flex items-center gap-2">
-              <span className="group-hover:text-firefly-green transition-colors duration-300">عرض المزيد من الأعمال</span>
+              <span className="group-hover:text-firefly-green transition-colors duration-300">View More Projects</span>
             </div>
             <div className="absolute inset-0 bg-gradient-to-r from-firefly-yellow/0 via-firefly-green/10 to-firefly-yellow/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000" />
           </button>
@@ -217,10 +216,7 @@ export default function SoftwarePortfolio() {
             return (
               <div key={section.id} className="last:mb-0">
                 <Reveal width="100%">
-                  <div
-                    className="w-full flex flex-col items-center justify-center gap-3 mb-8 md:mb-10 px-4"
-                    dir="ltr"
-                  >
+                  <div className="w-full flex flex-col items-center justify-center gap-3 mb-8 md:mb-10 px-4">
                     <SectionIcon className="w-8 h-8 md:w-10 md:h-10 text-firefly-yellow" />
                     <h3 className="text-center text-xl md:text-3xl font-bold text-white tracking-tight">
                       {section.title}
@@ -242,7 +238,7 @@ export default function SoftwarePortfolio() {
               onClick={() => setIsExpanded(false)}
               className="px-6 py-2.5 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 text-white/60 hover:text-white transition-all duration-300 text-sm"
             >
-              إخفاء التفاصيل
+              Hide Details
             </button>
           </div>
         </div>

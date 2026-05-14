@@ -2,6 +2,15 @@ import React, { useState, useEffect } from 'react';
 import Reveal from '../components/Reveal';
 import VideoPlayer from '../components/VideoPlayer';
 import SoftwarePortfolio from '../components/SoftwarePortfolio';
+import { PenTool, Camera, MonitorSmartphone, Video, LayoutGrid } from 'lucide-react';
+
+const portfolioCategories = [
+  { id: 'branding', title: 'Branding', icon: PenTool },
+  { id: 'designs', title: 'Designs', icon: LayoutGrid },
+  { id: 'software', title: 'Website', icon: MonitorSmartphone },
+  { id: 'photography', title: 'Photography', icon: Camera },
+  { id: 'media', title: 'Media Production', icon: Video },
+];
 
 // Import images
 const brandingImages = [
@@ -308,8 +317,37 @@ const ShowReel: React.FC<ShowReelProps> = ({ onNavigateHome }) => {
             </div>
           </Reveal>
 
+          {/* Quick Navigation Cards */}
+          <Reveal delay={200} width="100%">
+            <div className="flex flex-wrap justify-center gap-2 md:gap-4 mb-12 md:mb-16 px-2 md:px-0 w-full py-2 md:py-4">
+              {portfolioCategories.map((cat) => {
+                const Icon = cat.icon;
+                return (
+                  <button
+                    key={cat.id}
+                    onClick={() => {
+                      const el = document.getElementById(cat.id);
+                      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }}
+                    className="relative flex items-center justify-center gap-2 md:gap-3 py-2 px-4 md:py-3.5 md:px-6 rounded-xl md:rounded-full bg-gradient-to-b from-white/10 to-white/[0.02] backdrop-blur-md border border-firefly-green/40 transition-all duration-300 group shadow-lg hover:-translate-y-1 active:translate-y-0.5 active:scale-95 flex-grow sm:flex-grow-0 overflow-hidden cursor-pointer"
+                  >
+                    <div className="absolute bottom-0 left-0 h-[2px] md:h-[3px] w-full bg-gradient-to-r from-firefly-green/50 via-firefly-yellow/50 to-firefly-green/50 opacity-100 transition-opacity duration-300" />
+                    
+                    <div className="p-1.5 md:p-2 rounded-full border bg-gradient-to-br from-firefly-green/20 to-firefly-yellow/10 scale-110 border-firefly-yellow/40 transition-all duration-300 z-10">
+                      <Icon className="w-4 h-4 md:w-5 md:h-5 text-firefly-yellow transition-colors" />
+                    </div>
+                    
+                    <span className="text-white text-[12px] md:text-sm font-bold tracking-wide transition-colors z-10">
+                      {cat.title}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+          </Reveal>
+
           {/* Branding Section */}
-          <div className="w-full mt-8 mb-12 text-center">
+          <div id="branding" className="w-full mt-8 mb-12 text-center scroll-mt-32">
             <Reveal>
               <div className="flex justify-center items-center gap-3 mb-8">
                 <h2 className="text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-firefly-yellow via-white to-firefly-green animate-gradient bg-gradient-animation">
@@ -346,7 +384,7 @@ const ShowReel: React.FC<ShowReelProps> = ({ onNavigateHome }) => {
           </div>
 
           {/* Graphic Design Section */}
-          <div className="w-full mt-8 mb-8 text-center">
+          <div id="designs" className="w-full mt-8 mb-8 text-center scroll-mt-32">
             <Reveal>
               <div className="flex justify-center items-center gap-3 mb-6">
 
@@ -378,8 +416,13 @@ const ShowReel: React.FC<ShowReelProps> = ({ onNavigateHome }) => {
             </div>
           </div>
 
+          {/* Websites & Apps section */}
+          <div id="software" className="scroll-mt-32">
+            <SoftwarePortfolio />
+          </div>
+
           {/* Photography Section */}
-          <div className="w-full mt-8 mb-8 text-center">
+          <div id="photography" className="w-full mt-8 mb-8 text-center scroll-mt-32">
             <Reveal>
               <div className="flex justify-center items-center gap-3 mb-6">
                 <h2 className="text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-firefly-yellow via-white to-firefly-green animate-gradient bg-gradient-animation">
@@ -410,11 +453,8 @@ const ShowReel: React.FC<ShowReelProps> = ({ onNavigateHome }) => {
             </div>
           </div>
 
-          {/* Websites & Apps section */}
-          <SoftwarePortfolio />
-
           {/* Media Production Section */}
-          <div className="w-full mt-8 mb-24 text-center">
+          <div id="media" className="w-full mt-8 mb-24 text-center scroll-mt-32">
             <Reveal>
               <div className="flex justify-center items-center gap-3 mb-10">
                 <h2 className="text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-firefly-yellow via-white to-firefly-green animate-gradient bg-gradient-animation">
