@@ -22,8 +22,8 @@ const Header: React.FC<HeaderProps> = ({ currentPage, onNavigate }) => {
     { name: 'Home', value: 'home' },
     { name: 'About Us', value: 'about' },
     { name: 'Our Services', value: 'home', section: 'our-services-list' },
-    { name: 'Contact', value: 'contact' },
-    { name: 'Portfolio', value: 'showreel' },
+    { name: 'Previous Work', value: 'showreel' },
+    { name: 'Contact Us', value: 'contact' },
   ];
 
   const handleNavClick = (e: React.MouseEvent, link: any) => {

@@ -7,7 +7,7 @@ import { PenTool, Camera, MonitorSmartphone, Video, LayoutGrid } from 'lucide-re
 const portfolioCategories = [
   { id: 'branding', title: 'Branding', icon: PenTool },
   { id: 'designs', title: 'Designs', icon: LayoutGrid },
-  { id: 'software', title: 'Website', icon: MonitorSmartphone },
+  { id: 'software', title: 'Websites', icon: MonitorSmartphone },
   { id: 'photography', title: 'Photography', icon: Camera },
   { id: 'media', title: 'Media Production', icon: Video },
 ];

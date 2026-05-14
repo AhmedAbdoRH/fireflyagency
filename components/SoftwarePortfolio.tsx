@@ -26,6 +26,30 @@ const sections: {
 
 const projects: Project[] = [
   {
+    id: 5,
+    title: 'Almasa Industrial Company',
+    category: 'web',
+    image: '/website/5.webp',
+    link: 'https://Almasa.com.sa',
+    displayUrl: 'Almasa.com.sa',
+  },
+  {
+    id: 14,
+    title: 'Gardenia Environmental Consulting',
+    category: 'web',
+    image: '/website/14.jpeg',
+    link: 'https://GardeniaEC.com',
+    displayUrl: 'GardeniaEC.com',
+  },
+  {
+    id: 15,
+    title: 'Dr. Hatem Galal Said',
+    category: 'web',
+    image: '/website/15.webp',
+    link: 'https://Dr-HatemGalalSaid.com',
+    displayUrl: 'Dr-HatemGalalSaid.com',
+  },
+  {
     id: 1,
     title: 'Ana Kafou Educational Platform',
     category: 'web',
@@ -42,14 +66,6 @@ const projects: Project[] = [
     displayUrl: 'PovaAgency.com',
   },
   {
-    id: 14,
-    title: 'Gardenia Environmental Consulting',
-    category: 'web',
-    image: '/website/14.jpeg',
-    link: 'https://GardeniaEC.com',
-    displayUrl: 'GardeniaEC.com',
-  },
-  {
     id: 13,
     title: 'El-Wessam Limousine',
     category: 'web',
@@ -64,22 +80,6 @@ const projects: Project[] = [
     image: '/website/12.png',
     link: 'https://elroaa-store.com',
     displayUrl: 'Elroaa-Store.com',
-  },
-  {
-    id: 5,
-    title: 'Almasa Industrial Company',
-    category: 'web',
-    image: '/website/5.webp',
-    link: 'https://Almasa.com.sa',
-    displayUrl: 'Almasa.com.sa',
-  },
-  {
-    id: 15,
-    title: 'Dr. Hatem Galal Said',
-    category: 'web',
-    image: '/website/15.webp',
-    link: 'https://Dr-HatemGalalSaid.com',
-    displayUrl: 'Dr-HatemGalalSaid.com',
   },
   {
     id: 101,
@@ -186,7 +186,7 @@ export default function SoftwarePortfolio() {
       <Reveal width="100%">
         <div className="w-full flex justify-center items-center mb-8 md:mb-12 px-4">
           <h2 className="w-full max-w-4xl mx-auto text-center text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-firefly-yellow via-white to-firefly-green animate-gradient bg-gradient-animation">
-            Websites & Apps
+            Websites
           </h2>
         </div>
       </Reveal>
