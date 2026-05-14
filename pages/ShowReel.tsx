@@ -410,7 +410,7 @@ const ShowReel: React.FC<ShowReelProps> = ({ onNavigateHome }) => {
             </div>
           </div>
 
-          {/* Software & Web Development Section */}
+          {/* Websites & Apps section */}
           <SoftwarePortfolio />
 
           {/* Media Production Section */}

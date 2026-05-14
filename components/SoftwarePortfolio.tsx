@@ -1,15 +1,30 @@
+"use client";
 import React, { useState, useEffect } from 'react';
 import { ExternalLink, Globe, Smartphone, Bot } from 'lucide-react';
 import Reveal from './Reveal';
 
-const categories = [
-  { id: 'web', name: 'تطوير الويب', icon: Globe },
-  { id: 'apps', name: 'تطبيقات الأندرويد وأنظمة الـ Saas', icon: Smartphone },
-  { id: 'ai', name: 'أتمتة وAI', icon: Bot },
+type ProjectCategory = 'web' | 'apps' | 'ai';
+
+interface Project {
+  id: number;
+  title: string;
+  category: ProjectCategory;
+  image: string;
+  link: string;
+  displayUrl: string;
+}
+
+const sections: {
+  id: ProjectCategory;
+  title: string;
+  icon: typeof Globe;
+}[] = [
+  { id: 'web', title: 'Websites', icon: Globe },
+  { id: 'apps', title: 'Android Apps', icon: Smartphone },
+  { id: 'ai', title: 'Automation & AI', icon: Bot },
 ];
 
-const projects = [
-  // Web & E-commerce
+const projects: Project[] = [
   {
     id: 1,
     title: 'منصة أنا كفو التعليمية',
@@ -66,14 +81,13 @@ const projects = [
     link: 'https://Dr-HatemGalalSaid.com',
     displayUrl: 'Dr-HatemGalalSaid.com',
   },
-  // Apps
   {
     id: 101,
     title: 'تطبيق ممتن',
     category: 'apps',
     image: '/androin/oc.png',
     link: 'https://momtn.app/',
-    displayUrl: 'تطبيق تواصل إجتماعي',
+    displayUrl: 'Momtn.app',
   },
   {
     id: 102,
@@ -81,9 +95,8 @@ const projects = [
     category: 'apps',
     image: '/androin/momtn.png',
     link: 'https://play.google.com/store/apps/details?id=com.tagronline.app',
-    displayUrl: 'تطبيق للتجارة الإلكترونية',
+    displayUrl: 'Tagr-Online.com',
   },
-  // AI & Automation
   {
     id: 301,
     title: 'وكيل الرد على العملاء (Ai Chat Agent)',
@@ -99,133 +112,140 @@ const projects = [
     image: '/Ai/2.png',
     link: '#',
     displayUrl: 'جمعية رسالة للأعمال الخيرية',
-  }
+  },
 ];
 
-const INITIAL_VISIBLE = 4;
-
-export default function SoftwarePortfolio() {
-  const [activeTab, setActiveTab] = useState('web');
-  const [showAll, setShowAll] = useState(false);
-
-  const filteredProjects = projects.filter(p => p.category === activeTab);
-
-  useEffect(() => {
-    setShowAll(false);
-  }, [activeTab]);
-
-  const visibleProjects = showAll
-    ? filteredProjects
-    : filteredProjects.slice(0, INITIAL_VISIBLE);
-  const hasMore = filteredProjects.length > INITIAL_VISIBLE;
+function ProjectCard({ project, index }: { project: Project; index: number }) {
+  const cat = project.category;
+  const Icon = cat === 'apps' ? Smartphone : cat === 'ai' ? Bot : Globe;
+  const ctaLabel = cat === 'apps' ? 'عرض التطبيق' : 'عرض الموقع';
 
   return (
-    <div 
-      className="w-full mt-16 mb-24"
-      dir="rtl"
-    >
-      <Reveal>
-        <div className="flex justify-center items-center gap-3 mb-10 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-firefly-yellow via-white to-firefly-green animate-gradient bg-gradient-animation">
-            Software & Web Development
+    <Reveal delay={index * 80} width="100%">
+      <a
+        href={project.link !== '#' ? project.link : undefined}
+        target={project.link !== '#' ? '_blank' : undefined}
+        rel={project.link !== '#' ? 'noopener noreferrer' : undefined}
+        className={`group block w-full ${project.link === '#' ? 'cursor-default' : 'cursor-pointer'}`}
+        onClick={(e) => project.link === '#' && e.preventDefault()}
+      >
+        <div className="relative w-full aspect-[16/9] lg:aspect-[2/1] rounded-lg md:rounded-xl overflow-hidden mb-3 md:mb-5 bg-white/5">
+          <img
+            src={project.image}
+            alt={project.title}
+            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+            loading="lazy"
+          />
+          <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-500" />
+          
+          {project.link !== '#' && (
+            <div className="absolute top-3 right-3 md:top-5 md:right-5 w-8 h-8 md:w-12 md:h-12 bg-white/10 backdrop-blur-md border border-white/20 rounded-full flex items-center justify-center opacity-0 scale-75 group-hover:opacity-100 group-hover:scale-100 transition-all duration-500 shadow-xl">
+              <ExternalLink className="w-3.5 h-3.5 md:w-5 md:h-5 text-white" />
+            </div>
+          )}
+        </div>
+
+        <div className="flex flex-col px-1 md:px-2 gap-1.5 md:gap-2">
+          <h3 className="text-sm md:text-xl font-bold text-white/90 group-hover:text-firefly-green transition-colors duration-300 line-clamp-1 leading-snug">
+            {project.title}
+          </h3>
+
+          <div className="flex items-center gap-1.5 md:gap-2 mt-0.5">
+            <Icon className="w-3.5 h-3.5 md:w-4 md:h-4 text-firefly-yellow/90 shrink-0" />
+            
+            <div className={`flex items-center gap-1 md:gap-1.5 ${project.link !== '#' ? 'text-firefly-green/80 group-hover:text-firefly-green' : 'text-white/50'} transition-colors duration-300`}>
+              <span className={`text-[11px] md:text-sm font-medium tracking-wide truncate ${project.link !== '#' ? 'border-b border-transparent group-hover:border-firefly-green/40 pb-0.5' : ''}`} dir="ltr">
+                {project.displayUrl}
+              </span>
+              {project.link !== '#' && (
+                <ExternalLink className="w-3 h-3 md:w-3.5 md:h-3.5 opacity-70 group-hover:opacity-100 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-all duration-300 shrink-0" />
+              )}
+            </div>
+          </div>
+        </div>
+      </a>
+    </Reveal>
+  );
+}
+
+export default function SoftwarePortfolio() {
+  const [isExpanded, setIsExpanded] = useState(false);
+  const [featuredIndex, setFeaturedIndex] = useState(0);
+
+  useEffect(() => {
+    if (isExpanded) return;
+    const interval = setInterval(() => {
+      setFeaturedIndex((prev) => (prev + 1) % projects.length);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, [isExpanded]);
+
+  const featuredProject = projects[featuredIndex];
+
+  return (
+    <div className="w-full mt-16 mb-24" dir="rtl">
+      <Reveal width="100%">
+        <div className="w-full flex justify-center items-center mb-8 md:mb-12 px-4" dir="ltr">
+          <h2 className="w-full max-w-4xl mx-auto text-center text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-firefly-yellow via-white to-firefly-green animate-gradient bg-gradient-animation">
+            Websites & Apps
           </h2>
         </div>
       </Reveal>
 
-      {/* Tabs Selection */}
-      <Reveal width="100%">
-        <div className="flex flex-wrap justify-center gap-1.5 md:gap-4 mb-6 md:mb-12 px-2" dir="rtl">
-          {categories.map((cat) => (
-            <button
-              key={cat.id}
-              onClick={() => {
-                setActiveTab(cat.id);
-              }}
-              className={`group relative flex items-center justify-center gap-1 md:gap-2 px-2.5 py-2 md:px-6 md:py-3 rounded-lg md:rounded-2xl font-bold text-[10px] md:text-base transition-all duration-300 border flex-1 min-w-[100px] max-w-[160px] md:min-w-0 md:max-w-none md:flex-none ${
-                activeTab === cat.id
-                  ? 'bg-firefly-green/20 border-firefly-green text-white shadow-[0_0_15px_rgba(0,238,138,0.3)] scale-105'
-                  : 'bg-white/5 border-white/10 text-gray-400 hover:bg-white/10 hover:text-white'
-              }`}
-            >
-              <cat.icon className={`w-3 h-3 md:w-5 md:h-5 shrink-0 transition-colors ${activeTab === cat.id ? 'text-firefly-yellow' : 'text-gray-400 group-hover:text-firefly-yellow'}`} />
-              <span className="relative z-10 text-center leading-tight">{cat.name}</span>
-            </button>
-          ))}
+      {!isExpanded ? (
+        <div className="flex flex-col items-center justify-center px-4">
+          <div className="w-full max-w-2xl mb-8">
+            <ProjectCard project={featuredProject} index={0} />
+          </div>
+          <button
+            onClick={() => setIsExpanded(true)}
+            className="group relative px-8 py-3 rounded-xl bg-white/5 border border-white/10 hover:border-firefly-green hover:bg-firefly-green/10 text-white font-bold transition-all duration-300 shadow-lg overflow-hidden"
+          >
+            <div className="relative z-10 flex items-center gap-2">
+              <span className="group-hover:text-firefly-green transition-colors duration-300">عرض المزيد من الأعمال</span>
+            </div>
+            <div className="absolute inset-0 bg-gradient-to-r from-firefly-yellow/0 via-firefly-green/10 to-firefly-yellow/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000" />
+          </button>
         </div>
-      </Reveal>
+      ) : (
+        <div className="flex flex-col gap-14 md:gap-20">
+          {sections.map((section) => {
+            const SectionIcon = section.icon;
+            const list = projects.filter((p) => p.category === section.id);
+            if (list.length === 0) return null;
 
-      {/* Projects Grid */}
-      <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-2 md:gap-8 min-h-[280px] md:min-h-[400px] px-3 md:px-4">
-        {visibleProjects.map((project, index) => (
-          <Reveal key={`${activeTab}-${project.id}`} delay={index * 100} width="100%">
-            <div className="group relative rounded-xl md:rounded-3xl overflow-hidden bg-[#152538] border border-white/5 hover:border-firefly-green/30 shadow-lg transition-all duration-500 hover:-translate-y-0.5 md:hover:-translate-y-2">
-              {/* Project Image */}
-              <div className="relative aspect-[4/3] md:aspect-[16/10] overflow-hidden">
-                <img
-                  src={project.image}
-                  alt={project.title}
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                  loading="lazy"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#152538] via-transparent to-transparent opacity-80" />
-              </div>
-
-              {/* Website URL Bar */}
-              <div className="relative py-1.5 px-2 md:py-3 md:px-5 border-b border-white/5 bg-[#1a2d42]">
-                <div className="flex items-center gap-1.5 md:gap-3 w-full min-w-0">
-                  <div className="p-1 md:p-2 rounded-md md:rounded-lg bg-firefly-dark border border-white/10 group-hover:border-firefly-green/50 transition-colors shrink-0">
-                    {activeTab === 'apps' ? 
-                    <Smartphone className="w-3 h-3 md:w-5 md:h-5 text-firefly-yellow" /> :
-                    activeTab === 'ai' ? 
-                    <Bot className="w-3 h-3 md:w-5 md:h-5 text-firefly-yellow" /> :
-                    <Globe className="w-3 h-3 md:w-5 md:h-5 text-firefly-yellow" />
-                  }
+            return (
+              <div key={section.id} className="last:mb-0">
+                <Reveal width="100%">
+                  <div
+                    className="w-full flex flex-col items-center justify-center gap-3 mb-8 md:mb-10 px-4"
+                    dir="ltr"
+                  >
+                    <SectionIcon className="w-8 h-8 md:w-10 md:h-10 text-firefly-yellow" />
+                    <h3 className="text-center text-xl md:text-3xl font-bold text-white tracking-tight">
+                      {section.title}
+                    </h3>
                   </div>
-                  <span className="text-white/70 text-[10px] md:text-sm font-medium tracking-wide truncate group-hover:text-firefly-green transition-colors duration-300" dir="ltr">
-                    {project.displayUrl}
-                  </span>
+                </Reveal>
+
+                <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6 md:gap-8 lg:gap-10 px-3 md:px-4">
+                  {list.map((project, index) => (
+                    <ProjectCard key={project.id} project={project} index={index} />
+                  ))}
                 </div>
               </div>
-
-              {/* Project Info */}
-              <div className="p-2 md:p-6 flex flex-col gap-2 md:gap-4">
-                <h3 className="text-[11px] md:text-xl font-bold text-white group-hover:text-firefly-yellow transition-colors line-clamp-2 md:line-clamp-1 leading-snug">
-                  {project.title}
-                </h3>
-
-                <a
-                  href={project.link !== '#' ? project.link : undefined}
-                  target={project.link !== '#' ? "_blank" : undefined}
-                  rel={project.link !== '#' ? "noopener noreferrer" : undefined}
-                  className={`relative inline-flex items-center justify-center w-full px-2 py-1.5 md:px-6 md:py-3 font-bold text-firefly-dark bg-firefly-green hover:bg-firefly-yellow transition-colors duration-300 rounded-md md:rounded-xl overflow-hidden shadow-[0_0_10px_rgba(0,238,138,0.15)] md:shadow-[0_0_15px_rgba(0,238,138,0.2)] hover:shadow-[0_0_20px_rgba(226,216,43,0.4)] ${project.link === '#' ? 'opacity-50 cursor-not-allowed' : ''}`}
-                  onClick={(e) => project.link === '#' && e.preventDefault()}
-                >
-                  <div className="relative z-10 flex items-center gap-1 md:gap-2">
-                    <span className="tracking-wide text-[10px] md:text-base">{activeTab === 'apps' ? 'عرض التطبيق' : 'عرض الموقع'}</span>
-                    <ExternalLink className="w-3 h-3 md:w-4 md:h-4 shrink-0" />
-                  </div>
-                </a>
-              </div>
-
-              {/* Bottom Gradient Line */}
-              <div className="absolute bottom-0 left-0 h-1 md:h-1.5 w-0 group-hover:w-full transition-all duration-500 bg-gradient-to-r from-firefly-yellow to-firefly-green" />
-            </div>
-          </Reveal>
-        ))}
-      </div>
-
-      {hasMore && !showAll && (
-        <Reveal width="100%">
-          <div className="flex justify-center mt-6 md:mt-8 px-4">
+            );
+          })}
+          
+          <div className="flex justify-center mt-4">
             <button
-              type="button"
-              onClick={() => setShowAll(true)}
-              className="px-5 py-2 md:px-8 md:py-3 rounded-lg md:rounded-xl font-bold text-xs md:text-base text-white bg-white/10 border border-white/15 hover:bg-white/15 hover:border-firefly-green/40 transition-all duration-300"
+              onClick={() => setIsExpanded(false)}
+              className="px-6 py-2.5 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 text-white/60 hover:text-white transition-all duration-300 text-sm"
             >
-              إظهار المزيد
+              إخفاء التفاصيل
             </button>
           </div>
-        </Reveal>
+        </div>
       )}
     </div>
   );
